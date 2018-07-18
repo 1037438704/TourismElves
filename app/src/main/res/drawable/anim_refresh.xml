@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@mipmap/refresh__00062"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00063"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00064"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00065"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00066"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00067"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00068"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00069"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00070"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00071"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00072"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00073"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00074"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00075"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00076"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00077"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00078"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00079"
+        android:duration="16" />
+    <item
+        android:drawable="@mipmap/refresh__00080"
+        android:duration="16" />
+</animation-list>

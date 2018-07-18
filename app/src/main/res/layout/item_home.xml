@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp10"
+        android:background="#999999" />
+
+    <RelativeLayout
+        android:id="@+id/i_home_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@drawable/amap_through" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/hot_scenic_spot"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/i_home_details"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp200"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp15">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/i_home_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_launcher_round" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_home_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp5"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_home_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="中国·河北省"
+            android:textSize="@dimen/sp12" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_home_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scenic_spot_count"
+            android:textSize="@dimen/sp12" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_home_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@drawable/round_4585f5"
+            android:padding="@dimen/dp2"
+            android:text="@string/automatic_navigation"
+            android:textColor="@color/color_4585f5"
+            android:textSize="@dimen/sp12" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_home_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/distance"
+            android:textSize="@dimen/sp12" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/i_home_shop"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/ic_launcher" />
+    </LinearLayout>
+</LinearLayout>
