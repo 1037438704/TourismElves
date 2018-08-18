@@ -31,7 +31,7 @@ public class SplashActivity extends StateBaseActivity {
             }
         }, 1000);
     }
-
+    //laf;jflasjflakjsfl;akjsfl;ha;dfjkhajsl;kdja;lsfja;sl
     @Override
     protected void initEvent() {
 
