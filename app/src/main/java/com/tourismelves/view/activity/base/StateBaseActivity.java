@@ -1,9 +1,18 @@
 package com.tourismelves.view.activity.base;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.tourismelves.R;
+import com.tourismelves.view.activity.SearchActivity;
+import com.tourismelves.view.activity.SelectCityActivity;
 import com.tourismelves.view.widget.loadlayout.LoadLayout;
 
 import butterknife.ButterKnife;
@@ -18,8 +27,16 @@ import butterknife.Unbinder;
  * 实现obtainData来做数据的初始化
  * 实现initEvent来做事件监听的初始化
  */
-public abstract class StateBaseActivity extends BaseActivity {
+public abstract class StateBaseActivity extends BaseActivity implements View.OnClickListener {
 
+    private AppCompatTextView basePositioning;
+    private AppCompatImageView baseWeather;
+    private LinearLayout baseSearchLayout;
+    private AppCompatTextView baseTitle;
+    private AppCompatImageView baseRight;
+    private LinearLayout baseSearch;
+    private AppCompatImageView baseBack;
+    private RelativeLayout baseTitleLayout;
     private LoadLayout mLoadLayout;//加载布局，可以显示各种状态的布局, 如加载中，加载成功, 加载失败, 无数据
     private Unbinder bind;
 
@@ -44,6 +61,34 @@ public abstract class StateBaseActivity extends BaseActivity {
 
     public void init() {
         bind = ButterKnife.bind(this, this);
+        setStatusBar(R.id.base_status);
+        basePositioning = findViewById(R.id.base_positioning);
+        baseWeather = findViewById(R.id.base_weather);
+        baseSearchLayout = findViewById(R.id.base_search_layout);
+        baseTitle = findViewById(R.id.base_title);
+        baseRight = findViewById(R.id.base_right);
+        baseTitleLayout = findViewById(R.id.base_title_layout);
+        baseSearch = findViewById(R.id.base_search);
+        baseBack = findViewById(R.id.base_back);
+
+        basePositioning.setOnClickListener(this);
+        baseSearch.setOnClickListener(this);
+        baseBack.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.base_positioning:
+                startActivity(new Intent(this, SelectCityActivity.class));
+                break;
+            case R.id.base_search:
+                startActivity(new Intent(this, SearchActivity.class));
+                break;
+            case R.id.base_back:
+                finish();
+                break;
+        }
     }
 
     /**
@@ -71,5 +116,45 @@ public abstract class StateBaseActivity extends BaseActivity {
         if (bind != null)
             bind.unbind();
         super.onDestroy();
+    }
+
+
+    /**
+     * 显示那种标题栏
+     * 0:搜索  1:标题
+     */
+    protected void showStateLayout(int state) {
+        baseSearchLayout.setVisibility(state == 0 ? View.VISIBLE : View.GONE);
+        baseTitleLayout.setVisibility(state == 1 ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 设置右边按钮事件
+     */
+    protected void setBaseRightListener(View.OnClickListener listener) {
+        baseRight.setOnClickListener(listener);
+    }
+
+    /**
+     * 设置右边按钮图片
+     */
+    protected void setBaseRightImage(int resImg) {
+        baseRight.setImageResource(resImg);
+    }
+
+    protected void setBaseTitle(@StringRes int resStr) {
+        baseTitle.setText(getString(resStr));
+    }
+
+    protected void setBaseTitle(@NonNull String resStr) {
+        baseTitle.setText(resStr);
+    }
+
+    protected void setBasePositioning(@NonNull String resStr) {
+        basePositioning.setText(resStr.equals("") ? "定位" : resStr);
+    }
+
+    public String getBasePositioning() {
+        return basePositioning.getText().toString().equals("定位") ? "" : basePositioning.getText().toString();
     }
 }

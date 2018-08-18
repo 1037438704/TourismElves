@@ -15,8 +15,9 @@
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +26,39 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NearScenicSpotActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SelectCityActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.MyScenicSpotActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ActivityCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.InterpretationListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.InterpretationList2Activity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".view.activity.MyAccountActivity" />
+        <activity android:name=".view.activity.CouponActivity" />
+        <activity android:name=".view.activity.FootMarkActivity" />
+        <activity android:name=".view.activity.SetupActivity" />
+        <activity android:name=".view.activity.CooperationActivity" />
+        <activity android:name=".view.activity.OrderActivity" />
+        <activity android:name=".view.activity.RegisterActivity" />
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.RechargeActivity"></activity>
     </application>
 
 </manifest>

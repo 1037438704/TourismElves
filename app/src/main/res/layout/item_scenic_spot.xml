@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp10">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp170"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/i_scenic_spot_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gray_c"
+            android:scaleType="centerCrop" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/bofang" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_scenic_spot_address"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp18"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dp5"
+            android:background="@drawable/transparent_green"
+            android:drawableLeft="@mipmap/dingwei_bai"
+            android:drawablePadding="@dimen/dp5"
+            android:gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:paddingLeft="@dimen/dp6"
+            android:paddingRight="@dimen/dp6"
+            android:text="中国 河北省"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp10" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp15"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_scenic_spot_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="望瀛楼"
+                android:textColor="#434F6D"
+                android:textSize="@dimen/sp18" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_scenic_spot_count"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp15"
+                android:background="@drawable/gradient_attractions_number"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:text="@string/scenic_spot_count"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp12"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@drawable/round_4585f5"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:text="@string/automatic_navigation"
+                android:textColor="#4A90E2"
+                android:textSize="@dimen/sp10" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_scenic_spot_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/dp10"
+                android:text="¥0"
+                android:textColor="#FF6A00"
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_scenic_spot_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp7"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
+            android:maxLines="2"
+            android:textColor="#606980"
+            android:textSize="@dimen/sp12" />
+
+    </LinearLayout>
+
+
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/i_scenic_spot_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginBottom="@dimen/dp6">-->
+
+    <!--<android.support.v7.widget.AppCompatTextView-->
+    <!--android:id="@+id/i_scenic_spot_elf_said"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="@dimen/dp31"-->
+    <!--android:text="@string/Scenic_area_in_the_province"-->
+    <!--android:textColor="#434949"-->
+    <!--android:textSize="@dimen/sp12" />-->
+
+    <!--<android.support.v7.widget.AppCompatImageView-->
+    <!--android:id="@+id/i_scenic_spot_more"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginRight="@dimen/dp25"-->
+    <!--android:padding="@dimen/dp5"-->
+    <!--android:src="@mipmap/scenic_more_image" />-->
+    <!--</RelativeLayout>-->
+
+
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/i_scenic_spot_elf_said_list"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:background="#d2d5d6" />
+</LinearLayout>

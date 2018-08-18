@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/base_status"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/gradient_interpretation" />
+
+    <LinearLayout
+        android:id="@+id/base_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:background="@drawable/gradient_interpretation"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/base_positioning"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@mipmap/home_select_city_image"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp15"
+            android:paddingRight="@dimen/dp10"
+            android:text="定位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:id="@+id/base_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp6"
+            android:layout_marginRight="@dimen/dp22"
+            android:layout_marginTop="@dimen/dp6"
+            android:layout_weight="1"
+            android:background="@drawable/round_transparent_white"
+            android:gravity="center_vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_weight="1"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="@dimen/dp6"
+                android:text="Search"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp14" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp18"
+                android:src="@mipmap/yuyin" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/base_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp6"
+            android:layout_marginRight="@dimen/dp18"
+            android:layout_marginTop="@dimen/dp6"
+            android:src="@mipmap/dalei" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/base_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:background="@drawable/gradient_interpretation"
+        android:visibility="gone">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/base_back"
+            android:layout_width="@dimen/dp44"
+            android:layout_height="@dimen/dp44"
+            android:padding="@dimen/dp13"
+            android:src="@mipmap/fanhui_bai" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/base_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:includeFontPadding="false"
+            android:text="标题"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp17" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/base_right"
+            android:layout_width="@dimen/dp44"
+            android:layout_height="@dimen/dp44"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp14"
+            android:src="@mipmap/open" />
+    </RelativeLayout>
+
+</LinearLayout>

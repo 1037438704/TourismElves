@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.utils.system.LocationUtil;
 
 
 public class App extends Application {
@@ -24,5 +25,7 @@ public class App extends Application {
         mContext = getApplicationContext();
         ToastUtil.init(this);
         LogUtil.init(true);
+
+        LocationUtil instance = LocationUtil.getInstance(getContext());
     }
 }

@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent">
+
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp38"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp8"
+        android:layout_marginTop="@dimen/dp8"
+        android:background="@color/white"
+        card:cardCornerRadius="@dimen/dp5"
+        card:cardElevation="@dimen/dp5">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@drawable/icon_like_select"
+                android:drawablePadding="@dimen/dp4"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp17"
+                android:paddingRight="@dimen/dp15"
+                android:text="收藏"
+                android:textColor="#606869"
+                android:textSize="@dimen/sp12" />
+
+            <View
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_c" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/youwanzhiyin"
+                android:drawablePadding="@dimen/dp2"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp4"
+                android:paddingRight="@dimen/dp4"
+                android:text="游玩指引"
+                android:textColor="#606869"
+                android:textSize="@dimen/sp12" />
+
+            <View
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_c" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:drawableLeft="@mipmap/souzhoubian"
+                android:drawablePadding="@dimen/dp4"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp9"
+                android:paddingRight="@dimen/dp9"
+                android:text="搜周边"
+                android:textColor="#606869"
+                android:textSize="@dimen/sp12" />
+
+            <View
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@color/gray_c" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/pinglun"
+                android:drawablePadding="@dimen/dp4"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp15"
+                android:paddingRight="@dimen/dp17"
+                android:text="评论"
+                android:textColor="#606869"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/dp38"
+        android:layout_height="@dimen/dp38"
+        android:layout_above="@+id/interpretation_list_bottom"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginLeft="@dimen/dp10"
+        android:background="@color/white"
+        card:cardCornerRadius="@dimen/dp5"
+        card:cardElevation="@dimen/dp5">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="@dimen/dp7"
+            android:src="@mipmap/zuobiao" />
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/dp38"
+        android:layout_height="@dimen/dp77"
+        android:layout_above="@+id/interpretation_list_bottom"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp30"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@color/white"
+        card:cardCornerRadius="@dimen/dp5"
+        card:cardElevation="@dimen/dp5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp9"
+                android:src="@mipmap/fangda" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginLeft="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp4"
+                android:background="@color/gray_c" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:padding="@dimen/dp9"
+                android:src="@mipmap/suoxiao" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/interpretation_list_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/round_top_10_white"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/bullhorn" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/interpretation_list_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_weight="1"
+            android:includeFontPadding="false"
+            android:text="故宫角楼"
+            android:textColor="#434F6D"
+            android:textSize="@dimen/sp16"
+            android:textStyle="bold" />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/interpretation_list_comments"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp30"
+            android:layout_marginRight="@dimen/dp10"
+            android:src="@mipmap/jiangjie_guan" />
+    </LinearLayout>
+</RelativeLayout>

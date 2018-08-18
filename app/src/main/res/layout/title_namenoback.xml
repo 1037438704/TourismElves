@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+
+        android:layout_below="@+id/toolbar_main"
+        android:id="@+id/salell1"
+        android:layout_alignParentTop="true"
+        android:background="@mipmap/bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="@dimen/dp25"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"/>
+        <TextView
+
+            android:id="@+id/title_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dp10"
+            android:textSize="@dimen/sp16"
+            android:textColor="@color/white"
+            android:text="我的优惠券"/>
+        <TextView
+            android:layout_width="@dimen/dp25"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp10"/>
+    </LinearLayout>
+</LinearLayout>

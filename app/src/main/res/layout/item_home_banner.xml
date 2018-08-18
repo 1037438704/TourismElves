@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.tourismelves.view.widget.viewpager.banner.Banner
+        android:id="@+id/home_banner"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp180"
+        android:background="@color/gray_c" />
+
+    <LinearLayout
+        android:id="@+id/home_class"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/home_banner"
+        android:layout_marginTop="@dimen/dp_20"
+        android:background="@drawable/round_top_10_white"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_near"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp2"
+            android:drawableTop="@mipmap/fujin"
+            android:gravity="center_horizontal"
+            android:text="附近"
+            android:textColor="#343734"
+            android:textSize="@dimen/sp6" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_activation_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp2"
+            android:drawableTop="@mipmap/jihuoma"
+            android:gravity="center_horizontal"
+            android:text="激活码"
+            android:textColor="#343734"
+            android:textSize="@dimen/sp6" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_already_bought"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp2"
+            android:drawableTop="@mipmap/yigou"
+            android:gravity="center_horizontal"
+            android:text="已购"
+            android:textColor="#343734"
+            android:textSize="@dimen/sp6" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_footprint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dp2"
+            android:drawableTop="@mipmap/zuji"
+            android:gravity="center_horizontal"
+            android:text="足迹"
+            android:textColor="#343734"
+            android:textSize="@dimen/sp6" />
+    </LinearLayout>
+
+</RelativeLayout>

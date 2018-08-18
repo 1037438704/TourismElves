@@ -3,19 +3,20 @@ package com.tourismelves.utils.glide;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
+import android.support.v7.widget.AppCompatImageView;
 import android.widget.ImageView;
 
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.tourismelves.R;
+import com.tourismelves.utils.system.ResolutionUtil;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ShowImageUtils {
-    private static final int errorimg = R.mipmap.ic_launcher_round;
+    private static final int errorimg = R.mipmap.ic_launcher;
 
     /**
      * 显示图片Imageview
@@ -73,18 +74,16 @@ public class ShowImageUtils {
         }
     }
 
-    /**
-     * 圆角图片
-     */
-    //加载网络图片
     @SuppressLint("NewApi")
-    public static void showImageViewToRoundedCorners(Context context, String url, ImageView imgeview, int dp) {
+    public static void showTopRounded(Context context, String url, AppCompatImageView imgeview, int px) {
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
-                DrawableTypeRequest<String> builder = Glide.with(context).load(url);
-                builder.transform(new CenterCrop(context), new GlideRoundImage(context, Resources.getSystem().getDisplayMetrics().density * dp))
+                Glide.with(context)
+                        .load(url)
                         .error(errorimg)
-                        .placeholder(errorimg)
+                        .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context,
+                                ResolutionUtil.getInstance(context).px2dp2pxWidth(px), 0,
+                                RoundedCornersTransformation.CornerType.TOP))
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .into(imgeview);
             }

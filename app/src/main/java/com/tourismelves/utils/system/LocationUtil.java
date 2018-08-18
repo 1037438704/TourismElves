@@ -3,6 +3,8 @@ package com.tourismelves.utils.system;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import com.tourismelves.utils.log.LogUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.tourismelves.app.constant.BaseConstants.EARTH_RADIUS;
 
@@ -143,6 +146,23 @@ public class LocationUtil {
             setLocation(location);
         }
     };
+
+    /**
+     * 根据经纬度获取地址信息
+     */
+    public List<Address> getAddress(Context context, Location location) {
+        List<Address> result = null;
+        try {
+            if (location != null) {
+                Geocoder gc = new Geocoder(context, Locale.getDefault());
+                result = gc.getFromLocation(location.getLatitude(),
+                        location.getLongitude(), 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 
     /**

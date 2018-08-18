@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/select_city_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/select_city_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/select_city"
+            android:textColor="#ff333333"
+            android:textSize="@dimen/sp20" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/select_city_title">
+
+        <com.tourismelves.view.widget.SideBar
+            android:id="@+id/select_city_sideBar"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp400"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/select_city_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/select_city_sideBar" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/select_city_dialog"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_10_59000000"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </RelativeLayout>
+</RelativeLayout>

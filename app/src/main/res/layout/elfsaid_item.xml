@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp120"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/im_elfsaid"
+            android:layout_width="@dimen/dp105"
+            android:layout_height="@dimen/dp105"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp10"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="天坛"
+                    android:textColor="@color/jls_name"
+                    android:textSize="@dimen/sp16" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp15"
+                    android:layout_height="@dimen/dp13"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/icon_16px_sc_1" />
+
+                <TextView
+                    android:id="@+id/elfsaid_collect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="124"
+                    android:textColor="@color/jls_jl"
+                    android:textSize="@dimen/sp12" />
+
+
+            </LinearLayout>
+
+
+            <TextView
+                android:ellipsize="end"
+                android:lines="2"
+                android:id="@+id/elfsaid_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp10"
+                android:text="天坛天坛天坛天坛天坛天坛天坛天坛天坛天坛天坛"
+                android:textColor="@color/jls_content"
+                android:textSize="@dimen/sp14" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp20"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="@dimen/dp8"
+                    android:layout_height="@dimen/dp10"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/spritesay" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:text="北京朝阳区"
+                    android:textColor="@color/jls_jl"
+                    android:textSize="@dimen/sp12" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp12"
+                    android:layout_height="@dimen/dp12"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/sprite" />
+
+                <TextView
+                    android:id="@+id/elfsaid_watch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:text="999 浏览"
+                    android:textColor="@color/jls_jl"
+                    android:textSize="@dimen/sp12" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+</LinearLayout>

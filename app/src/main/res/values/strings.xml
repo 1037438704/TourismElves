@@ -7,7 +7,7 @@
     <string name="no_data">没有内容</string>
     <string name="near_the_scenic_spot">附近景区</string>
     <string name="my_the_scenic_spot">我的景区</string>
-    <string name="activation_code">激活码</string>
+    <string name="activation_code">我的激活码</string>
     <string name="hot_scenic_spot">热门景区</string>
     <string name="distance">距离您%skm</string>
     <string name="scenic_spot_count">%s个景点</string>
@@ -16,4 +16,9 @@
     <string name="scenic_spot">景区</string>
     <string name="elf_said">精灵说</string>
     <string name="my">我的</string>
+    <string name="Destination_attractions">目的地/景点</string>
+    <string name="Destination_attractions_strategies_elves">目的地/景点/攻略/精灵说</string>
+    <string name="provinces">省份</string>
+    <string name="Scenic_area_in_the_province">省内景区</string>
+    <string name="select_city">选择城市</string>
 </resources>

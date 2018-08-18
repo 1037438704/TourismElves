@@ -11,7 +11,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.DisplayMetrics;
@@ -20,9 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.tourismelves.R;
 import com.tourismelves.utils.log.LogUtil;
-import com.tourismelves.utils.system.flyn.Eyes;
 
 import static com.tourismelves.utils.system.StatusBarUtil.getStatusHeight;
 
@@ -41,7 +38,8 @@ public abstract class BaseActivity extends AbstractActivity implements IBaseActi
         init();
 
         setContentLayout();//由具体的activity实现，设置内容布局ID
-        Eyes.setStatusBarColor(this, ContextCompat.getColor(this, R.color.color_state));
+        translucentStatusBar(true);
+
         initControls();//由具体的activity实现，做视图相关的初始化
         obtainData();//由具体的activity实现，做数据的初始化
         initEvent();//由具体的activity实现，做事件监听的初始化

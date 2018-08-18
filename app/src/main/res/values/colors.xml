@@ -7,9 +7,26 @@
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="gray_c">#cccccc</color>
+    <color name="gray_c">#F2F4F5</color>
     <color name="color_state">#ffcf41</color>
     <color name="color_4585f5">#FF4585F5</color>
 
 
+    <color name="nc_border">#f4f4f4</color>
+    <color name="jls_name">#434F6D</color>
+    <color name="jls_content">#606980</color>
+    <color name="jls_jl">#777D84</color>
+    <!-- 米绸色 -->
+
+
+    <color name="seashell">#FFF5EE</color>
+    <!-- 印第安红 -->
+
+
+    <color name="mediumvioletred">#C71585</color>
+
+    <!-- 火砖色 -->
+
+
+    <color name="powderblue">#B0E0E6</color>
 </resources>

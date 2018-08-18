@@ -38,4 +38,18 @@
         <item name="android:windowExitAnimation">@anim/top_to_bottom</item>
         <!-- 指定消失时的动画xml -->
     </style>
+
+    <style name="CustomBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+        <!--边框 -->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否浮现在Activity之上 -->
+        <item name="android:windowIsFloating">true</item>
+        <!--背景透明 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--背景变暗-->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!--进出的显示动画 -->
+        <item name="android:windowAnimationStyle">@style/normalDialogAnim</item>
+    </style>
+
 </resources>

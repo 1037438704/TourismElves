@@ -2,112 +2,268 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp10"
-        android:background="#999999" />
+        android:layout_height="@dimen/dp1"
+        android:layout_marginBottom="@dimen/dp15"
+        android:background="@color/gray_c" />
 
     <RelativeLayout
-        android:id="@+id/i_home_title"
+        android:id="@+id/home_look_all_rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone">
-
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="@dimen/dp30"
-            android:layout_height="@dimen/dp30"
-            android:layout_marginLeft="@dimen/dp10"
-            android:src="@drawable/amap_through" />
+        android:layout_marginBottom="@dimen/dp10">
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/hot_scenic_spot"
-            android:textColor="@color/black"
+            android:layout_marginBottom="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp18"
+            android:layout_marginTop="@dimen/dp2"
+            android:text="热门推荐"
+            android:textColor="#434F6D"
+            android:textSize="@dimen/sp18" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_look_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp15"
+            android:drawablePadding="@dimen/dp10"
+            android:drawableRight="@mipmap/qianjin_hei"
+            android:text="查看全部"
+            android:textColor="#777D84"
             android:textSize="@dimen/sp16" />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/i_home_details"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp200"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp10"
-        android:layout_marginRight="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp15">
+        android:layout_marginRight="@dimen/dp10">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/i_home_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
+        <RelativeLayout
+            android:id="@+id/home_attractions_img_rl"
+            android:layout_width="@dimen/dp105"
+            android:layout_height="@dimen/dp105"
+            android:layout_marginRight="@dimen/dp10">
 
-        <android.support.v7.widget.AppCompatImageView
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/home_attractions_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_c" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp18"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp4"
+                android:background="@drawable/transparent_black"
+                android:drawableLeft="@mipmap/wifi"
+                android:drawablePadding="@dimen/dp3"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp7"
+                android:paddingRight="@dimen/dp5"
+                android:text="听景点"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_attractions_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:src="@mipmap/ic_launcher_round" />
+            android:layout_toRightOf="@id/home_attractions_img_rl"
+            android:text="天坛"
+            android:textColor="#ff434f6d"
+            android:textSize="@dimen/sp16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_attractions_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_attractions_name"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_toRightOf="@id/home_attractions_img_rl"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="天坛是明、清两朝皇帝祭天、求雨和祈祷丰年的专用祭坛。 "
+            android:textColor="#ff606980"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_attractions_img_rl"
+            android:layout_toRightOf="@id/home_attractions_img_rl"
+            android:gravity="center_vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/home_attractions_count"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp20"
+                android:background="@drawable/gradient_attractions_number"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:text="@string/scenic_spot_count"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp12" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp12"
+                android:layout_marginRight="@dimen/dp10"
+                android:background="@drawable/round_4585f5"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:text="@string/automatic_navigation"
+                android:textColor="#4A90E2"
+                android:textSize="@dimen/sp10" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/home_attractions_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/dp10"
+                android:text="¥0"
+                android:textColor="#FF6A00"
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
+        </LinearLayout>
     </RelativeLayout>
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/i_home_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp10"
-        android:textColor="@color/black"
-        android:textSize="@dimen/sp16" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dp20"
+        android:layout_marginBottom="@dimen/dp15"
         android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp2"
         android:layout_marginRight="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp5"
-        android:gravity="center_vertical">
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_home_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="中国·河北省"
-            android:textSize="@dimen/sp12" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_home_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/scenic_spot_count"
-            android:textSize="@dimen/sp12" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_home_auto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginRight="@dimen/dp10"
-            android:background="@drawable/round_4585f5"
-            android:padding="@dimen/dp2"
-            android:text="@string/automatic_navigation"
-            android:textColor="@color/color_4585f5"
-            android:textSize="@dimen/sp12" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_home_distance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/distance"
-            android:textSize="@dimen/sp12" />
+        android:background="@mipmap/shouye_item_da"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15"
+        android:paddingTop="@dimen/dp25">
 
         <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/i_home_shop"
-            android:layout_width="@dimen/dp20"
-            android:layout_height="@dimen/dp20"
-            android:layout_marginLeft="@dimen/dp10"
-            android:src="@mipmap/ic_launcher" />
-    </LinearLayout>
+            android:id="@+id/home_attractions2_img"
+            android:layout_width="@dimen/dp45"
+            android:layout_height="@dimen/dp45"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@color/gray_c" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_attractions2_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/home_attractions2_img"
+            android:singleLine="true"
+            android:text="天坛"
+            android:textColor="#ff434f6d"
+            android:textSize="@dimen/sp16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_attractions2_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/home_attractions2_img"
+            android:layout_marginRight="@dimen/dp4"
+            android:layout_marginTop="@dimen/dp8"
+            android:layout_toRightOf="@id/home_attractions2_img"
+            android:drawableRight="@mipmap/qianjin_hei"
+            android:singleLine="true"
+            android:text="天坛是明、清两朝皇帝祭天、求雨和祈祷丰年的专用祭坛。 "
+            android:textColor="#ff606980"
+            android:textSize="@dimen/sp14" />
+
+
+        <RelativeLayout
+            android:id="@+id/home_attractions3_img_rl"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp180"
+            android:layout_below="@id/home_attractions2_img"
+            android:layout_marginTop="@dimen/dp15">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/home_attractions3_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray_c"
+                android:scaleType="centerCrop" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/home_attractions3_address"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp18"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dp5"
+                android:background="@drawable/transparent_green"
+                android:drawableLeft="@mipmap/dingwei_bai"
+                android:drawablePadding="@dimen/dp5"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/dp6"
+                android:paddingRight="@dimen/dp6"
+                android:text="中国 河北省"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/home_attractions3_name_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_attractions3_img_rl"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center_vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/home_attractions3_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="故宫角楼"
+                android:textColor="#ff434f6d"
+                android:textSize="@dimen/sp16" />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp20"
+                android:layout_marginLeft="@dimen/dp10"
+                android:background="@drawable/round_gradient_interpretation"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingLeft="@dimen/dp8"
+                android:paddingRight="@dimen/dp8"
+                android:text="专业讲解"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp12" />
+        </LinearLayout>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/home_attractions3_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/home_attractions3_name_ll"
+            android:layout_marginBottom="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp6"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="一谈到角楼，人们很自然地会想到座落在北京紫禁城城墙四角上的结构奇异、金碧辉懊的… "
+            android:textColor="#ff606980"
+            android:textSize="@dimen/sp14" />
+    </RelativeLayout>
+
+
 </LinearLayout>

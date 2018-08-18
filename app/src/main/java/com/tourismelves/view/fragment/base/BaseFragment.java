@@ -2,9 +2,11 @@ package com.tourismelves.view.fragment.base;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +23,8 @@ import com.tourismelves.view.widget.loadlayout.LoadLayout;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.tourismelves.utils.system.StatusBarUtil.getStatusHeight;
 
 public abstract class BaseFragment extends Fragment implements IBaseFragment {
 
@@ -66,6 +70,24 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
             initView(getView());
             obtainData();
             initEvent();
+        }
+    }
+
+    /**
+     * 将一个布局延长状态栏的高度
+     */
+    protected void setStatusBar(@IdRes int id) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final View linear_bar = getView().findViewById(id);
+            final int statusHeight = getStatusHeight(getContext());
+            linear_bar.post(new Runnable() {
+                @Override
+                public void run() {
+                    ViewGroup.LayoutParams params = linear_bar.getLayoutParams();
+                    params.height = statusHeight;
+                    linear_bar.setLayoutParams(params);
+                }
+            });
         }
     }
 
