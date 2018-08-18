@@ -43,9 +43,9 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.MyView
     @Override
     public void onBindViewHolder(RechargeAdapter.MyViewHolder holder, final int position) {
 
-        holder.tv_money.setText(listBeen.get(position).getName());
+        holder.tv_money.setText(listBeen.get(position).getName()+"+再送"+listBeen.get(position).getGive()+"金币");
         holder.tv_moneytwo.setText("￥"+listBeen.get(position).getGold());
-        holder.tv_moneyzs.setText("再送"+listBeen.get(position).getGive()+"金币");
+//        holder.tv_moneyzs.setText();
 
 
     }
@@ -59,7 +59,7 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.MyView
             super(itemView);
             tv_money = itemView.findViewById(R.id.recharge_money);
             tv_moneytwo = itemView.findViewById(R.id.recharge_moneytwo);
-            tv_moneyzs = itemView.findViewById(R.id.recharge_zs);
+//            tv_moneyzs = itemView.findViewById(R.id.recharge_zs);
         }
     }
 }

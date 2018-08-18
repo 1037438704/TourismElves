@@ -36,8 +36,8 @@ public class LoginActivity extends StateBaseActivity {
         bt_login = (Button) findViewById(R.id.bt_login_login);
         ed_username = (EditText) findViewById(R.id.login_username);
         ed_pass = (EditText) findViewById(R.id.login_pass);
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("登录");
+//        tv_title = findViewById(R.id.title_name);
+//        tv_title.setText("登录");
     }
     @Override
     protected void initControls() {

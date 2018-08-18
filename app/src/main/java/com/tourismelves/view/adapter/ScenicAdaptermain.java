@@ -59,6 +59,7 @@ public class ScenicAdaptermain extends RecyclerView.Adapter<ScenicAdaptermain.My
         holder.userAvatar.setImageURI(uri);
         holder.userAvatar.getLayoutParams().height = (position % 2)*100 + 400;
         holder.userName.setText(listBeen.get(position).getName());
+        holder.tv_content.setText(listBeen.get(position).getDescription());
 
 //        holder.tv_name.setText(listBeen.get(position).getName());
 //        Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getImage())
@@ -72,10 +73,12 @@ public class ScenicAdaptermain extends RecyclerView.Adapter<ScenicAdaptermain.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
          SimpleDraweeView userAvatar;
          TextView userName;
+         TextView tv_content;
         public MyViewHolder(final View itemView) {
             super(itemView);
             userAvatar =  itemView.findViewById(R.id.user_avatar);
             userName =  itemView.findViewById(R.id.user_name);
+            tv_content = itemView.findViewById(R.id.scenic_content);
         }
     }
 }

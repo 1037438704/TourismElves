@@ -1,7 +1,9 @@
 package com.tourismelves.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -53,6 +55,9 @@ public class MyFragment extends BaseFragment {
         mLinearAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), MyAccountActivity.class);
                 startActivity(intent);
             }
@@ -62,6 +67,9 @@ public class MyFragment extends BaseFragment {
         mLinearCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), CouponActivity.class);
                 startActivity(intent);
             }
@@ -71,6 +79,9 @@ public class MyFragment extends BaseFragment {
         mLinearTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), FootMarkActivity.class);
                 startActivity(intent);
             }
@@ -80,6 +91,9 @@ public class MyFragment extends BaseFragment {
         mLinearSetup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), SetupActivity.class);
                 startActivity(intent);
             }
@@ -89,6 +103,9 @@ public class MyFragment extends BaseFragment {
         mLinearCooper.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), CooperationActivity.class);
                 startActivity(intent);
             }
@@ -98,6 +115,9 @@ public class MyFragment extends BaseFragment {
         tv_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), OrderActivity.class);
                 startActivity(intent);
             }
@@ -119,6 +139,9 @@ public class MyFragment extends BaseFragment {
         tv_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), RechargeActivity.class);
                 startActivity(intent);
             }
@@ -129,6 +152,10 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void obtainData() {
+//        if (!isLogin(getActivity(),true)){
+//            tv_name.setText("请登录");
+//            return;
+//        }
         UserInfo();
     }
 
@@ -149,6 +176,17 @@ public class MyFragment extends BaseFragment {
                         Gson gson = new Gson();
                         UserBean userBean;
                         userBean = gson.fromJson(response,UserBean.class);
+                        if (!userBean.getDataList().isEmpty()){
+                            tv_name.setText("请登录");
+                            tv_name.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                            return;
+                        }
                         tv_name.setText(userBean.getDataList().get(0).getNickName());
 
                     }
@@ -160,4 +198,25 @@ public class MyFragment extends BaseFragment {
                 }
         );
     }
+
+    /**
+     * 检查用户是否登录
+     * @param context
+     * @param isNeedToLoginView true 表示需要跳转登录界面   false 只检查用户是否登录
+     * @return
+     */
+    public static boolean isLogin(Context context, boolean isNeedToLoginView){
+        String token =  SPUtils.getInstance(context).getString("putInt");  //取出这个int值
+       // Log.e("个人中心---------------------",token);
+        if (!TextUtils.isEmpty(token)){
+            return true;
+        }
+        if (isNeedToLoginView) {
+            Intent intent = new Intent(context,LoginActivity.class);
+            context.startActivity(intent);
+            return false;
+        }
+        return false;
+    }
+
 }
