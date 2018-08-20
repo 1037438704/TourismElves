@@ -32,6 +32,7 @@ public class CommentsActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
+        showStateLayout(1);
         showStateRightView(0);
         setBaseTitle("评论");
         setBaseRightTv("发布");

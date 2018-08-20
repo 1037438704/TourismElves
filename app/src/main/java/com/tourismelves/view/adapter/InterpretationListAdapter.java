@@ -1,12 +1,14 @@
 package com.tourismelves.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.tourismelves.R;
+import com.tourismelves.view.activity.InterpretationDetailsActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
 
@@ -22,6 +24,13 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<String> {
     @Override
     protected void bindDataForView(ViewHolder holder, String s, int position) {
 
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), InterpretationDetailsActivity.class));
+            }
+        });
     }
 
     @Override

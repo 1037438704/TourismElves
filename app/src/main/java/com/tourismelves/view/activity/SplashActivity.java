@@ -18,7 +18,6 @@ public class SplashActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
-        setStatusUi();
     }
 
     @Override

@@ -18,7 +18,6 @@ import android.view.WindowManager;
 import com.tourismelves.R;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.PreferenceUtil;
-import com.tourismelves.utils.system.ResolutionUtil;
 
 import static com.tourismelves.app.constant.BaseConstants.APP_SHARE_USER;
 
@@ -43,11 +42,11 @@ public abstract class BaseDialog extends DialogFragment {
     }
 
     protected int getDialogGravity() {
-        return Gravity.BOTTOM;
+        return Gravity.CENTER;
     }
 
     protected int getDialogHeight() {
-        return (int) (ResolutionUtil.getInstance(getContext()).getHeight() * 0.5f);
+        return ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     protected int getDialogStyle() {
@@ -55,7 +54,7 @@ public abstract class BaseDialog extends DialogFragment {
     }
 
     protected int getDialogWight() {
-        return (int) (ResolutionUtil.getInstance(getContext()).getWidth());
+        return ViewGroup.LayoutParams.WRAP_CONTENT;
     }
 
     public abstract int getLayoutId();

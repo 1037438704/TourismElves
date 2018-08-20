@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.tourismelves.R;
 import com.tourismelves.model.res.HomeRes;
 import com.tourismelves.utils.glide.ShowImageUtils;
+import com.tourismelves.utils.system.ResolutionUtil;
 import com.tourismelves.view.activity.InterpretationListActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
@@ -26,10 +27,13 @@ import static com.tourismelves.app.constant.UrlConstants.port;
 
 public class ScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
     private String provinces;
+    private int h, w;
 
     public ScenicSpotAdapter(@NonNull Context context, @NonNull List<HomeRes> mDataList, String provinces) {
         super(context, mDataList);
         this.provinces = provinces;
+        h = (int) getContext().getResources().getDimension(R.dimen.dp170);
+        w = (int) (ResolutionUtil.getInstance(getContext()).getWidth() - getContext().getResources().getDimension(R.dimen.dp20));
     }
 
     public void setProvinces(String provinces) {
@@ -39,52 +43,19 @@ public class ScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
     @Override
     protected void bindDataForView(ViewHolder holder, HomeRes homeRes, int position) {
         AppCompatImageView img = holder.getView(R.id.i_scenic_spot_img);
-//        AppCompatImageView more = holder.getView(R.id.i_scenic_spot_more);
-//        AppCompatTextView elfSaid = holder.getView(R.id.i_scenic_spot_elf_said);
         AppCompatTextView name = holder.getView(R.id.i_scenic_spot_name);
         AppCompatTextView address = holder.getView(R.id.i_scenic_spot_address);
         AppCompatTextView count = holder.getView(R.id.i_scenic_spot_count);
-        AppCompatTextView money = holder.getView(R.id.i_scenic_spot_money);
         AppCompatTextView content = holder.getView(R.id.i_scenic_spot_content);
-//        RecyclerView elfSaidList = holder.getView(R.id.i_scenic_spot_elf_said_list);
-//        RelativeLayout elfSaidLayout = holder.getView(R.id.i_scenic_spot_layout);
+        AppCompatTextView autoPlay = holder.getView(R.id.i_scenic_spot_auto_play);
 
-//        if (position == 0) {
-//            hot.setVisibility(View.VISIBLE);
-//            elfSaid.setVisibility(View.VISIBLE);
-//
-//            hot.setText(provinces.equals("") ? homeRes.getArea().getParentArea().getName() : provinces);
-//        } else {
-//            hot.setVisibility(View.INVISIBLE);
-//            elfSaid.setVisibility(View.GONE);
-//        }
-
-
-        ShowImageUtils.showTopRounded(getContext(), port + homeRes.getImage(), img, 0);
+        autoPlay.setVisibility(homeRes.getIsAutoplay() == 1 ? View.VISIBLE : View.GONE);
+        ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), w, h, img, 0);
         name.setText(homeRes.getName());
         String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName();
-        address.setText(sAddress+" "+String.format(getContext().getString(R.string.distance), homeRes.getDistance() + ""));
+        address.setText(sAddress + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + ""));
         count.setText(String.format(getContext().getString(R.string.scenic_spot_count), homeRes.getSceneryCount() + ""));
         content.setText(homeRes.getDescription());
-//        List<HomeRes.ArticleListBean> articleList = homeRes.getArticleList();
-//        if (articleList.size() == 0) {
-//            elfSaidLayout.setVisibility(View.GONE);
-//            elfSaidList.setVisibility(View.GONE);
-//        } else {
-//            elfSaidLayout.setVisibility(View.VISIBLE);
-//            elfSaidList.setVisibility(View.VISIBLE);
-//            elfSaidList.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-//            Home2Adapter home2Adapter = new Home2Adapter(getContext(), articleList);
-//            elfSaidList.setAdapter(home2Adapter);
-//        }
-
-
-//        more.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //TODO 更多点击事件
-//            }
-//        });
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

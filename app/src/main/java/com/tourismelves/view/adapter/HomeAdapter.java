@@ -3,6 +3,7 @@ package com.tourismelves.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
@@ -18,10 +19,11 @@ import com.tourismelves.model.res.HomeRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.utils.log.LogUtil;
-import com.tourismelves.view.activity.ActivityCodeActivity;
 import com.tourismelves.view.activity.NearScenicSpotActivity;
+import com.tourismelves.view.activity.SettlementActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
+import com.tourismelves.view.dialog.ActivityCodeDialog;
 import com.tourismelves.view.widget.viewpager.banner.Banner;
 import com.tourismelves.view.widget.viewpager.banner.GlideImageLoader;
 import com.tourismelves.view.widget.viewpager.banner.OnBannerListener;
@@ -95,7 +97,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             AppCompatTextView home_attractions2_name = holder.getView(R.id.home_attractions2_name);
             AppCompatTextView home_attractions2_content = holder.getView(R.id.home_attractions2_content);
 
-            if (homeRes.getArticleList() != null&&homeRes.getArticleList().size()!=0) {
+            if (homeRes.getArticleList() != null && homeRes.getArticleList().size() != 0) {
                 home_attractions2_content.setVisibility(View.VISIBLE);
                 home_attractions2_name.setVisibility(View.VISIBLE);
                 ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(),
@@ -147,7 +149,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 getContext().startActivity(new Intent(getContext(), NearScenicSpotActivity.class));
                 break;
             case R.id.home_activation_code://激活码
-                getContext().startActivity(new Intent(getContext(), ActivityCodeActivity.class));
+                new ActivityCodeDialog().show(((AppCompatActivity) getContext()).getSupportFragmentManager());
                 break;
             case R.id.home_already_bought://已购
                 LogUtil.i("已购");
@@ -156,11 +158,10 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 LogUtil.i("足迹");
                 break;
             case R.id.home_look_all://查看全部
-                LogUtil.i("景区页面");
                 EventBusUtil.postEvent(new TabSelectBus(1));
                 break;
             case R.id.home_attractions_money://支付
-                LogUtil.i("支付");
+                getContext().startActivity(new Intent(getContext(), SettlementActivity.class));
                 break;
             case R.id.home_scenic_spot_details://景区详情
                 LogUtil.i("景区详情");

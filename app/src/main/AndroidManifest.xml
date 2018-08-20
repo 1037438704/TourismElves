@@ -81,6 +81,11 @@
         <activity
             android:name=".view.activity.CommentsActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.SettlementActivity"
+            android:screenOrientation="portrait"  />
+        <activity android:name=".view.activity.InterpretationDetailsActivity"
+            android:screenOrientation="portrait"   />
+        <activity android:name=".view.activity.VisitGuidanceActivity" />
     </application>
 
 </manifest>

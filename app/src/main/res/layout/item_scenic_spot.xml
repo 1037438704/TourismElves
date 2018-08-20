@@ -38,7 +38,6 @@
             android:includeFontPadding="false"
             android:paddingLeft="@dimen/dp6"
             android:paddingRight="@dimen/dp6"
-            android:text="中国 河北省"
             android:textColor="@color/white"
             android:textSize="@dimen/sp10" />
     </RelativeLayout>
@@ -50,17 +49,16 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/dp10">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp15"
-            android:gravity="center_vertical">
+            android:layout_marginTop="@dimen/dp15">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/i_scenic_spot_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:includeFontPadding="false"
+                android:maxWidth="@dimen/dp120"
                 android:text="望瀛楼"
                 android:textColor="#434F6D"
                 android:textSize="@dimen/sp18" />
@@ -70,9 +68,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp15"
+                android:layout_toRightOf="@id/i_scenic_spot_name"
                 android:background="@drawable/gradient_attractions_number"
                 android:gravity="center"
-                android:includeFontPadding="false"
                 android:paddingLeft="@dimen/dp8"
                 android:paddingRight="@dimen/dp8"
                 android:text="@string/scenic_spot_count"
@@ -80,10 +78,12 @@
                 android:textSize="@dimen/sp12" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_scenic_spot_auto_play"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dp20"
                 android:layout_marginLeft="@dimen/dp12"
                 android:layout_marginRight="@dimen/dp10"
+                android:layout_toRightOf="@id/i_scenic_spot_count"
                 android:background="@drawable/round_4585f5"
                 android:gravity="center"
                 android:paddingLeft="@dimen/dp8"
@@ -94,16 +94,16 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/i_scenic_spot_money"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="@dimen/dp10"
-                android:text="¥0"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dp10"
+                android:maxWidth="@dimen/dp60"
+                android:text="¥0.0"
                 android:textColor="#FF6A00"
                 android:textSize="@dimen/sp18"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/i_scenic_spot_content"

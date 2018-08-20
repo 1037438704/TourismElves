@@ -169,6 +169,7 @@ public class InterpretationListActivity extends StateBaseActivity {
             case R.id.interpretation_list_like_btn:
                 break;
             case R.id.interpretation_list_visit_guidance_btn:
+                startActivity(new Intent(this, VisitGuidanceActivity.class));
                 break;
             case R.id.interpretation_list_search_around_comments_btn:
                 break;

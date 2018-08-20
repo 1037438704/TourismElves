@@ -33,6 +33,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     private AppCompatImageView baseWeather;
     private LinearLayout baseSearchLayout;
     private AppCompatTextView baseTitle;
+    private View baseStatus;
     private AppCompatImageView baseRight;
     private AppCompatTextView baseRightTv;
     private LinearLayout baseSearch;
@@ -65,6 +66,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         setStatusBar(R.id.base_status);
         basePositioning = findViewById(R.id.base_positioning);
         baseWeather = findViewById(R.id.base_weather);
+        baseStatus = findViewById(R.id.base_status);
         baseSearchLayout = findViewById(R.id.base_search_layout);
         baseTitle = findViewById(R.id.base_title);
         baseRight = findViewById(R.id.base_right);
@@ -128,6 +130,8 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected void showStateLayout(int state) {
         baseSearchLayout.setVisibility(state == 0 ? View.VISIBLE : View.GONE);
         baseTitleLayout.setVisibility(state == 1 ? View.VISIBLE : View.GONE);
+
+        baseStatus.setVisibility((state == 1 || state == 0) ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -145,6 +149,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected void setBaseRightListener(View.OnClickListener listener) {
         baseRight.setOnClickListener(listener);
     }
+
     protected void setBaseRightTvListener(View.OnClickListener listener) {
         baseRightTv.setOnClickListener(listener);
     }
