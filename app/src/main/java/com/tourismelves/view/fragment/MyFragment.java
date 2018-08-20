@@ -166,8 +166,9 @@ public class MyFragment extends BaseFragment {
 
     //获取个人信息
     private void UserInfo(){
-        String ww = SPUtils.getInstance(getActivity()).getString("putInt");  //取出这个int值
-        OkHttpUtils.get(String.format(userinfo, ww+""),
+        String userid = SPUtils.getInstance(getActivity()).getString("putInt");  //取出这个int值
+        Log.e("用户id",userid);
+        OkHttpUtils.get(String.format(userinfo, userid+""),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(String response) {

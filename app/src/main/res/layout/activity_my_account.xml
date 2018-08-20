@@ -86,14 +86,15 @@
 
         <TextView
 
-            android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:id="@+id/account_xb"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
+            android:layout_weight="0.00"
+            android:gravity="center"
             android:text="男"
-            android:textSize="@dimen/sp13"
-            android:layout_weight="0.00" />
+            android:textSize="@dimen/sp13" />
 
         <ImageView
             android:layout_marginLeft="@dimen/dp5"
@@ -120,8 +121,9 @@
 
         <TextView
 
+            android:id="@+id/account_name"
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
@@ -154,12 +156,13 @@
 
         <TextView
 
+
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
-            android:text="男"
+            android:text="*******"
             android:textSize="@dimen/sp13"
             android:layout_weight="0.00" />
 
@@ -188,12 +191,13 @@
 
         <TextView
 
+            android:id="@+id/account_phone"
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
-            android:text="男"
+            android:text=""
             android:textSize="@dimen/sp13"
             android:layout_weight="0.00" />
 

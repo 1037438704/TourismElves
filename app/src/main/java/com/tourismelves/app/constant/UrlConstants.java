@@ -33,5 +33,6 @@ public interface UrlConstants {
     String searcharticle = port+"lyjl/web/searchOrganizationOrArticle.do?key=天津&type=0&sortType=0";
     //获取精灵说
     String elfsaidinfo = port+"lyjl/web/newsList.do?page.showCount=%s&page.currentPage=%s";
+    //
 
 }

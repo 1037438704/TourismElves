@@ -3,6 +3,9 @@ package com.tourismelves.view.activity;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tourismelves.R;
@@ -36,12 +39,20 @@ public class FootMarkActivity extends StateBaseActivity {
         tv_title.setText("足迹");
         fragments.add(new ScenicFragment());
         fragments.add(new WaitPayFragment());
-        list.add("景区");
-        list.add("精灵说");
+//        list.add("景区");
+//        list.add("精灵说");
+
         SubscribeAdapter subscribeAdapter = new SubscribeAdapter(getSupportFragmentManager(),fragments,list);
         viewpager.setAdapter(subscribeAdapter);
-        tab_layout.setupWithViewPager(viewpager);
-        tab_layout.setTabsFromPagerAdapter(subscribeAdapter);
+       // tab_layout.setupWithViewPager(viewpager);
+      //  tab_layout.setTabsFromPagerAdapter(subscribeAdapter);
+
+
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("景区",R.drawable.add_switch2)));
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("精灵说",R.drawable.add_switch2)));
+        //Tablayout自定义view绑定ViewPager
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
+        tab_layout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewpager));
     }
 
     @Override
@@ -58,5 +69,14 @@ public class FootMarkActivity extends StateBaseActivity {
     @Override
     protected void initEvent() {
 
+    }
+
+    private View tab_icon(String name, int iconID) {
+        View newtab = LayoutInflater.from(this).inflate(R.layout.footmark_item, null);
+        TextView tv = newtab.findViewById(R.id.tabtext);
+        tv.setText(name);
+        ImageView im = newtab.findViewById(R.id.tabicon);
+        im.setImageResource(iconID);
+        return newtab;
     }
 }

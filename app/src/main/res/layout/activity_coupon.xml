@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#FFF4F8FB"
     tools:context="com.tourismelves.view.activity.CouponActivity">
     <View
         android:id="@+id/select_city_status"
@@ -12,4 +13,12 @@
         android:layout_height="0dp" />
 
     <include layout="@layout/title_name" />
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:id="@+id/coupon_recy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

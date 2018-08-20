@@ -57,6 +57,7 @@
         <activity android:name=".view.activity.RegisterActivity" />
         <activity android:name=".view.activity.LoginActivity" />
         <activity android:name=".view.activity.RechargeActivity" />
+        <activity android:name=".view.activity.SetNameActivity"></activity>
     </application>
 
 </manifest>
