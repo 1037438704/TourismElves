@@ -33,8 +33,10 @@ import static com.tourismelves.app.constant.UrlConstants.posterList;
 import static com.tourismelves.view.widget.loadlayout.State.FAILED;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
+/**
+ * 首页
+ */
 public class HomeFragment extends BaseFragment {
-
 
     @BindView(R.id.swipe_target)
     RecyclerView homeRecycler;
