@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,11 +20,16 @@ import com.tourismelves.view.adapter.InterpretationListAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+
 /**
  * 讲解列表 地图
  */
 
 public class InterpretationListActivity extends StateBaseActivity {
+    @BindView(R.id.interpretation_list_like_btn)
+    AppCompatTextView interpretationListLikeBtn;
     private AppCompatImageView interpretationListComments;
     private LinearLayout interpretationListBottom;
     private int lastY = 0, lastY2 = 0;
@@ -155,5 +161,20 @@ public class InterpretationListActivity extends StateBaseActivity {
                 return true;
             }
         });
+    }
+
+    @OnClick({R.id.interpretation_list_like_btn, R.id.interpretation_list_visit_guidance_btn, R.id.interpretation_list_search_around_comments_btn, R.id.interpretation_list_comments_btn})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.interpretation_list_like_btn:
+                break;
+            case R.id.interpretation_list_visit_guidance_btn:
+                break;
+            case R.id.interpretation_list_search_around_comments_btn:
+                break;
+            case R.id.interpretation_list_comments_btn:
+                startActivity(new Intent(this, CommentsActivity.class));
+                break;
+        }
     }
 }

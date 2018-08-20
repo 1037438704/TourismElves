@@ -28,8 +28,8 @@
             android:drawableTop="@mipmap/fujin"
             android:gravity="center_horizontal"
             android:text="附近"
-            android:textColor="#343734"
-            android:textSize="@dimen/sp6" />
+            android:textColor="#3F485E"
+            android:textSize="@dimen/sp14" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/home_activation_code"
@@ -40,8 +40,8 @@
             android:drawableTop="@mipmap/jihuoma"
             android:gravity="center_horizontal"
             android:text="激活码"
-            android:textColor="#343734"
-            android:textSize="@dimen/sp6" />
+            android:textColor="#3F485E"
+            android:textSize="@dimen/sp14" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/home_already_bought"
@@ -52,8 +52,8 @@
             android:drawableTop="@mipmap/yigou"
             android:gravity="center_horizontal"
             android:text="已购"
-            android:textColor="#343734"
-            android:textSize="@dimen/sp6" />
+            android:textColor="#3F485E"
+            android:textSize="@dimen/sp14" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/home_footprint"
@@ -64,8 +64,8 @@
             android:drawableTop="@mipmap/zuji"
             android:gravity="center_horizontal"
             android:text="足迹"
-            android:textColor="#343734"
-            android:textSize="@dimen/sp6" />
+            android:textColor="#3F485E"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
 </RelativeLayout>

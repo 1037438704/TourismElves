@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp15"
+    android:paddingTop="@dimen/dp15">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/i_near_scenic_spot_img"
+        android:layout_width="@dimen/dp105"
+        android:layout_height="@dimen/dp105"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@color/gray_c" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_near_scenic_spot_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/i_near_scenic_spot_img"
+        android:text="故宫博物院"
+        android:textColor="#ff434f6d"
+        android:textSize="@dimen/sp16" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_near_scenic_spot_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i_near_scenic_spot_name"
+        android:layout_marginTop="@dimen/dp2"
+        android:layout_toRightOf="@id/i_near_scenic_spot_img"
+        android:text="@string/distance"
+        android:textColor="#ff777d84"
+        android:textSize="@dimen/sp12" />
+
+    <LinearLayout
+        android:id="@+id/i_near_scenic_spot_score_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i_near_scenic_spot_distance"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_toRightOf="@id/i_near_scenic_spot_img"
+        android:gravity="center_vertical">
+
+        <com.tourismelves.view.widget.RatingStar
+            android:id="@+id/i_near_scenic_spot_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp10"
+            app:curRating="1"
+            app:starCount="5"
+            app:starMarginRight="@dimen/dp5"
+            app:starSize="@dimen/dp16" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_near_scenic_spot_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1.0"
+            android:textColor="#fff36e1f"
+            android:textSize="@dimen/sp16" />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp20"
+        android:layout_alignBottom="@id/i_near_scenic_spot_img"
+        android:layout_toRightOf="@id/i_near_scenic_spot_img"
+        android:background="@drawable/round_4585f5"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:text="古建类"
+        android:textColor="#4A90E2"
+        android:textSize="@dimen/sp12" />
+
+    <RelativeLayout
+        android:id="@+id/i_near_scenic_spot_auto_play"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp44"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp15">
+
+        <View
+            android:layout_width="@dimen/dp1"
+            android:layout_height="match_parent"
+            android:background="@color/gray_c" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10">
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp3"
+                android:src="@mipmap/zidong" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dp3"
+                android:text="自动导航"
+                android:textColor="#ff434f6d"
+                android:textSize="@dimen/sp12" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp55"
+        android:layout_below="@id/i_near_scenic_spot_img"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@drawable/round_10_f4f8fb"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/i_near_scenic_spot_ticket_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/you" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_near_scenic_spot_ticket_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:text="故宫博物院门票"
+            android:textColor="#ff606980"
+            android:textSize="@dimen/sp14" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_near_scenic_spot_ticket_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="@dimen/dp10"
+            android:text="¥0"
+            android:textColor="#FF6A00"
+            android:textSize="@dimen/sp14"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

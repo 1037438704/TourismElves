@@ -70,6 +70,7 @@ public class HomeRes {
     private String summary = "";
     private int orders;
     private int creator;
+    private int isAutoplay;
     private double price = 0.0;
     private String imageLayer;
     private String imageBounds;
@@ -78,6 +79,14 @@ public class HomeRes {
     private int sceneryCount;
     private int distance = 0;
     private List<ArticleListBean> articleList;
+
+    public int getIsAutoplay() {
+        return isAutoplay;
+    }
+
+    public void setIsAutoplay(int isAutoplay) {
+        this.isAutoplay = isAutoplay;
+    }
 
     public String getSummary() {
         return summary;

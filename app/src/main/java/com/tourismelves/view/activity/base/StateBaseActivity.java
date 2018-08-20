@@ -34,6 +34,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     private LinearLayout baseSearchLayout;
     private AppCompatTextView baseTitle;
     private AppCompatImageView baseRight;
+    private AppCompatTextView baseRightTv;
     private LinearLayout baseSearch;
     private AppCompatImageView baseBack;
     private RelativeLayout baseTitleLayout;
@@ -67,6 +68,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         baseSearchLayout = findViewById(R.id.base_search_layout);
         baseTitle = findViewById(R.id.base_title);
         baseRight = findViewById(R.id.base_right);
+        baseRightTv = findViewById(R.id.base_right_tv);
         baseTitleLayout = findViewById(R.id.base_title_layout);
         baseSearch = findViewById(R.id.base_search);
         baseBack = findViewById(R.id.base_back);
@@ -129,10 +131,22 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     }
 
     /**
+     * 显示右边类型
+     * 0:TextView  1:ImageView
+     */
+    protected void showStateRightView(int state) {
+        baseRightTv.setVisibility(state == 0 ? View.VISIBLE : View.GONE);
+        baseRight.setVisibility(state == 1 ? View.VISIBLE : View.GONE);
+    }
+
+    /**
      * 设置右边按钮事件
      */
     protected void setBaseRightListener(View.OnClickListener listener) {
         baseRight.setOnClickListener(listener);
+    }
+    protected void setBaseRightTvListener(View.OnClickListener listener) {
+        baseRightTv.setOnClickListener(listener);
     }
 
     /**
@@ -148,6 +162,14 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
 
     protected void setBaseTitle(@NonNull String resStr) {
         baseTitle.setText(resStr);
+    }
+
+    protected void setBaseRightTv(@NonNull String resStr) {
+        baseRightTv.setText(resStr);
+    }
+
+    protected void setBaseRightTv(@StringRes int resStr) {
+        baseRightTv.setText(getString(resStr));
     }
 
     protected void setBasePositioning(@NonNull String resStr) {

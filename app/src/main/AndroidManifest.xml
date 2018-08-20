@@ -48,16 +48,39 @@
         <activity
             android:name=".view.activity.InterpretationList2Activity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.MyAccountActivity" />
-        <activity android:name=".view.activity.CouponActivity" />
-        <activity android:name=".view.activity.FootMarkActivity" />
-        <activity android:name=".view.activity.SetupActivity" />
-        <activity android:name=".view.activity.CooperationActivity" />
-        <activity android:name=".view.activity.OrderActivity" />
-        <activity android:name=".view.activity.RegisterActivity" />
-        <activity android:name=".view.activity.LoginActivity" />
-        <activity android:name=".view.activity.RechargeActivity" />
-        <activity android:name=".view.activity.SetNameActivity"></activity>
+        <activity
+            android:name=".view.activity.MyAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CouponActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.FootMarkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SetupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CooperationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.OrderActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RechargeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.SetNameActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.CommentsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

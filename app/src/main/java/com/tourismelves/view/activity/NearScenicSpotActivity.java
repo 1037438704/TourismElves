@@ -15,6 +15,8 @@ import com.tourismelves.utils.system.LocationUtil;
 import com.tourismelves.utils.system.ResolutionUtil;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.FragmentAdapter;
+import com.tourismelves.view.fragment.near.ScenicSpotFragment;
+import com.tourismelves.view.fragment.near.ShoppingFragment;
 import com.tourismelves.view.widget.SlidingTabLayout;
 import com.tourismelves.view.widget.loadlayout.State;
 import com.tourismelves.view.widget.viewpager.NoScrollViewPager;
@@ -50,21 +52,24 @@ public class NearScenicSpotActivity extends StateBaseActivity {
     protected void initControls() {
         showStateLayout(1);
         setBaseRightImage(R.mipmap.search);
-        tabWidth = ResolutionUtil.getInstance(getContext()).getWidth() / 4;
+        tabWidth = (int) (ResolutionUtil.getInstance(getContext()).getWidth() / 2.2);
 
         strings = new ArrayList<>();
         fragments = new ArrayList<>();
+
+        nearViewpager.setScroll(true);
     }
 
     @Override
     protected void obtainData() {
         nearOrganizationList();
         strings.add("景区");
-        strings.add("美食");
         strings.add("购物");
-        strings.add("娱乐");
 
         nearTab.setTabWhite(tabWidth);
+
+        fragments.add(new ScenicSpotFragment());
+        fragments.add(new ShoppingFragment());
 
 
         nearViewpager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragments, strings));
@@ -107,7 +112,14 @@ public class NearScenicSpotActivity extends StateBaseActivity {
         int totalPage = 1;
         //获取当前经纬度
         Location location = LocationUtil.getInstance(getContext()).showLocation();
-        OkHttpUtils.get(String.format(nearOrganizationList, location.getLatitude(), location.getLongitude(), 20, page),
+
+        double latitude = 0;
+        double longitude = 0;
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        OkHttpUtils.get(String.format(nearOrganizationList, latitude, longitude, 20, page),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(String response) {

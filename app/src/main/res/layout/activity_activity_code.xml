@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</RelativeLayout>
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/code_et"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp15"
+        android:background="@drawable/round_10_border_white"
+        android:gravity="center_vertical"
+        android:hint="输入兑换码"
+        android:padding="@dimen/dp15"
+        android:singleLine="true"
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:text="注意事项： \n1. 激活码为10位数字，尽可使用一次。 \n2. 输入时请注意区分相似字母和数字。"
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+</LinearLayout>

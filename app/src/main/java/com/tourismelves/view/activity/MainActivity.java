@@ -5,9 +5,12 @@ import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
 import com.tourismelves.R;
+import com.tourismelves.model.event.TabSelectBus;
+import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.LocationUtil;
 import com.tourismelves.view.activity.base.StateBaseActivity;
@@ -17,6 +20,9 @@ import com.tourismelves.view.fragment.HomeFragment;
 import com.tourismelves.view.fragment.MyFragment;
 import com.tourismelves.view.fragment.ScenicSpotFragment;
 import com.tourismelves.view.widget.viewpager.NoScrollViewPager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +48,7 @@ public class MainActivity extends StateBaseActivity {
     private List<AppCompatImageView> imageViews;
     //存储Fragment
     private List<Fragment> fragments;
+    private List<AppCompatTextView> tabText;
     private HomeFragment homeFragment;
     private ScenicSpotFragment scenicSpotFragment;
     private ElfSaidFragment elfSaidFragment;
@@ -57,6 +64,7 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
+        EventBusUtil.register(this);
         showStateLayout(0);
         homeFragment = new HomeFragment();
         scenicSpotFragment = new ScenicSpotFragment();
@@ -64,6 +72,7 @@ public class MainActivity extends StateBaseActivity {
         myFragment = new MyFragment();
         imageViews = new ArrayList<>();
         fragments = new ArrayList<>();
+        tabText = new ArrayList<>();
 
         instance = LocationUtil.getInstance(getContext());
         location = instance.showLocation();
@@ -88,6 +97,11 @@ public class MainActivity extends StateBaseActivity {
 
     @Override
     protected void obtainData() {
+        tabText.add((AppCompatTextView) findViewById(R.id.main_tv_home));
+        tabText.add((AppCompatTextView) findViewById(R.id.main_tv_scenic_spot));
+        tabText.add((AppCompatTextView) findViewById(R.id.main_tv_ely_said));
+        tabText.add((AppCompatTextView) findViewById(R.id.main_tv_my));
+
         imageViews.add(mainIconHome);
         imageViews.add(mainIconScenicSpot);
         imageViews.add(mainIconElySaid);
@@ -152,11 +166,24 @@ public class MainActivity extends StateBaseActivity {
         //初始化
         for (int i = 0; i < imageViews.size(); i++) {
             imageViews.get(i).setSelected(false);
+            tabText.get(i).setTextColor(0xff909090);
         }
         //设置选中的样式
         imageViews.get(position).setSelected(true);
+        tabText.get(position).setTextColor(0xff3F8DD9);
 
         //切换Fragment 无动画
         mainViewpager.setCurrentItem(position, false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBusUtil.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getTabSelectBus(TabSelectBus tabSelectBus) {
+        selectTab(tabSelectBus.getMainTabIndex());
     }
 }
