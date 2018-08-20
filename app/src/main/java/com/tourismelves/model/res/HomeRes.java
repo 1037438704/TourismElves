@@ -7,7 +7,6 @@ import java.util.List;
  */
 
 public class HomeRes {
-
     /**
      * orgId : 47
      * code : HB-QDL
@@ -68,8 +67,10 @@ public class HomeRes {
     private boolean status;
     private String insertTime;
     private String insertIp;
+    private String summary = "";
     private int orders;
     private int creator;
+    private double price = 0.0;
     private String imageLayer;
     private String imageBounds;
     private String imageZooms;
@@ -77,6 +78,22 @@ public class HomeRes {
     private int sceneryCount;
     private int distance = 0;
     private List<ArticleListBean> articleList;
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
     public int getDistance() {
         return distance;

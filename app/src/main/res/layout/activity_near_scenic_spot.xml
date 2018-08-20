@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.tourismelves.view.widget.SlidingTabLayout
+        android:id="@+id/near_tab"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:layout_alignParentTop="true"
+        app:tabBackground="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="#3C7DD5"
+        app:tabTextColor="#606869" />
+
+    <com.tourismelves.view.widget.viewpager.NoScrollViewPager
+        android:id="@+id/near_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="附近的景区" />
+        android:layout_below="@id/near_tab" />
 </RelativeLayout>

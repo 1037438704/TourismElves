@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-
+/**
+ * 讲解列表 详情
+ */
 public class InterpretationList2Activity extends StateBaseActivity {
     @BindView(R.id.interpretation_list2_rank)
     AppCompatTextView interpretationList2Rank;
@@ -56,4 +58,5 @@ public class InterpretationList2Activity extends StateBaseActivity {
                 break;
         }
     }
+
 }

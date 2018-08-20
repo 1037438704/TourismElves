@@ -13,6 +13,7 @@ import com.tourismelves.R;
 import com.tourismelves.utils.system.ResolutionUtil;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import jp.wasabeef.glide.transformations.CropTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ShowImageUtils {
@@ -59,6 +60,16 @@ public class ShowImageUtils {
                 .into(imgeview);
     }
 
+    @SuppressLint("NewApi")
+    public static void showImageView(Context context, String url, int w, int h, ImageView imgeview) {
+        if (!((Activity) context).isDestroyed()) {
+            Glide.with(context)
+                    .load(url)
+                    .bitmapTransform(new CropTransformation(context, w, h, CropTransformation.CropType.CENTER))
+                    .into(imgeview);
+        }
+    }
+
     /**
      * 圆形图片
      */
@@ -84,6 +95,37 @@ public class ShowImageUtils {
                         .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context,
                                 ResolutionUtil.getInstance(context).px2dp2pxWidth(px), 0,
                                 RoundedCornersTransformation.CornerType.TOP))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(imgeview);
+            }
+        }
+    }
+    @SuppressLint("NewApi")
+    public static void showRounded(Context context, String url, AppCompatImageView imgeview, int px) {
+        if (context != null) {
+            if (!((Activity) context).isDestroyed()) {
+                Glide.with(context)
+                        .load(url)
+                        .error(errorimg)
+                        .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context,
+                                ResolutionUtil.getInstance(context).px2dp2pxWidth(px), 0,
+                                RoundedCornersTransformation.CornerType.ALL))
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                        .into(imgeview);
+            }
+        }
+    }
+    @SuppressLint("NewApi")
+    public static void showRounded(Context context, String url, int w, int h, AppCompatImageView imgeview, int px) {
+        if (context != null) {
+            if (!((Activity) context).isDestroyed()) {
+                Glide.with(context)
+                        .load(url)
+                        .error(errorimg)
+                        .bitmapTransform(new CropTransformation(context, w, h, CropTransformation.CropType.CENTER),
+                                new RoundedCornersTransformation(context,
+                                ResolutionUtil.getInstance(context).px2dp2pxWidth(px), 0,
+                                RoundedCornersTransformation.CornerType.ALL))
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .into(imgeview);
             }

@@ -1,15 +1,22 @@
 package com.tourismelves.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.tourismelves.R;
 import com.tourismelves.model.res.BannerRes;
 import com.tourismelves.model.res.HomeRes;
+import com.tourismelves.utils.glide.ShowImageUtils;
+import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.view.activity.NearScenicSpotActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
 import com.tourismelves.view.widget.viewpager.banner.Banner;
@@ -18,11 +25,13 @@ import com.tourismelves.view.widget.viewpager.banner.OnBannerListener;
 
 import java.util.List;
 
+import static com.tourismelves.app.constant.UrlConstants.port;
+
 /**
  * 热门景区适配器
  */
 
-public class HomeAdapter extends RecyclerBaseAdapter<Object> {
+public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnClickListener {
 
     public HomeAdapter(@NonNull Context context, @NonNull List<Object> mDataList) {
         super(context, mDataList);
@@ -41,56 +50,65 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> {
                     .setOnBannerListener(new OnBannerListener() {
                         @Override
                         public void OnBannerClick(int position) {
-
+                            BannerRes.BannerBean bannerBean = bannerBeans.get(position);
                         }
                     })
                     .start();
 
-            AppCompatTextView near = holder.getView(R.id.home_near);
-            AppCompatTextView code = holder.getView(R.id.home_activation_code);
-            AppCompatTextView bought = holder.getView(R.id.home_already_bought);
-            AppCompatTextView footprint = holder.getView(R.id.home_footprint);
-
-            near.setOnClickListener(new View.OnClickListener() {//附近
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            code.setOnClickListener(new View.OnClickListener() {//激活码
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            bought.setOnClickListener(new View.OnClickListener() {//已购
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-
-            footprint.setOnClickListener(new View.OnClickListener() {//足迹
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
+            holder.getView(R.id.home_near).setOnClickListener(this);
+            holder.getView(R.id.home_activation_code).setOnClickListener(this);
+            holder.getView(R.id.home_already_bought).setOnClickListener(this);
+            holder.getView(R.id.home_footprint).setOnClickListener(this);
         } else {//item
             HomeRes homeRes = (HomeRes) object;
+            RelativeLayout home_look_all_rl = holder.getView(R.id.home_look_all_rl);
+            if (position == 1) {
+                home_look_all_rl.setVisibility(View.VISIBLE);
+            } else {
+                home_look_all_rl.setVisibility(View.GONE);
+            }
+            //查看全部
+            holder.getView(R.id.home_look_all).setOnClickListener(this);
+
+            AppCompatImageView home_attractions_img = holder.getView(R.id.home_attractions_img);
+            AppCompatTextView home_attractions_name = holder.getView(R.id.home_attractions_name);
+            AppCompatTextView home_attractions_content = holder.getView(R.id.home_attractions_content);
+            AppCompatTextView home_attractions_count = holder.getView(R.id.home_attractions_count);
+            AppCompatTextView home_attractions_money = holder.getView(R.id.home_attractions_money);
 
 
+            ShowImageUtils.showImageView(getContext(), port + homeRes.getImage(),
+                    (int) getContext().getResources().getDimension(R.dimen.dp105), (int) getContext().getResources().getDimension(R.dimen.dp105),
+                    home_attractions_img);
+            home_attractions_count.setText(String.format(getContext().getString(R.string.scenic_spot_count), homeRes.getSceneryCount() + ""));
+            home_attractions_money.setText(Html.fromHtml("¥<b>" + homeRes.getPrice() + "</b>"));
+            home_attractions_content.setText(homeRes.getSummary());
+            home_attractions_name.setText(homeRes.getName());
+
+            AppCompatImageView home_attractions2_img = holder.getView(R.id.home_attractions2_img);
+            AppCompatTextView home_attractions2_name = holder.getView(R.id.home_attractions2_name);
+            AppCompatTextView home_attractions2_content = holder.getView(R.id.home_attractions2_content);
+
+            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(),
+                    (int) getContext().getResources().getDimension(R.dimen.dp45), (int) getContext().getResources().getDimension(R.dimen.dp45),
+                    home_attractions2_img, 10);
+            home_attractions2_content.setText(homeRes.getSummary());
+            home_attractions2_name.setText(homeRes.getName());
+
+            AppCompatImageView home_attractions3_img = holder.getView(R.id.home_attractions3_img);
+            AppCompatTextView home_attractions3_address = holder.getView(R.id.home_attractions3_address);
+            AppCompatTextView home_attractions3_name = holder.getView(R.id.home_attractions3_name);
+            AppCompatTextView home_attractions3_content = holder.getView(R.id.home_attractions3_content);
+
+
+            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), home_attractions3_img, 10);
+            String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + "");
+            home_attractions3_address.setText(sAddress);
+            home_attractions3_content.setText(homeRes.getSummary());
+            home_attractions3_name.setText(homeRes.getName());
         }
 
 
-//        ShowImageUtils.showTopRounded(getContext(), port + homeRes.getImage(), img, 10);
-//        name.setText(homeRes.getName());
-//        String sAddress = homeRes.getArea().getParentArea().getName() + "·" + homeRes.getArea().getName();
-//        address.setText(sAddress);
-//        distance.setText(String.format(getContext().getString(R.string.distance), homeRes.getDistance() + ""));
-//        count.setText(String.format(getContext().getString(R.string.scenic_spot_count), homeRes.getSceneryCount() + ""));
     }
 
     @Override
@@ -107,5 +125,26 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> {
             view = LayoutInflater.from(getContext()).inflate(R.layout.item_home, parent, false);
         }
         return new ViewHolder(view);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.home_near://附近
+                getContext().startActivity(new Intent(getContext(), NearScenicSpotActivity.class));
+                break;
+            case R.id.home_activation_code://激活码
+                LogUtil.i("激活码");
+                break;
+            case R.id.home_already_bought://已购
+                LogUtil.i("已购");
+                break;
+            case R.id.home_footprint://足迹
+                LogUtil.i("足迹");
+                break;
+            case R.id.home_look_all://查看全部
+                LogUtil.i("查看全部");
+                break;
+        }
     }
 }

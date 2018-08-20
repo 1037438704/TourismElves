@@ -20,13 +20,13 @@ import com.tourismelves.view.adapter.InterpretationListAdapter;
 import java.util.ArrayList;
 
 /**
- * 讲解列表
+ * 讲解列表 地图
  */
 
 public class InterpretationListActivity extends StateBaseActivity {
     private AppCompatImageView interpretationListComments;
     private LinearLayout interpretationListBottom;
-    private int lastY = 0;
+    private int lastY = 0, lastY2 = 0;
 
     private BottomSheetDialog mBottomSheetDialog;
 
@@ -63,19 +63,20 @@ public class InterpretationListActivity extends StateBaseActivity {
         interpretationListBottom.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int dy = 0;
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         //将点下的点的坐标保存
-                        lastY = (int) event.getRawY();
-                        break;
+                        lastY2 = (int) event.getRawY();
+                        return true;
 
                     case MotionEvent.ACTION_MOVE:
                         //计算出需要移动的距离
-                        int dy = (int) event.getRawY() + lastY;
-                        if (dy > 1) {
+                        dy = (int) event.getRawY() - lastY2;
+                        if (dy <= 0) {
                             mBottomSheetDialog.show();
                         }
-                        break;
+                        return true;
                 }
                 return true;
             }
@@ -116,32 +117,40 @@ public class InterpretationListActivity extends StateBaseActivity {
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
 
-                LogUtil.i("onStateChanged: " + newState);
             }
 
             @Override
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-                LogUtil.i("onSlide: " + slideOffset);
             }
         });
 
         ll.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int dy = 0;
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         //将点下的点的坐标保存
                         lastY = (int) event.getRawY();
-                        break;
+                        LogUtil.i("ACTION_DOWN_" + lastY);
+                        return true;
 
                     case MotionEvent.ACTION_MOVE:
                         //计算出需要移动的距离
-                        int dy = (int) event.getRawY() + lastY;
-                        if (dy > 5) {
+                        LogUtil.i("ACTION_MOVE_" + event.getRawY());
+                        dy = (int) event.getRawY() - lastY;
+                        if (dy <= 0) {
                             mBottomSheetDialog.dismiss();
                             startActivity(new Intent(getContext(), InterpretationList2Activity.class));
                         }
-                        break;
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        LogUtil.i("ACTION_UP_" + event.getRawY());
+                        return true;
+                    case MotionEvent.ACTION_CANCEL:
+                        //按钮弹起逻辑
+                        LogUtil.i("ACTION_CANCEL_" + event.getRawY());
+                        return true;
                 }
                 return true;
             }
