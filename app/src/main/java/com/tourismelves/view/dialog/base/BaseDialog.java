@@ -21,7 +21,6 @@ import com.tourismelves.utils.system.PreferenceUtil;
 
 import static com.tourismelves.app.constant.BaseConstants.APP_SHARE_USER;
 
-
 public abstract class BaseDialog extends DialogFragment {
     protected SharedPreferences userPreference;
     private OnDismissListener onDismissListener;
