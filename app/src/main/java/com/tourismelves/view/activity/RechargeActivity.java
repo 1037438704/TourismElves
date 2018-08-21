@@ -37,7 +37,7 @@ import static com.tourismelves.app.constant.UrlConstants.moneyinfo;
 public class RechargeActivity extends StateBaseActivity {
 
 
-//    TextView tv_title;
+
     RecyclerView recyclerView;
     RechargeAdapter rechargeAdapter;
     RechargeBean rechargeBean;
@@ -52,16 +52,15 @@ public class RechargeActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
-//        tv_title = findViewById(R.id.title_name);
-//        tv_title.setText("充值金币");
+
         recyclerView = findViewById(R.id.recharge_recy);
         listBeen = new ArrayList<>();
     }
 
     @Override
     protected void obtainData() {
-       // setStatusBar(R.id.select_city_status);
-//        setStatusUi();
+
+        setStatusUi();
         rechargeAdapter = new RechargeAdapter(RechargeActivity.this,listBeen);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rechargeAdapter);

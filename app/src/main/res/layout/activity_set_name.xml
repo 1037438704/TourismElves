@@ -8,7 +8,6 @@
     tools:context="com.tourismelves.view.activity.SetNameActivity">
 
 
-    <include layout="@layout/title_name" />
 
     <LinearLayout
         android:layout_marginTop="@dimen/dp10"

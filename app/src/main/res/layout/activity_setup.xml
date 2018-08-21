@@ -7,12 +7,7 @@
     android:orientation="vertical"
     android:background="@color/nc_border"
     tools:context="com.tourismelves.view.activity.CouponActivity">
-    <View
-        android:id="@+id/select_city_status"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
-
-    <include layout="@layout/title_name" />
+    
 
 
 

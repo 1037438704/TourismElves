@@ -31,7 +31,8 @@ public class PaymentActivity extends StateBaseActivity {
     private String flagString = "1";
     LinearLayout ll_zfbpay,ll_wxpay;
     TextView tv_submit;
-    ImageView im_zfb,im_wx;
+   // ImageView im_zfb,im_wx;
+    ImageView im_zfb,im_zfb1,im_wx,im_wx1;
     private static final int SDK_PAY_FLAG = 1;
     private static final int SDK_CHECK_FLAG = 2;
     String sk_id;
@@ -46,8 +47,12 @@ public class PaymentActivity extends StateBaseActivity {
         ll_zfbpay =  findViewById(R.id.ll_zfbpay);
         ll_wxpay =  findViewById(R.id.ll_wxpay);
         tv_submit = findViewById(R.id.payment_save);
+//        im_zfb = findViewById(R.id.im_zfb);
+//        im_wx = findViewById(R.id.im_zfb);
         im_zfb = findViewById(R.id.im_zfb);
-        im_wx = findViewById(R.id.im_zfb);
+        im_zfb1 = findViewById(R.id.im_zfb1);
+        im_wx = findViewById(R.id.im_wx);
+        im_wx1 = findViewById(R.id.im_wx1);
         tv_title.setText("充值");
     }
 
@@ -67,8 +72,12 @@ public class PaymentActivity extends StateBaseActivity {
                 tv_submit.setText("微信支付￥");
 //                im_wx.setVisibility(View.VISIBLE);
 //                im_zfb.setVisibility(View.GONE);
-                 im_wx.setSelected(true);
-                 im_zfb.setSelected(false);
+//                 im_wx.setSelected(true);
+//                 im_zfb.setSelected(false);
+                im_wx1.setVisibility(View.VISIBLE);
+                im_wx.setVisibility(View.GONE);
+                im_zfb.setVisibility(View.VISIBLE);
+                im_zfb1.setVisibility(View.GONE);
                  flagString = "1";
             }
         });
@@ -78,9 +87,20 @@ public class PaymentActivity extends StateBaseActivity {
                 tv_submit.setText("支付宝支付￥");
 //                im_zfb.setVisibility(View.VISIBLE);
 //                im_wx.setVisibility(View.GONE);
-                im_zfb.setSelected(true);
-                im_wx.setSelected(false);
+//                im_zfb.setSelected(true);
+//                im_wx.setSelected(false);
+                im_wx1.setVisibility(View.GONE);
+                im_wx.setVisibility(View.VISIBLE);
+                im_zfb.setVisibility(View.GONE);
+                im_zfb1.setVisibility(View.VISIBLE);
                 flagString = "2";
+
+            }
+        });
+
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 gotoPay(flagString);
             }
         });

@@ -10,7 +10,7 @@ import com.tourismelves.view.adapter.CouponAdapter;
 
 public class CouponActivity extends StateBaseActivity {
 
-    TextView tv_title;
+
     RecyclerView recyclerView;
     CouponAdapter couponAdapter;
 
@@ -22,8 +22,7 @@ public class CouponActivity extends StateBaseActivity {
         initView();
     }
     private void initView() {
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("我的优惠券");
+
         recyclerView = findViewById(R.id.coupon_recy);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         couponAdapter = new CouponAdapter(this);
@@ -34,6 +33,10 @@ public class CouponActivity extends StateBaseActivity {
     @Override
     protected void initControls() {
      //   setStatusBar(R.id.select_city_status);
+        showStateLayout(1);
+        setBaseTitle("我的优惠券");
+        showStateRightView(2);
+        setStatusUi();
         setStatusUi();
     }
 

@@ -20,7 +20,7 @@ import static com.tourismelves.app.constant.UrlConstants.userinfo;
 
 public class MyAccountActivity extends StateBaseActivity {
 
-    TextView tv_title;
+
 
     TextView tv_name,tv_phone,tv_xb;
 
@@ -33,8 +33,7 @@ public class MyAccountActivity extends StateBaseActivity {
     }
 
     private void initView() {
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("我的账户");
+
         tv_name = findViewById(R.id.account_name);
         tv_phone = findViewById(R.id.account_phone);
         tv_xb = findViewById(R.id.account_xb);
@@ -94,6 +93,9 @@ public class MyAccountActivity extends StateBaseActivity {
     @Override
     protected void initControls() {
        // setStatusBar(R.id.select_city_status);
+        showStateLayout(1);
+        setBaseTitle("我的账户");
+        showStateRightView(2);
         setStatusUi();
     }
 

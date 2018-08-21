@@ -7,12 +7,7 @@
     android:orientation="vertical"
     tools:context="com.tourismelves.view.activity.MyAccountActivity">
 
-    <View
-        android:id="@+id/select_city_status"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
 
-    <include layout="@layout/title_name" />
 
     <LinearLayout
         android:layout_width="match_parent"

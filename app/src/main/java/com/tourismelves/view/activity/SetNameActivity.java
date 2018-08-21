@@ -22,7 +22,7 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 public class SetNameActivity extends StateBaseActivity {
-    TextView tv_title;
+
     EditText ed_name;
     Button bt_save;
     String name;
@@ -34,15 +34,17 @@ public class SetNameActivity extends StateBaseActivity {
     }
 
     private void initView() {
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("修改昵称");
+
+
         ed_name = (EditText) findViewById(R.id.pet_et_name);
         bt_save = (Button) findViewById(R.id.petname_save);
 
     }
     @Override
     protected void initControls() {
-
+        showStateLayout(1);
+        setBaseTitle("修改昵称");
+        showStateRightView(2);
     }
 
     @Override

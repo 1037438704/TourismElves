@@ -6,12 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.tourismelves.view.activity.CouponActivity">
-    <View
-        android:id="@+id/select_city_status"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
 
-    <include layout="@layout/title_name" />
 
     <android.support.design.widget.TabLayout
         android:background="@color/white"

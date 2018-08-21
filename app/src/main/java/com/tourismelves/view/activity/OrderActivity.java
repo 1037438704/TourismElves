@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OrderActivity extends StateBaseActivity {
 
-    TextView tv_title;
+
     TabLayout tab_layout;
     ViewPager viewpager;
     List<Fragment> fragments = new ArrayList<>();
@@ -31,8 +31,7 @@ public class OrderActivity extends StateBaseActivity {
     private void initView() {
         tab_layout = (TabLayout) findViewById(R.id.order_layout);
         viewpager = (ViewPager) findViewById(R.id.order_viewpager);
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("订单管理");
+
         fragments.add(new BuyFragment());
         fragments.add(new WaitPayFragment());
         list.add("待支付");
@@ -47,6 +46,9 @@ public class OrderActivity extends StateBaseActivity {
     @Override
     protected void initControls() {
       //  setStatusBar(R.id.select_city_status);
+        showStateLayout(1);
+        setBaseTitle("订单管理");
+        showStateRightView(2);
         setStatusUi();
     }
 

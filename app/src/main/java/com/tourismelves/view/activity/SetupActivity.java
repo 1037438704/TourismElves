@@ -7,7 +7,7 @@ import com.tourismelves.view.activity.base.StateBaseActivity;
 
 public class SetupActivity extends StateBaseActivity {
 
-    TextView tv_title;
+
 
     @Override
     protected void setContentLayout() {
@@ -15,14 +15,16 @@ public class SetupActivity extends StateBaseActivity {
         initView();
     }
     private void initView() {
-        tv_title = findViewById(R.id.title_name);
-        tv_title.setText("设置");
+
     }
 
 
     @Override
     protected void initControls() {
       //  setStatusBar(R.id.select_city_status);
+        showStateLayout(1);
+        setBaseTitle("设置");
+        showStateRightView(2);
         setStatusUi();
     }
 
