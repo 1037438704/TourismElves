@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tourismelves.view.activity.PaymentActivity">
+
+
+    <include layout="@layout/title_name" />
+
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dp50">-->
+
+        <!--<TextView-->
+            <!--android:layout_marginLeft="@dimen/dp10"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:textColor="#FF434F6D"-->
+            <!--android:text="充值金额"-->
+            <!--android:textSize="@dimen/sp16"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--</LinearLayout>-->
+
+    <TextView
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp10"
+        android:textColor="#FF434F6D"
+        android:text="支付方式"
+        android:textSize="@dimen/sp16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="@dimen/dp10"
+        android:background="#FFF4F8FB"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    
+    <LinearLayout
+        android:id="@+id/ll_zfbpay"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+        
+        <ImageView
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:src="@mipmap/zfb"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:textColor="#FF434F6D"
+            android:text="支付宝"
+            android:textSize="@dimen/sp16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--<ImageView-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_marginRight="@dimen/dp10"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@mipmap/chioce_no"-->
+            <!--android:layout_width="@dimen/dp20"-->
+            <!--android:layout_height="@dimen/dp20" />-->
+
+        <!--<ImageView-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_marginRight="@dimen/dp10"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@mipmap/chioce"-->
+            <!--android:layout_width="@dimen/dp20"-->
+            <!--android:layout_height="@dimen/dp20" />-->
+
+        <ImageView
+            android:id="@+id/im_zfb"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_gravity="center"
+            android:src="@drawable/pay_ment"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20" />
+    </LinearLayout>
+    <TextView
+        android:background="#FFF4F8FB"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+
+    <LinearLayout
+        android:id="@+id/ll_wxpay"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <ImageView
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:src="@mipmap/wx"
+            android:layout_width="@dimen/dp24"
+            android:layout_height="@dimen/dp24" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:textColor="#FF434F6D"
+            android:text="微信"
+            android:textSize="@dimen/sp16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--<ImageView-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_marginRight="@dimen/dp10"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@mipmap/chioce_no"-->
+            <!--android:layout_width="@dimen/dp20"-->
+            <!--android:layout_height="@dimen/dp20" />-->
+
+        <!--<ImageView-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_marginRight="@dimen/dp10"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@mipmap/chioce"-->
+            <!--android:layout_width="@dimen/dp20"-->
+            <!--android:layout_height="@dimen/dp20" />-->
+        <ImageView
+            android:id="@+id/im_wx"
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_gravity="center"
+            android:src="@drawable/pay_ment"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20" />
+    </LinearLayout>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/payment_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp20"
+        android:background="@mipmap/bar"
+        android:text="保存"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp16" />
+
+
+</LinearLayout>

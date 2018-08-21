@@ -18,11 +18,16 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
 }
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
 
+
+
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     //ButterKnife注入
     //noinspection GradleDependency
     // Glide图形转换工具
@@ -31,6 +36,8 @@ dependencies {
     //Gson
     //FastJson
     //OkHttp
+    compile files('libs/open_sdk_r5990_lite.jar')
+    compile files('libs/alipaySdk-20180403.jar')
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.1.2'
     compile 'com.android.support.test:runner:1.0.2'

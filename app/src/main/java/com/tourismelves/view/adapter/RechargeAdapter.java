@@ -37,15 +37,24 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.MyView
         View view= LayoutInflater.from(context).inflate(R.layout.recharge_item,parent,false);
         RechargeAdapter.MyViewHolder myViewHolder = new RechargeAdapter.MyViewHolder(view);
         return myViewHolder;
-   //     return view;
+
     }
 
     @Override
-    public void onBindViewHolder(RechargeAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final RechargeAdapter.MyViewHolder holder, final int position) {
 
+        if (onItemClickListener!=null) {
+            holder.tv_cz.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.OnItem(holder.itemView, position);
+                }
+            });
+
+        }
         holder.tv_money.setText(listBeen.get(position).getName()+"+再送"+listBeen.get(position).getGive()+"金币");
         holder.tv_moneytwo.setText("￥"+listBeen.get(position).getGold());
-//        holder.tv_moneyzs.setText();
+
 
 
     }
@@ -54,12 +63,25 @@ public class RechargeAdapter extends RecyclerView.Adapter<RechargeAdapter.MyView
         return listBeen.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_money,tv_moneytwo,tv_moneyzs;
+        TextView tv_money,tv_moneytwo,tv_cz;
+
         public MyViewHolder(final View itemView) {
             super(itemView);
             tv_money = itemView.findViewById(R.id.recharge_money);
             tv_moneytwo = itemView.findViewById(R.id.recharge_moneytwo);
-//            tv_moneyzs = itemView.findViewById(R.id.recharge_zs);
+            tv_cz = itemView.findViewById(R.id.recharge_cz);
+
         }
     }
+
+
+    public interface OnItemClickListener{
+        void OnItem(View view,int position);
+
+    }
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+
 }

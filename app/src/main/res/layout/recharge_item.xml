@@ -88,6 +88,7 @@
 
         <TextView
 
+            android:id="@+id/recharge_cz"
             android:gravity="center"
             android:background="@drawable/shaperecharge"
             android:layout_marginLeft="@dimen/dp20"

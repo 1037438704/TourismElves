@@ -17,7 +17,9 @@ public class ApiManager {
 
     //修改个人信息
 
-  public static final String SET_PERSON = getBaseUrl() + "lyjl/app/updateUserInfo.do";
+    public static final String SET_PERSON = getBaseUrl() + "lyjl/app/updateUserInfo.do";
 
 
+    //登录接口
+    public static final String LOGIN = getBaseUrl()+"lyjl/web/login.do";
 }

@@ -81,6 +81,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="center"
                 android:src="@mipmap/loginname"
                 android:layout_width="@dimen/dp16"
@@ -112,6 +113,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:layout_marginLeft="@dimen/dp10"
                 android:layout_gravity="center"
                 android:src="@mipmap/lockpass"
                 android:layout_width="@dimen/dp16"
@@ -216,7 +218,7 @@
                 android:layout_width="@dimen/dp50"
                 android:layout_height="@dimen/dp50" />
             <ImageView
-
+                android:id="@+id/login_qq"
                 android:layout_gravity="center"
                 android:src="@mipmap/qqlogin"
                 android:layout_width="@dimen/dp50"

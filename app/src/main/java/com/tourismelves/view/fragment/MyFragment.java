@@ -19,6 +19,7 @@ import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.CooperationActivity;
 import com.tourismelves.view.activity.CouponActivity;
 import com.tourismelves.view.activity.FootMarkActivity;
+import com.tourismelves.view.activity.InviteActivity;
 import com.tourismelves.view.activity.LoginActivity;
 import com.tourismelves.view.activity.MyAccountActivity;
 import com.tourismelves.view.activity.OrderActivity;
@@ -34,10 +35,11 @@ import static com.tourismelves.app.constant.UrlConstants.userinfo;
  */
 public class MyFragment extends BaseFragment {
 
-    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper;
+    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite;
     TextView tv_order,tv_loginname,tv_recharge;
     TextView tv_title;
     TextView tv_name;
+
     @Override
     protected int setContentLayout() {
         return R.layout.fragment_my;
@@ -143,6 +145,18 @@ public class MyFragment extends BaseFragment {
                     return;
                 }
                 Intent intent = new Intent(getActivity(), RechargeActivity.class);
+                startActivity(intent);
+            }
+        });
+        //邀请好友
+        mLinearInvite = view.findViewById(R.id.ll_yqhy);
+        mLinearInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), InviteActivity.class);
                 startActivity(intent);
             }
         });
