@@ -101,7 +101,6 @@ public class RechargeActivity extends StateBaseActivity {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         });
             }
