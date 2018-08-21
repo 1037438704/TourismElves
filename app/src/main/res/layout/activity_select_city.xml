@@ -3,28 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <RelativeLayout
-        android:id="@+id/select_city_title"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50">
-
-
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/select_city_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/select_city"
-            android:textColor="#ff333333"
-            android:textSize="@dimen/sp20" />
-    </RelativeLayout>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

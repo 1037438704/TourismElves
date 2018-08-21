@@ -13,12 +13,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.tourismelves.R;
+import com.tourismelves.model.bean.SettlementBean;
 import com.tourismelves.model.event.TabSelectBus;
 import com.tourismelves.model.res.BannerRes;
 import com.tourismelves.model.res.HomeRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.view.activity.AlreadyBoughtActivity;
+import com.tourismelves.view.activity.FootMarkActivity;
 import com.tourismelves.view.activity.NearScenicSpotActivity;
 import com.tourismelves.view.activity.SettlementActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
@@ -31,6 +34,7 @@ import com.tourismelves.view.widget.viewpager.banner.OnBannerListener;
 import java.util.List;
 
 import static com.tourismelves.app.constant.UrlConstants.port;
+import static com.tourismelves.view.fragment.MyFragment.isLogin;
 
 /**
  * 热门景区适配器
@@ -65,7 +69,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             holder.getView(R.id.home_already_bought).setOnClickListener(this);
             holder.getView(R.id.home_footprint).setOnClickListener(this);
         } else {//item
-            HomeRes homeRes = (HomeRes) object;
+            final HomeRes homeRes = (HomeRes) object;
             RelativeLayout home_look_all_rl = holder.getView(R.id.home_look_all_rl);
             if (position == 1) {
                 home_look_all_rl.setVisibility(View.VISIBLE);
@@ -82,7 +86,14 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             AppCompatTextView home_attractions_money = holder.getView(R.id.home_attractions_money);
             AppCompatTextView home_auto_play = holder.getView(R.id.home_auto_play);
 
-            home_attractions_money.setOnClickListener(this);
+            home_attractions_money.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//支付
+                    Intent intent = new Intent(getContext(), SettlementActivity.class);
+                    intent.putExtra("SettlementBean", new SettlementBean(homeRes.getName(), homeRes.getPrice(), homeRes.getPrice(), homeRes.getImage(), homeRes.getSceneryCount()));
+                    getContext().startActivity(intent);
+                }
+            });
 
             home_auto_play.setVisibility(homeRes.getIsAutoplay() == 1 ? View.VISIBLE : View.GONE);
             ShowImageUtils.showImageView(getContext(), port + homeRes.getImage(),
@@ -149,19 +160,26 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 getContext().startActivity(new Intent(getContext(), NearScenicSpotActivity.class));
                 break;
             case R.id.home_activation_code://激活码
+                if (!isLogin(getContext(), true)) {
+                    return;
+                }
                 new ActivityCodeDialog().show(((AppCompatActivity) getContext()).getSupportFragmentManager());
                 break;
             case R.id.home_already_bought://已购
-                LogUtil.i("已购");
+                if (!isLogin(getContext(), true)) {
+                    return;
+                }
+                getContext().startActivity(new Intent(getContext(), AlreadyBoughtActivity.class));
                 break;
             case R.id.home_footprint://足迹
-                LogUtil.i("足迹");
+                if (!isLogin(getContext(), true)) {
+                    return;
+                }
+                Intent intent = new Intent(getContext(), FootMarkActivity.class);
+                getContext().startActivity(intent);
                 break;
             case R.id.home_look_all://查看全部
                 EventBusUtil.postEvent(new TabSelectBus(1));
-                break;
-            case R.id.home_attractions_money://支付
-                getContext().startActivity(new Intent(getContext(), SettlementActivity.class));
                 break;
             case R.id.home_scenic_spot_details://景区详情
                 LogUtil.i("景区详情");

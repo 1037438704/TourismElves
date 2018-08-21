@@ -1,12 +1,13 @@
 package com.tourismelves.model.res;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 景区数据
  */
 
-public class HomeRes {
+public class HomeRes implements Serializable{
     /**
      * orgId : 47
      * code : HB-QDL

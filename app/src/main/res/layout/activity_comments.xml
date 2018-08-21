@@ -120,7 +120,7 @@
         android:id="@+id/comments_anonymous"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp44"
-        android:drawableLeft="@mipmap/niming_s"
+        android:drawableLeft="@drawable/anonymous_select"
         android:drawablePadding="@dimen/dp10"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp10"

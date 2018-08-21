@@ -70,6 +70,7 @@ public class CommentsActivity extends StateBaseActivity {
             case R.id.comments_video:
                 break;
             case R.id.comments_anonymous:
+                commentsAnonymous.setSelected(!commentsAnonymous.isSelected());
                 break;
         }
     }

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp15">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/i_settlement_img"
+        android:layout_width="@dimen/dp105"
+        android:layout_height="@dimen/dp105"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@color/gray_c" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_settlement_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dp10"
+        android:includeFontPadding="false"
+        android:text="¥0.00"
+        android:textColor="#ffff6a00"
+        android:textSize="@dimen/sp18" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_settlement_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/i_settlement_money"
+        android:layout_toRightOf="@id/i_settlement_img"
+        android:text="故宫博物院"
+        android:textColor="#ff434f6d"
+        android:textSize="@dimen/sp16" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_settlement_count"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp20"
+        android:layout_below="@id/i_settlement_name"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_toRightOf="@id/i_settlement_img"
+        android:background="@drawable/round_gradient_interpretation"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:text="@string/scenic_spot_count"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp12" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_settlement_original_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i_settlement_count"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_toRightOf="@id/i_settlement_img"
+        android:text="原价: "
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_settlement_original_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i_settlement_count"
+        android:layout_marginTop="@dimen/dp16"
+        android:layout_toRightOf="@id/i_settlement_original_tv"
+        android:text="¥0.00"
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@id/i_settlement_img"
+        android:background="@color/gray_c" />
+</RelativeLayout>

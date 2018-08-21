@@ -1,22 +1,33 @@
 package com.tourismelves.view.fragment.near;
 
+import android.location.Location;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tourismelves.R;
+import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.model.res.HomeRes;
+import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.system.LocationUtil;
 import com.tourismelves.view.adapter.NearScenicSpotAdapter;
 import com.tourismelves.view.fragment.base.BaseFragment;
+import com.tourismelves.view.widget.loadlayout.State;
 import com.tourismelves.view.widget.swipetoloadlayout.OnLoadMoreListener;
 import com.tourismelves.view.widget.swipetoloadlayout.OnRefreshListener;
 import com.tourismelves.view.widget.swipetoloadlayout.SwipeToLoadLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
+
+import static com.tourismelves.app.constant.UrlConstants.nearOrganizationList;
+import static com.tourismelves.view.widget.loadlayout.State.LOADING;
+import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
 /**
  * 景区
@@ -28,6 +39,11 @@ public class ScenicSpotFragment extends BaseFragment {
     @BindView(R.id.swipeToLoadLayout)
     SwipeToLoadLayout swipeToLoadLayout;
     private NearScenicSpotAdapter nearScenicSpotAdapter;
+
+    //当前页数
+    int page = 1;
+    //总页数
+    int totalPage = 1;
 
     @Override
     protected int setContentLayout() {
@@ -44,13 +60,8 @@ public class ScenicSpotFragment extends BaseFragment {
 
     @Override
     protected void obtainData() {
-        List<HomeRes> list = new ArrayList<>();
-
-        for (int i = 0; i < 20; i++) {
-            list.add(new HomeRes());
-        }
-
-        nearScenicSpotAdapter.replaceData(list);
+        getLoadLayout().setLayoutState(LOADING);
+        nearOrganizationList(true);
     }
 
     @Override
@@ -58,13 +69,15 @@ public class ScenicSpotFragment extends BaseFragment {
         swipeToLoadLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                swipeToLoadLayout.setLoadingMore(false);
+                page++;
+                nearOrganizationList(false);
             }
         });
         swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                swipeToLoadLayout.setRefreshing(false);
+                page = 1;
+                nearOrganizationList(true);
             }
         });
         swipeTarget.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -77,5 +90,98 @@ public class ScenicSpotFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+
+    private void nearOrganizationList(final boolean isRefresh) {
+
+        //获取当前经纬度
+        final Location location = LocationUtil.getInstance(getContext()).showLocation();
+
+        double latitude = 0;
+        double longitude = 0;
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+        OkHttpUtils.get(String.format(nearOrganizationList, latitude, longitude, 20, page),
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(final String response) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                super.run();
+                                JSONObject object = JSON.parseObject(response);
+                                //获取请求结果的code码
+                                Integer code = object.getInteger("code");
+                                if (code == 200) {
+                                    final ArrayList<HomeRes> homeResList = new ArrayList<>();
+                                    //获取总页数
+                                    totalPage = object.getInteger("totalPage");
+
+                                    //获取当前数据源集合
+                                    JSONArray dataList = object.getJSONArray("dataList");
+                                    int size = dataList.size();
+                                    for (int i = 0; i < size; i++) {
+                                        String string = dataList.getJSONObject(i).toString();
+                                        HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
+
+                                        int distance = 0;
+                                        if (location != null)
+                                            distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
+                                                    location.getLongitude(), location.getLatitude());
+
+                                        homeRes.setDistance(distance / 1000);
+                                        homeResList.add(homeRes);
+                                    }
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            //是否为刷新操作
+                                            if (isRefresh) {
+                                                //替换适配器的数据源
+                                                nearScenicSpotAdapter.replaceData(homeResList);
+                                                //停止头部刷新动画
+                                                swipeToLoadLayout.setRefreshing(false);
+                                            } else {
+                                                //添加适配器的数据源
+                                                nearScenicSpotAdapter.insertItems(homeResList);
+                                                //停止底部加载动画
+                                                swipeToLoadLayout.setLoadingMore(false);
+                                            }
+
+                                            //如果总页数超过一条，开启加载监听
+                                            if (totalPage > 1) {
+                                                swipeToLoadLayout.setLoadMoreEnabled(true);
+                                            }
+                                            //如果当前访问的是最后一页，关闭加载监听
+                                            if (totalPage == page) {
+                                                swipeToLoadLayout.setLoadMoreEnabled(false);
+                                            }
+                                        }
+                                    });
+
+                                } else {
+                                    ToastUtil.show(object.getString("message"));
+                                }
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        getLoadLayout().setLayoutState(SUCCESS);
+                                    }
+                                });
+                            }
+                        }.start();
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        getLoadLayout().setLayoutState(State.FAILED);
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
     }
 }

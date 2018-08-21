@@ -1,25 +1,16 @@
 package com.tourismelves.view.activity;
 
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.squareup.okhttp.Request;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.RechargeBean;
 import com.tourismelves.model.net.OkHttpUtils;
-import com.tourismelves.utils.common.PayResult;
 import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
@@ -37,7 +28,7 @@ import static com.tourismelves.app.constant.UrlConstants.moneyinfo;
 public class RechargeActivity extends StateBaseActivity {
 
 
-
+//    TextView tv_title;
     RecyclerView recyclerView;
     RechargeAdapter rechargeAdapter;
     RechargeBean rechargeBean;
@@ -52,15 +43,16 @@ public class RechargeActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
-
+//        tv_title = findViewById(R.id.title_name);
+//        tv_title.setText("充值金币");
         recyclerView = findViewById(R.id.recharge_recy);
         listBeen = new ArrayList<>();
     }
 
     @Override
     protected void obtainData() {
-
-        setStatusUi();
+        setStatusBar(R.id.recharge_status);
+//        setStatusUi();
         rechargeAdapter = new RechargeAdapter(RechargeActivity.this,listBeen);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(rechargeAdapter);

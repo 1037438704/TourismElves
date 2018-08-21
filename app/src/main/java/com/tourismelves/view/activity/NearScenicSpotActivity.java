@@ -1,32 +1,23 @@
 package com.tourismelves.view.activity;
 
 import android.content.Intent;
-import android.location.Location;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.tourismelves.R;
-import com.tourismelves.model.net.OkHttpUtils;
-import com.tourismelves.utils.common.ToastUtil;
-import com.tourismelves.utils.system.LocationUtil;
 import com.tourismelves.utils.system.ResolutionUtil;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.FragmentAdapter;
 import com.tourismelves.view.fragment.near.ScenicSpotFragment;
 import com.tourismelves.view.fragment.near.ShoppingFragment;
 import com.tourismelves.view.widget.SlidingTabLayout;
-import com.tourismelves.view.widget.loadlayout.State;
 import com.tourismelves.view.widget.viewpager.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.tourismelves.app.constant.UrlConstants.nearOrganizationList;
 
 /**
  * 附近景区
@@ -62,7 +53,6 @@ public class NearScenicSpotActivity extends StateBaseActivity {
 
     @Override
     protected void obtainData() {
-        nearOrganizationList();
         strings.add("景区");
         strings.add("购物");
 
@@ -103,39 +93,5 @@ public class NearScenicSpotActivity extends StateBaseActivity {
 
             }
         });
-    }
-
-    private void nearOrganizationList() {
-        //当前页数
-        int page = 1;
-        //总页数
-        int totalPage = 1;
-        //获取当前经纬度
-        Location location = LocationUtil.getInstance(getContext()).showLocation();
-
-        double latitude = 0;
-        double longitude = 0;
-        if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
-        OkHttpUtils.get(String.format(nearOrganizationList, latitude, longitude, 20, page),
-                new OkHttpUtils.ResultCallback<String>() {
-                    @Override
-                    public void onSuccess(String response) {
-                        JSONObject object = JSON.parseObject(response);
-                        //获取请求结果的code码
-                        Integer code = object.getInteger("code");
-                        if (code == 200) {
-
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Exception e) {
-                        getLoadLayout().setLayoutState(State.FAILED);
-                        ToastUtil.show(R.string.no_found_network);
-                    }
-                });
     }
 }

@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.areaList;
 
@@ -56,7 +55,9 @@ public class SelectCityActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
-        setStatusUi();
+        showStateLayout(1);
+        setBaseTitle("选择城市");
+        showStateRightView(2);
 
         provinces = new ArrayList<>();
         citys = new ArrayList<>();
@@ -201,11 +202,6 @@ public class SelectCityActivity extends StateBaseActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    @OnClick(R.id.select_city_back)
-    public void onViewClicked() {
-        finish();
     }
 
     @Override

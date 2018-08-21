@@ -31,6 +31,7 @@ public class ShowImageUtils {
                 .crossFade()// 设置淡入淡出效果，默认300ms，可以传参
                 .placeholder(errorimg)// 设置占位图
                 .thumbnail(0.1f)
+                .centerCrop()
                 .priority(Priority.LOW)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)// 缓存修改过的图片
                 .into(imgeview);

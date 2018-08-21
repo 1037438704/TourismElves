@@ -177,7 +177,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         baseRightTv.setText(getString(resStr));
     }
 
-    protected void setBasePositioning(@NonNull String resStr) {
+    public void setBasePositioning(@NonNull String resStr) {
         basePositioning.setText(resStr.equals("") ? "定位" : resStr);
     }
 

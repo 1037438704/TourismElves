@@ -74,12 +74,8 @@ public class ScenicSpotFragment extends BaseFragment {
         homeAdapter = new ScenicSpotAdapter(getContext(), new ArrayList<HomeRes>(), mainActivity.getBasePositioning());
         swipeTarget.setAdapter(homeAdapter);
         swipeToLoadLayout.setLoadMoreEnabled(false);
-
-
         //获取当前经纬度
         location = LocationUtil.getInstance(getContext()).showLocation();
-
-        setAddress();
     }
 
     @Override
@@ -118,10 +114,6 @@ public class ScenicSpotFragment extends BaseFragment {
                 }
             }
         });
-    }
-
-    private void setAddress() {
-
     }
 
     /**
@@ -192,6 +184,8 @@ public class ScenicSpotFragment extends BaseFragment {
                                             }
                                         }
                                     });
+                                } else {
+                                    ToastUtil.show(object.getString("message"));
                                 }
 
                                 getActivity().runOnUiThread(new Runnable() {
@@ -223,7 +217,7 @@ public class ScenicSpotFragment extends BaseFragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getSelectCityBus(final SelectCityBus selectCityBus) {
-        setAddress();
+        mainActivity.setBasePositioning(selectCityBus.getCity());
         swipeToLoadLayout.setRefreshing(true);
     }
 }

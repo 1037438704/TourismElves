@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/round_10_white"
@@ -12,28 +12,31 @@
         android:layout_marginBottom="@dimen/dp15"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp10"
         android:background="@drawable/round_10_ecf3fc"
         android:gravity="center"
         android:hint="输入兑换码"
         android:padding="@dimen/dp15"
-        android:singleLine="true"
         android:textColor="#ff606980"
         android:textSize="@dimen/sp14" />
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/code_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignRight="@id/code_et"
+        android:layout_below="@id/code_et"
         android:layout_marginLeft="@dimen/dp10"
-        android:layout_marginRight="@dimen/dp10"
         android:text="注意事项： \n1. 激活码为10位数字，尽可使用一次。 \n2. 输入时请注意区分相似字母和数字。"
         android:textColor="#ff606980"
         android:textSize="@dimen/sp14" />
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/code_sure"
         android:layout_width="@dimen/dp140"
         android:layout_height="@dimen/dp36"
-        android:layout_gravity="center_horizontal"
+        android:layout_below="@id/code_tip"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dp23"
         android:layout_marginTop="@dimen/dp60"
         android:background="@drawable/round_gradient_4_interpretation2"
@@ -41,4 +44,4 @@
         android:text="确定"
         android:textColor="@color/white"
         android:textSize="@dimen/sp16" />
-</LinearLayout>
+</RelativeLayout>

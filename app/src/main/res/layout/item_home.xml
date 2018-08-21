@@ -221,7 +221,6 @@
                 android:includeFontPadding="false"
                 android:paddingLeft="@dimen/dp6"
                 android:paddingRight="@dimen/dp6"
-                android:text="中国 河北省"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp10" />
 

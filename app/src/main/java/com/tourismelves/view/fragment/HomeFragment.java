@@ -173,6 +173,8 @@ public class HomeFragment extends BaseFragment {
                                         }
                                     });
 
+                                } else {
+                                    ToastUtil.show(object.getString("message"));
                                 }
 
                                 getActivity().runOnUiThread(new Runnable() {
