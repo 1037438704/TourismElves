@@ -10,11 +10,13 @@ public interface UrlConstants {
     //热门景区列表
     String organizationList = port + "lyjl/web/organizationList.do?page.showCount=%s&page.currentPage=%s";
     //热门景区详情
-    String organizationList2 = port + "/lyjl/web/organizationList.do?orgId=1";
+    String organizationList2 = port + "/lyjl/web/organizationList.do?orgId=%s";
     //首页轮转图
     String posterList = port + "lyjl/web/posterList.do?spaceId=%s";
     //查询景区or精灵说
     String searchOrganizationOrArticle = port + "lyjl/web/searchOrganizationOrArticle.do?key=%s&type=%s&sortType=%s&page.showCount=%s&page.currentPage=%s";
+    //景点列表
+    String sceneryList = port + "lyjl/web/sceneryList.do?orgId=%s&userId=%s";
     //地区列表
     String areaList = port + "lyjl/web/areaList.do";
     //附近景区列表

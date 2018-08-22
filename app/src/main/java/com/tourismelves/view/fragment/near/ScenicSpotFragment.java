@@ -27,6 +27,7 @@ import butterknife.BindView;
 
 import static com.tourismelves.app.constant.UrlConstants.nearOrganizationList;
 import static com.tourismelves.view.widget.loadlayout.State.LOADING;
+import static com.tourismelves.view.widget.loadlayout.State.NO_DATA;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
 /**
@@ -41,9 +42,9 @@ public class ScenicSpotFragment extends BaseFragment {
     private NearScenicSpotAdapter nearScenicSpotAdapter;
 
     //当前页数
-    int page = 1;
+    private int page = 1;
     //总页数
-    int totalPage = 1;
+    private int totalPage = 1;
 
     @Override
     protected int setContentLayout() {
@@ -123,17 +124,32 @@ public class ScenicSpotFragment extends BaseFragment {
                                     //获取当前数据源集合
                                     JSONArray dataList = object.getJSONArray("dataList");
                                     int size = dataList.size();
-                                    for (int i = 0; i < size; i++) {
-                                        String string = dataList.getJSONObject(i).toString();
-                                        HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
+                                    if (size > 0) {
+                                        for (int i = 0; i < size; i++) {
+                                            String string = dataList.getJSONObject(i).toString();
+                                            HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
-                                        int distance = 0;
-                                        if (location != null)
-                                            distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
-                                                    location.getLongitude(), location.getLatitude());
+                                            int distance = 0;
+                                            if (location != null)
+                                                distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
+                                                        location.getLongitude(), location.getLatitude());
 
-                                        homeRes.setDistance(distance / 1000);
-                                        homeResList.add(homeRes);
+                                            homeRes.setDistance(distance / 1000);
+                                            homeResList.add(homeRes);
+                                        }
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getLoadLayout().setLayoutState(SUCCESS);
+                                            }
+                                        });
+                                    } else {
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                getLoadLayout().setLayoutState(NO_DATA);
+                                            }
+                                        });
                                     }
 
                                     getActivity().runOnUiThread(new Runnable() {
@@ -165,14 +181,13 @@ public class ScenicSpotFragment extends BaseFragment {
 
                                 } else {
                                     ToastUtil.show(object.getString("message"));
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getLoadLayout().setLayoutState(SUCCESS);
+                                        }
+                                    });
                                 }
-
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        getLoadLayout().setLayoutState(SUCCESS);
-                                    }
-                                });
                             }
                         }.start();
                     }

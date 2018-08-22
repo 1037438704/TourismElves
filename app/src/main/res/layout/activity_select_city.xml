@@ -5,8 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/select_city_title">
+        android:layout_height="match_parent">
 
         <com.tourismelves.view.widget.SideBar
             android:id="@+id/select_city_sideBar"

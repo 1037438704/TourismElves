@@ -183,7 +183,6 @@
             android:layout_marginRight="@dimen/dp10"
             android:layout_weight="1"
             android:includeFontPadding="false"
-            android:text="故宫角楼"
             android:textColor="#434F6D"
             android:textSize="@dimen/sp16"
             android:textStyle="bold" />

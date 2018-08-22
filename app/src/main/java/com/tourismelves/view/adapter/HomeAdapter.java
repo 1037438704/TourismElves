@@ -19,9 +19,10 @@ import com.tourismelves.model.res.BannerRes;
 import com.tourismelves.model.res.HomeRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
-import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.view.activity.AlreadyBoughtActivity;
 import com.tourismelves.view.activity.FootMarkActivity;
+import com.tourismelves.view.activity.InterpretationList2Activity;
+import com.tourismelves.view.activity.InterpretationListActivity;
 import com.tourismelves.view.activity.NearScenicSpotActivity;
 import com.tourismelves.view.activity.SettlementActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
@@ -77,7 +78,25 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 home_look_all_rl.setVisibility(View.GONE);
             }
             //查看全部
+            holder.getView(R.id.home_elf_said_details).setOnClickListener(this);
             holder.getView(R.id.home_look_all).setOnClickListener(this);
+            holder.getView(R.id.home_attractions_details).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//景点详情
+                    Intent intent = new Intent(getContext(), InterpretationList2Activity.class);
+                    intent.putExtra("ordId",homeRes.getOrgId());
+                    getContext().startActivity(intent);
+                }
+            });
+            holder.getView(R.id.home_scenic_spot_details).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//景区详情
+                    Intent intent = new Intent(getContext(), InterpretationListActivity.class);
+                    intent.putExtra("ordId",homeRes.getOrgId());
+                    intent.putExtra("name",homeRes.getName());
+                    getContext().startActivity(intent);
+                }
+            });
 
             AppCompatImageView home_attractions_img = holder.getView(R.id.home_attractions_img);
             AppCompatTextView home_attractions_name = holder.getView(R.id.home_attractions_name);
@@ -181,14 +200,8 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             case R.id.home_look_all://查看全部
                 EventBusUtil.postEvent(new TabSelectBus(1));
                 break;
-            case R.id.home_scenic_spot_details://景区详情
-                LogUtil.i("景区详情");
-                break;
-            case R.id.home_attractions_details://景点详情
-                LogUtil.i("景点详情");
-                break;
             case R.id.home_elf_said_details://精灵说详情
-                LogUtil.i("精灵说详情");
+                EventBusUtil.postEvent(new TabSelectBus(2));
                 break;
         }
     }

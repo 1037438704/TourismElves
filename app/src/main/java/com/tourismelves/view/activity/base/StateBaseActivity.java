@@ -125,13 +125,13 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
 
     /**
      * 显示那种标题栏
-     * 0:搜索  1:标题
+     * 0:搜索  1:标题  -1:显示状态栏  其他:全部隐藏
      */
     protected void showStateLayout(int state) {
         baseSearchLayout.setVisibility(state == 0 ? View.VISIBLE : View.GONE);
         baseTitleLayout.setVisibility(state == 1 ? View.VISIBLE : View.GONE);
 
-        baseStatus.setVisibility((state == 1 || state == 0) ? View.VISIBLE : View.GONE);
+        baseStatus.setVisibility((state == 1 || state == 0||state==-1) ? View.VISIBLE : View.GONE);
     }
 
     /**

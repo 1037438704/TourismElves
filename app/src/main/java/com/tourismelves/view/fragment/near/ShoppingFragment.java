@@ -4,6 +4,7 @@ import android.view.View;
 
 import com.tourismelves.R;
 import com.tourismelves.view.fragment.base.BaseFragment;
+import com.tourismelves.view.widget.loadlayout.State;
 
 /**
  * 购物
@@ -22,7 +23,7 @@ public class ShoppingFragment extends BaseFragment {
 
     @Override
     protected void obtainData() {
-
+getLoadLayout().setLayoutState(State.NO_DATA);
     }
 
     @Override

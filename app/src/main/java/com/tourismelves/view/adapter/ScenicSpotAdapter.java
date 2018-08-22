@@ -41,7 +41,7 @@ public class ScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
     }
 
     @Override
-    protected void bindDataForView(ViewHolder holder, HomeRes homeRes, int position) {
+    protected void bindDataForView(ViewHolder holder, final HomeRes homeRes, int position) {
         AppCompatImageView img = holder.getView(R.id.i_scenic_spot_img);
         AppCompatTextView name = holder.getView(R.id.i_scenic_spot_name);
         AppCompatTextView address = holder.getView(R.id.i_scenic_spot_address);
@@ -61,6 +61,8 @@ public class ScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), InterpretationListActivity.class);
+                intent.putExtra("ordId",homeRes.getOrgId());
+                intent.putExtra("name",homeRes.getName());
                 getContext().startActivity(intent);
             }
         });

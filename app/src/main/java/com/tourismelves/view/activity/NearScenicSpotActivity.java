@@ -53,13 +53,13 @@ public class NearScenicSpotActivity extends StateBaseActivity {
 
     @Override
     protected void obtainData() {
-        strings.add("景区");
         strings.add("购物");
+        strings.add("景区");
 
         nearTab.setTabWhite(tabWidth);
 
-        fragments.add(new ScenicSpotFragment());
         fragments.add(new ShoppingFragment());
+        fragments.add(new ScenicSpotFragment());
 
 
         nearViewpager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragments, strings));

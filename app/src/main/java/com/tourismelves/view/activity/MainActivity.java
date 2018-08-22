@@ -131,7 +131,7 @@ public class MainActivity extends StateBaseActivity {
             @Override
             public void onPageSelected(int position) {
                 if (position == 3) {
-                    showStateLayout(2);
+                    showStateLayout(-1);
                 } else {
                     showStateLayout(0);
                 }
