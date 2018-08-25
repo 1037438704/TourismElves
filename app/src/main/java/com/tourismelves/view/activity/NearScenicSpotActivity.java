@@ -42,6 +42,7 @@ public class NearScenicSpotActivity extends StateBaseActivity {
     @Override
     protected void initControls() {
         showStateLayout(1);
+        setBaseTitle("附近");
         setBaseRightImage(R.mipmap.search);
         tabWidth = (int) (ResolutionUtil.getInstance(getContext()).getWidth() / 2.2);
 

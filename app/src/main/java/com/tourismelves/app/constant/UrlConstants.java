@@ -38,8 +38,20 @@ public interface UrlConstants {
     //获取精灵说
     String elfsaidinfo = port + "lyjl/web/newsList.do?page.showCount=%s&page.currentPage=%s";
     //激活码
-    String useActivationCode = port + "/lyjl/app/useActivationCode.do";
+    String useActivationCode = port + "lyjl/app/useActivationCode.do";
     //订单列表
-    String orderList = port + "/lyjl/app/orderList.do?userId=%s&page.currentPage=%s";
+    String orderList = port + "lyjl/app/orderList.do?userId=%s&page.currentPage=%s";
+    // 添加购物车
+    String addCart = port + "lyjl/app/addCart.do?";
+    //购物车列表
+    String cartList = port + "lyjl/app/cartList.do?";
+    //购物车结算
+    String settlement = port + "lyjl/app/settlement.do?";
+    //微信支付
+    String wxPayPay = port + "lyjl/app/wxPayPay.do?";
+    //支付宝支付
+    String alipayPay = port + "lyjl/app/alipayPay.do?";
+    //金币支付
+    String glodPay = port + "lyjl/app/goldPay.do?";
 
 }

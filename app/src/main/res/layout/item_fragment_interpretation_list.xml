@@ -12,11 +12,22 @@
         android:layout_height="@dimen/dp75"
         android:layout_marginBottom="@dimen/dp15">
 
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/i_interpretation_select"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="@drawable/anonymous_select"
+            android:visibility="gone" />
+
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="@dimen/dp75"
             android:layout_height="@dimen/dp75"
-            android:layout_marginRight="@dimen/dp10">
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_toRightOf="@id/i_interpretation_select">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/i_interpretation_icon"
@@ -24,10 +35,17 @@
                 android:layout_height="match_parent" />
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/i_interpretation_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:src="@mipmap/bofang" />
+
+            <View
+                android:id="@+id/i_interpretation_locked"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/suoding" />
         </RelativeLayout>
 
         <android.support.v7.widget.AppCompatTextView

@@ -3,8 +3,6 @@ package com.tourismelves.view.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -209,7 +207,6 @@ public class PaymentActivity extends StateBaseActivity {
 
 
     private void pay(final AliPayInfo mAliPayInfo) {
-
         Runnable payRunnable = new Runnable() {
             @Override
             public void run() {

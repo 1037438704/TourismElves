@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/gray_c"
-    android:padding="@dimen/dp4"
-    android:text="@string/app_name"
-    android:textColor="@color/white"
-    android:textSize="@dimen/sp16" />
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/hot_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp36"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="#F2F4F5"
+        android:drawablePadding="@dimen/dp8"
+        android:padding="@dimen/dp8"
+        android:text="@string/app_name"
+        android:textColor="#606980"
+        android:textSize="@dimen/sp14" />
+
+</RelativeLayout>

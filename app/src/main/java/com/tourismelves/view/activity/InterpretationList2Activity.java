@@ -1,5 +1,6 @@
 package com.tourismelves.view.activity;
 
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.tourismelves.R;
 import com.tourismelves.model.bean.AttractionsBean;
 import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.InterpretationListAdapter;
@@ -31,6 +33,8 @@ import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 public class InterpretationList2Activity extends StateBaseActivity {
     @BindView(R.id.interpretation_list2_recycler)
     RecyclerView interpretationList2Recycler;
+    @BindView(R.id.interpretation_list2_down)
+    AppCompatTextView interpretationList2Down;
     private InterpretationListAdapter interpretationListAdapter;
     private ArrayList<AttractionsBean> attractionsBeans;
 
@@ -44,6 +48,7 @@ public class InterpretationList2Activity extends StateBaseActivity {
         showStateLayout(1);
         setBaseTitle("讲解列表");
         setBaseRightImage(R.mipmap.xiazai);
+        setBaseRightTv("全选");
         interpretationList2Recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         interpretationListAdapter = new InterpretationListAdapter(getContext(), new ArrayList<AttractionsBean>());
         interpretationList2Recycler.setAdapter(interpretationListAdapter);
@@ -66,9 +71,43 @@ public class InterpretationList2Activity extends StateBaseActivity {
         setBaseRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showStateRightView(0);
+                interpretationList2Down.setVisibility(View.VISIBLE);
+                interpretationListAdapter.setEdit(true);
             }
         });
+        setBaseRightTvListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (getBaseRightTv().equals("全选")) {
+                    setBaseRightTv("全不选");
+                    interpretationListAdapter.selectAll(true);
+                } else {
+                    setBaseRightTv("全选");
+                    interpretationListAdapter.selectAll(false);
+                }
+            }
+        });
+
+        interpretationList2Down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringBuffer sb = new StringBuffer();
+                for (AttractionsBean a : interpretationListAdapter.getDataList()) {
+                    if (a.isSelect()) {
+                        sb.append(a.getName()).append("-");
+                    }
+                }
+                ToastUtil.showLong(sb.toString());
+                LogUtil.i(sb.toString());
+
+                showStateRightView(1);
+                setBaseRightTv("全选");
+                interpretationList2Down.setVisibility(View.GONE);
+                interpretationListAdapter.setEdit(false);
+            }
+        });
+
     }
 
     /**

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/i_interpretation_details_icon"
+        android:layout_width="@dimen/dp150"
+        android:layout_height="@dimen/dp84"
+        android:layout_marginLeft="@dimen/dp10"
+        android:background="@color/gray_c" />
+</RelativeLayout>

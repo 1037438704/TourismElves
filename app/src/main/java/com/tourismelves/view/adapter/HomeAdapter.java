@@ -12,14 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.alibaba.fastjson.JSON;
 import com.tourismelves.R;
-import com.tourismelves.model.bean.SettlementBean;
 import com.tourismelves.model.event.TabSelectBus;
+import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.model.res.BannerRes;
 import com.tourismelves.model.res.HomeRes;
 import com.tourismelves.utils.common.EventBusUtil;
+import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
-import com.tourismelves.view.activity.AlreadyBoughtActivity;
+import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.FootMarkActivity;
 import com.tourismelves.view.activity.InterpretationList2Activity;
 import com.tourismelves.view.activity.InterpretationListActivity;
@@ -34,6 +36,7 @@ import com.tourismelves.view.widget.viewpager.banner.OnBannerListener;
 
 import java.util.List;
 
+import static com.tourismelves.app.constant.UrlConstants.addCart;
 import static com.tourismelves.app.constant.UrlConstants.port;
 import static com.tourismelves.view.fragment.MyFragment.isLogin;
 
@@ -67,7 +70,17 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
 
             holder.getView(R.id.home_near).setOnClickListener(this);
             holder.getView(R.id.home_activation_code).setOnClickListener(this);
-            holder.getView(R.id.home_already_bought).setOnClickListener(this);
+            holder.getView(R.id.home_already_bought).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isLogin(getContext(), true)) {
+                        return;
+                    }
+                    Intent intent = new Intent(getContext(), SettlementActivity.class);
+                    getContext().startActivity(intent);
+//                    getContext().startActivity(new Intent(getContext(), AlreadyBoughtActivity.class));
+                }
+            });
             holder.getView(R.id.home_footprint).setOnClickListener(this);
         } else {//item
             final HomeRes homeRes = (HomeRes) object;
@@ -84,7 +97,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 @Override
                 public void onClick(View v) {//景点详情
                     Intent intent = new Intent(getContext(), InterpretationList2Activity.class);
-                    intent.putExtra("ordId",homeRes.getOrgId());
+                    intent.putExtra("ordId", homeRes.getOrgId());
                     getContext().startActivity(intent);
                 }
             });
@@ -92,8 +105,8 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 @Override
                 public void onClick(View v) {//景区详情
                     Intent intent = new Intent(getContext(), InterpretationListActivity.class);
-                    intent.putExtra("ordId",homeRes.getOrgId());
-                    intent.putExtra("name",homeRes.getName());
+                    intent.putExtra("ordId", homeRes.getOrgId());
+                    intent.putExtra("name", homeRes.getName());
                     getContext().startActivity(intent);
                 }
             });
@@ -108,9 +121,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             home_attractions_money.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {//支付
-                    Intent intent = new Intent(getContext(), SettlementActivity.class);
-                    intent.putExtra("SettlementBean", new SettlementBean(homeRes.getName(), homeRes.getPrice(), homeRes.getPrice(), homeRes.getImage(), homeRes.getSceneryCount()));
-                    getContext().startActivity(intent);
+                    addCart(homeRes.getOrgId());
                 }
             });
 
@@ -184,12 +195,6 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 }
                 new ActivityCodeDialog().show(((AppCompatActivity) getContext()).getSupportFragmentManager());
                 break;
-            case R.id.home_already_bought://已购
-                if (!isLogin(getContext(), true)) {
-                    return;
-                }
-                getContext().startActivity(new Intent(getContext(), AlreadyBoughtActivity.class));
-                break;
             case R.id.home_footprint://足迹
                 if (!isLogin(getContext(), true)) {
                     return;
@@ -204,5 +209,24 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 EventBusUtil.postEvent(new TabSelectBus(2));
                 break;
         }
+    }
+
+
+    /**
+     * 添加购物车
+     */
+    private void addCart(int orgId) {
+        OkHttpUtils.get(addCart + "userId=" + SPUtils.getInstance(getContext()).getString("putInt") + "&orgId=" + orgId,
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        ToastUtil.show(JSON.parseObject(response).getString("message"));
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
     }
 }

@@ -172,6 +172,9 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected void setBaseRightTv(@NonNull String resStr) {
         baseRightTv.setText(resStr);
     }
+    protected String getBaseRightTv() {
+       return baseRightTv.getText().toString();
+    }
 
     protected void setBaseRightTv(@StringRes int resStr) {
         baseRightTv.setText(getString(resStr));

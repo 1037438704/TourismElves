@@ -1,6 +1,5 @@
 package com.tourismelves.view.fragment.near;
 
-import android.location.Location;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +25,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 import static com.tourismelves.app.constant.UrlConstants.nearOrganizationList;
+import static com.tourismelves.view.activity.MainActivity.latitude;
+import static com.tourismelves.view.activity.MainActivity.longitude;
 import static com.tourismelves.view.widget.loadlayout.State.LOADING;
 import static com.tourismelves.view.widget.loadlayout.State.NO_DATA;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
@@ -95,16 +96,6 @@ public class ScenicSpotFragment extends BaseFragment {
 
 
     private void nearOrganizationList(final boolean isRefresh) {
-
-        //获取当前经纬度
-        final Location location = LocationUtil.getInstance(getContext()).showLocation();
-
-        double latitude = 0;
-        double longitude = 0;
-        if (location != null) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-        }
         OkHttpUtils.get(String.format(nearOrganizationList, latitude, longitude, 20, page),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
@@ -130,9 +121,8 @@ public class ScenicSpotFragment extends BaseFragment {
                                             HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
                                             int distance = 0;
-                                            if (location != null)
                                                 distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
-                                                        location.getLongitude(), location.getLatitude());
+                                                        latitude, longitude);
 
                                             homeRes.setDistance(distance / 1000);
                                             homeResList.add(homeRes);

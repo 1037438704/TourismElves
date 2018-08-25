@@ -46,7 +46,6 @@ public abstract class BaseActivity extends AbstractActivity implements IBaseActi
     }
 
     private void init() {
-
         WindowManager manager = this.getWindowManager();
         DisplayMetrics outMetrics = new DisplayMetrics();
         manager.getDefaultDisplay().getMetrics(outMetrics);

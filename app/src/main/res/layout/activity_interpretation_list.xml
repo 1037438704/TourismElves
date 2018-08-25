@@ -4,13 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent">
-
-
-    </RelativeLayout>
+        android:layout_height="match_parent" >
+    </com.amap.api.maps.MapView>
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
@@ -114,6 +113,7 @@
         card:cardElevation="@dimen/dp5">
 
         <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_map_restore"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -139,6 +139,7 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_zoom_large"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -153,6 +154,7 @@
                 android:background="@color/gray_c" />
 
             <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/iv_zoom_small"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="1"

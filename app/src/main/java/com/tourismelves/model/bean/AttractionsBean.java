@@ -12,6 +12,8 @@ import java.util.List;
 
 public class AttractionsBean implements Parcelable {
 
+    private boolean isSelect=false;
+
     private String name;
     private String description;
     private double longitude;
@@ -34,6 +36,14 @@ public class AttractionsBean implements Parcelable {
     private String updateTime;
     private int isAutoplay;
     private int locked;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public String getName() {
         return name;

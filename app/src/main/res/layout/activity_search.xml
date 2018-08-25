@@ -5,46 +5,69 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <View
-        android:id="@+id/search_status"
-        android:layout_width="match_parent"
-        android:layout_height="0dp" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp44"
+        android:background="@drawable/gradient_interpretation"
         android:gravity="center_vertical">
 
-        <android.support.v7.widget.AppCompatImageView
-            android:id="@+id/search_image"
-            android:layout_width="@dimen/dp44"
-            android:layout_height="@dimen/dp44"
-            android:padding="@dimen/dp10"
-            android:src="@mipmap/search" />
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/search_edit"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp30"
-            android:layout_weight="1"
-            android:background="@drawable/search_bg"
-            android:gravity="center_vertical"
-            android:hint="景区名称/城市/攻略"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/search_positioning"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:drawablePadding="@dimen/dp6"
+            android:drawableRight="@mipmap/home_select_city_image"
+            android:gravity="center"
             android:paddingLeft="@dimen/dp15"
-            android:paddingRight="@dimen/dp15"
-            android:singleLine="true"
-            android:textSize="@dimen/sp16" />
+            android:paddingRight="@dimen/dp10"
+            android:text="定位"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp6"
+            android:layout_marginTop="@dimen/dp6"
+            android:layout_weight="1"
+            android:background="@drawable/round_transparent_white"
+            android:gravity="center_vertical">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/search_edit"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp16"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="@dimen/dp6"
+                android:hint="Search"
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/sp14" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp18"
+                android:src="@mipmap/yuyin" />
+        </LinearLayout>
+
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/search_cancel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingLeft="@dimen/dp15"
-            android:paddingRight="@dimen/dp15"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingRight="@dimen/dp10"
             android:text="取消"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp18" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
     <View
@@ -52,31 +75,33 @@
         android:layout_height="@dimen/dp1"
         android:background="@color/gray_c" />
 
-    <LinearLayout
-        android:id="@+id/search_hot_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp14"
-            android:layout_marginTop="@dimen/dp20"
-            android:text="热门搜索"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp18" />
-
-        <com.tourismelves.view.widget.flowlayout.TagFlowLayout
-            android:id="@+id/search_hot"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            zhy:max_select="1" />
-    </LinearLayout>
+            android:overScrollMode="never" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/search_city_dialog"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_10_59000000"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <com.tourismelves.view.widget.SideBar
+            android:id="@+id/search_city_sideBar"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp400"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
 </LinearLayout>

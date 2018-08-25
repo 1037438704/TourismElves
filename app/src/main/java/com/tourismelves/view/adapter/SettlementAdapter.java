@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.tourismelves.R;
-import com.tourismelves.model.bean.SettlementBean;
+import com.tourismelves.model.bean.ShopListBean;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
@@ -24,26 +24,26 @@ import static com.tourismelves.app.constant.UrlConstants.port;
  * 结算
  */
 
-public class SettlementAdapter extends RecyclerBaseAdapter<SettlementBean> {
+public class SettlementAdapter extends RecyclerBaseAdapter<ShopListBean> {
 
-    public SettlementAdapter(@NonNull Context context, @NonNull List<SettlementBean> mDataList) {
+    public SettlementAdapter(@NonNull Context context, @NonNull List<ShopListBean> mDataList) {
         super(context, mDataList);
     }
 
     @Override
-    protected void bindDataForView(ViewHolder holder, SettlementBean s, int position) {
+    protected void bindDataForView(ViewHolder holder, ShopListBean s, int position) {
         AppCompatImageView img = holder.getView(R.id.i_settlement_img);
-        AppCompatTextView  money= holder.getView(R.id.i_settlement_money);
+        AppCompatTextView money = holder.getView(R.id.i_settlement_money);
         AppCompatTextView count = holder.getView(R.id.i_settlement_count);
         AppCompatTextView name = holder.getView(R.id.i_settlement_name);
         AppCompatTextView original_money = holder.getView(R.id.i_settlement_original_money);
 
         original_money.setPaintFlags(original_money.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-        ShowImageUtils.showImageView(getContext(), port + s.getImgSrc(), img);
-        count.setText(String.format(getContext().getString(R.string.scenic_spot_count), s.getSceneryCount() + ""));
-        money.setText(Html.fromHtml("¥<b>" + s.getMoney() + "</b>"));
-        original_money.setText(Html.fromHtml("¥" + s.getOriginalMoney()));
+        ShowImageUtils.showImageView(getContext(), port + s.getImage(), img);
+        count.setText(String.format(getContext().getString(R.string.scenic_spot_count), "1"));
+        money.setText(Html.fromHtml("¥<b>" + (s.getPrice() - s.getPreferential()) + "</b>"));
+        original_money.setText(Html.fromHtml("¥" + s.getPrice()));
         name.setText(s.getName());
     }
 

@@ -7,5 +7,17 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/interpretation_list2_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/interpretation_list2_down"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@drawable/gradient_interpretation"
+        android:gravity="center"
+        android:text="加入下载"
+        android:visibility="gone"
+        android:textColor="#ffffffff"
+        android:textSize="@dimen/sp16" />
 </LinearLayout>

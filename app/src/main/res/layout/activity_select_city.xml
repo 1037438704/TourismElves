@@ -18,7 +18,8 @@
             android:id="@+id/select_city_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toLeftOf="@id/select_city_sideBar" />
+            android:layout_toLeftOf="@id/select_city_sideBar"
+            android:overScrollMode="never" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/select_city_dialog"

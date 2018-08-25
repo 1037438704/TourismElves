@@ -1,16 +1,9 @@
 package com.tourismelves.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.TextView;
-
 import com.tourismelves.R;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 
 public class InviteActivity extends StateBaseActivity {
-
-
-
     @Override
     protected void setContentLayout() {
         setContentView(R.layout.activity_invite);
