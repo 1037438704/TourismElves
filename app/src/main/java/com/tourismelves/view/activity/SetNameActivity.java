@@ -57,7 +57,7 @@ public class SetNameActivity extends StateBaseActivity {
                 String userid = SPUtils.getInstance(SetNameActivity.this).getString("putInt");  //取出这个int值
                 name = ed_name.getText().toString();
                 OkHttpUtils.get().url(ApiManager.SET_PERSON)
-                        .addHeader("userId",userid)
+                        .addParams("userId",userid)
 //                        .addParams("Authorization", SPUtils.getInstance().getString(SPConstants.KEY_USER_TOKEN))
                         .addParams("nickName",name)
                         .build()

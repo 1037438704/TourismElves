@@ -8,7 +8,7 @@
     tools:context="com.tourismelves.view.activity.PaymentActivity">
 
 
-    <include layout="@layout/title_name" />
+
 
     <!--<LinearLayout-->
         <!--android:orientation="horizontal"-->
@@ -160,7 +160,7 @@
         android:layout_marginRight="@dimen/dp20"
         android:layout_marginTop="@dimen/dp20"
         android:background="@mipmap/bar"
-        android:text="保存"
+        android:text="选择支付方式"
         android:textColor="#ffffff"
         android:textSize="@dimen/sp16" />
 

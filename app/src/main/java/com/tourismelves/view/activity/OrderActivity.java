@@ -32,8 +32,8 @@ public class OrderActivity extends StateBaseActivity {
         tab_layout = (TabLayout) findViewById(R.id.order_layout);
         viewpager = (ViewPager) findViewById(R.id.order_viewpager);
 
-        fragments.add(new BuyFragment());
         fragments.add(new WaitPayFragment());
+        fragments.add(new BuyFragment());
         list.add("待支付");
         list.add("已购");
         SubscribeAdapter subscribeAdapter = new SubscribeAdapter(getSupportFragmentManager(),fragments,list);

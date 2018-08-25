@@ -25,7 +25,7 @@ import com.zhy.http.okhttp.callback.StringCallback;
 
 public class PaymentActivity extends StateBaseActivity {
 
-    TextView tv_title;
+
     private String flagString = "1";
     LinearLayout ll_zfbpay,ll_wxpay;
     TextView tv_submit;
@@ -41,7 +41,6 @@ public class PaymentActivity extends StateBaseActivity {
     @Override
     protected void setContentLayout() {
         setContentView(R.layout.activity_payment);
-        tv_title = findViewById(R.id.title_name);
         ll_zfbpay =  findViewById(R.id.ll_zfbpay);
         ll_wxpay =  findViewById(R.id.ll_wxpay);
         tv_submit = findViewById(R.id.payment_save);
@@ -51,12 +50,14 @@ public class PaymentActivity extends StateBaseActivity {
         im_zfb1 = findViewById(R.id.im_zfb1);
         im_wx = findViewById(R.id.im_wx);
         im_wx1 = findViewById(R.id.im_wx1);
-        tv_title.setText("充值");
+
     }
 
     @Override
     protected void initControls() {
-
+        showStateLayout(1);
+        setBaseTitle("充值");
+        showStateRightView(2);
     }
 
     @Override
@@ -64,10 +65,11 @@ public class PaymentActivity extends StateBaseActivity {
 
         Intent intent = getIntent();
         sk_id = intent.getStringExtra("pk_id");
+        final String money = intent.getStringExtra("money");
         ll_wxpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_submit.setText("微信支付￥");
+                tv_submit.setText("微信支付￥"+money);
 //                im_wx.setVisibility(View.VISIBLE);
 //                im_zfb.setVisibility(View.GONE);
 //                 im_wx.setSelected(true);
@@ -82,7 +84,7 @@ public class PaymentActivity extends StateBaseActivity {
         ll_zfbpay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_submit.setText("支付宝支付￥");
+                tv_submit.setText("支付宝支付￥"+money);
 //                im_zfb.setVisibility(View.VISIBLE);
 //                im_wx.setVisibility(View.GONE);
 //                im_zfb.setSelected(true);

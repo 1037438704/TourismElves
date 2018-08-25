@@ -1,7 +1,9 @@
 package com.tourismelves.view.fragment;
 
+import android.content.Intent;
 import android.location.Location;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,17 +12,21 @@ import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.tourismelves.R;
+import com.tourismelves.app.constant.CommentConstants;
 import com.tourismelves.model.bean.ElfsaidBean;
+import com.tourismelves.model.bean.RechargeBean;
 import com.tourismelves.model.event.SelectCityBus;
 import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.view.activity.ElverSayDetailsActivity;
 import com.tourismelves.view.adapter.ElfSaidAdapter;
 import com.tourismelves.view.adapter.ScenicSpotAdapter;
 import com.tourismelves.view.fragment.base.BaseFragment;
 import com.tourismelves.view.widget.swipetoloadlayout.OnLoadMoreListener;
 import com.tourismelves.view.widget.swipetoloadlayout.OnRefreshListener;
 import com.tourismelves.view.widget.swipetoloadlayout.SwipeToLoadLayout;
+
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -31,7 +37,9 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.tourismelves.app.constant.UrlConstants.elfsaidinfo;
+import static com.tourismelves.app.constant.UrlConstants.userinfo;
 import static com.tourismelves.view.widget.loadlayout.State.FAILED;
+import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
 /**
  * 景区
@@ -52,7 +60,7 @@ public class ElfSaidFragment extends BaseFragment {
   //  private String strAddress = CommentConstants.curAddress;
     //获取当前经纬度
     private Location location;
-    private ScenicSpotAdapter homeAdapter;
+
     ElfsaidBean elfsaidBean;
     List<ElfsaidBean.DataListBean> listBeen;
     ElfSaidAdapter elfSaidAdapter;
@@ -73,6 +81,18 @@ public class ElfSaidFragment extends BaseFragment {
        // setStatusBar(R.id.home_status);
        // homeQr.setVisibility(View.GONE);
 
+    }
+
+    private void setAddress() {
+      // strAddress = CommentConstants.curAddress;
+//        homeAdapter.setProvinces(strAddress);
+//        if (strAddress.equals("")) {
+//            homeAddress.setText(R.string.provinces);
+//            homeAddress.setTextColor(0xff333333);
+//        } else {
+//            homeAddress.setText(strAddress);
+//            homeAddress.setTextColor(0xff16adff);
+//        }
     }
 
     @Override
@@ -160,11 +180,22 @@ public class ElfSaidFragment extends BaseFragment {
                         getLoadLayout().setLayoutState(FAILED);
                     }
                 });
+        elfSaidAdapter.setOnItemClickListener(new ElfSaidAdapter.OnItemClickListener() {
+            @Override
+            public void OnItem(View view, int position) {
+                Intent intent = new Intent(getActivity(), ElverSayDetailsActivity.class);
+                intent.putExtra("titlename",listBeen.get(position).getShortTitle());
+                intent.putExtra("acticleid",listBeen.get(position).getArticleId()+"");
+                startActivity(intent);
+
+            }
+        });
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getSelectCityBus(final SelectCityBus selectCityBus) {
+        setAddress();
         swipeToLoadLayout.setRefreshing(true);
     }
 }

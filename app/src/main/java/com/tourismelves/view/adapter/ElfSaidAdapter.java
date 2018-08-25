@@ -3,6 +3,7 @@ package com.tourismelves.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,16 +52,28 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
 
 
     @Override
-    public ElfSaidAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.elfsaid_item,parent,false);
-        ElfSaidAdapter.MyViewHolder myViewHolder = new ElfSaidAdapter.MyViewHolder(view);
+        MyViewHolder myViewHolder = new MyViewHolder(view);
         return myViewHolder;
         //     return view;
     }
 
     @Override
-    public void onBindViewHolder(ElfSaidAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
+
+
+
+        if (onItemClickListener!=null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.OnItem(holder.itemView, position);
+                }
+            });
+
+        }
 
         Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getTitleImg())
                 .into(holder.im_elfsaid);
@@ -68,9 +81,21 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
         holder.tv_title.setText(listBeen.get(position).getTitle());
         holder.tv_colletc.setText(listBeen.get(position).getHot()+"");
         holder.tv_watch.setText(listBeen.get(position).getCommentNum()+"");
-        holder.tv_content.setText(listBeen.get(position).getContent());
 
+
+
+
+        String contents = listBeen.get(position).getContent();
+        String str=contents.replaceAll("[\t\" `a-zA-z0-9`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
+
+        Log.e("str",str);
+        holder.tv_content.setText(str);
     }
+//    public static String format(String s){
+//        s = listBeen.get(position).getContent()
+//        String str=s.replaceAll("[`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……& amp;*（）——+|{}【】‘；：”“’。，、？|-]", "");
+//        return str;
+//    }
     @Override
     public int getItemCount() {
         return listBeen.size();
@@ -89,5 +114,15 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
             tv_watch = itemView.findViewById(R.id.elfsaid_watch);
 
         }
+    }
+
+
+    public interface OnItemClickListener{
+        void OnItem(View view,int position);
+
+    }
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }

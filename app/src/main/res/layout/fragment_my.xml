@@ -502,6 +502,7 @@
                         android:textSize="@dimen/sp13" />
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/linear_code"
                     android:layout_marginTop="@dimen/dp6"
                     android:background="@color/white"
                     android:layout_width="match_parent"

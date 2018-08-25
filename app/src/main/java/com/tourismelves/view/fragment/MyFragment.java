@@ -3,6 +3,7 @@ package com.tourismelves.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.tourismelves.view.activity.MyAccountActivity;
 import com.tourismelves.view.activity.OrderActivity;
 import com.tourismelves.view.activity.RechargeActivity;
 import com.tourismelves.view.activity.SetupActivity;
+import com.tourismelves.view.dialog.ActivityCodeDialog;
 import com.tourismelves.view.fragment.base.BaseFragment;
 
 import static com.tourismelves.app.constant.UrlConstants.login;
@@ -35,7 +37,7 @@ import static com.tourismelves.app.constant.UrlConstants.userinfo;
  */
 public class MyFragment extends BaseFragment {
 
-    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite;
+    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite,mLinearCode;
     TextView tv_order,tv_loginname,tv_recharge;
     TextView tv_title;
     TextView tv_name;
@@ -160,6 +162,15 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        //激活码
+        mLinearCode = view.findViewById(R.id.linear_code);
+        mLinearCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ActivityCodeDialog().show(((AppCompatActivity) getContext()).getSupportFragmentManager());
+            }
+        });
+
     }
 
 

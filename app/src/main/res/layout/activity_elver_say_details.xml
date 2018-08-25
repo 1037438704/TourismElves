@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tourismelves.view.activity.ElverSayDetailsActivity">
+
+    <TextView
+        android:layout_marginTop="@dimen/dp20"
+        android:layout_marginLeft="@dimen/dp10"
+        android:textColor="#FF434F6D"
+        android:textSize="@dimen/sp18"
+        android:text="塘沽看海"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp20"
+       android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:textColor="#FF777D84"
+            android:textSize="@dimen/sp12"
+            android:text="塘沽看海"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_width="@dimen/dp19"
+            android:layout_height="@dimen/dp17"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_16px_sc_1" />
+
+        <TextView
+            android:layout_marginRight="@dimen/dp10"
+            android:id="@+id/elfsaid_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="124"
+            android:textColor="@color/jls_jl"
+            android:textSize="@dimen/sp14" />
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></WebView>
+
+
+</LinearLayout>

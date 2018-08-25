@@ -54,8 +54,7 @@ public class RechargeActivity extends StateBaseActivity {
         setStatusBar(R.id.recharge_status);
 //        setStatusUi();
         rechargeAdapter = new RechargeAdapter(RechargeActivity.this,listBeen);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(rechargeAdapter);
+
 
         OkHttpUtils.get(String.format(moneyinfo),
                 new OkHttpUtils.ResultCallback<String>() {
@@ -68,6 +67,9 @@ public class RechargeActivity extends StateBaseActivity {
                        // listBeen = rechargeBean.getDataList();
                         listBeen.addAll(rechargeBean.getDataList());
 
+                        recyclerView.setLayoutManager(new LinearLayoutManager(RechargeActivity.this));
+                        recyclerView.setAdapter(rechargeAdapter);
+
                     }
 
                     @Override
@@ -77,7 +79,7 @@ public class RechargeActivity extends StateBaseActivity {
                 });
         rechargeAdapter.setOnItemClickListener(new RechargeAdapter.OnItemClickListener() {
             @Override
-            public void OnItem(View view, int position) {
+            public void OnItem(View view, final int position) {
                 com.zhy.http.okhttp.OkHttpUtils.get()
                         .url(ApiManager.ALL_URL+"lyjl/app/createRechargeOrder.do")
                         .addParams("userId", SPUtils.getInstance(RechargeActivity.this).getString("putInt"))
@@ -97,6 +99,8 @@ public class RechargeActivity extends StateBaseActivity {
                                     String pk_id = jsonObject.getString("pk_id");
                                     Intent intent = new Intent(RechargeActivity.this,PaymentActivity.class);
                                     intent.putExtra("pk_id",pk_id);
+                                    intent.putExtra("money",listBeen.get(position).getGold()+"");
+                                    //Log.e("money",listBeen.get(position).getGold())
                                     startActivity(intent);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
