@@ -1,6 +1,8 @@
 package com.tourismelves.view.adapter;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.tourismelves.R;
 import com.tourismelves.model.event.TabSelectBus;
 import com.tourismelves.model.net.OkHttpUtils;
@@ -22,6 +25,7 @@ import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.utils.system.SPUtils;
+import com.tourismelves.view.activity.AlreadyBoughtActivity;
 import com.tourismelves.view.activity.FootMarkActivity;
 import com.tourismelves.view.activity.InterpretationList2Activity;
 import com.tourismelves.view.activity.InterpretationListActivity;
@@ -35,6 +39,8 @@ import com.tourismelves.view.widget.viewpager.banner.GlideImageLoader;
 import com.tourismelves.view.widget.viewpager.banner.OnBannerListener;
 
 import java.util.List;
+
+import okhttp3.Call;
 
 import static com.tourismelves.app.constant.UrlConstants.addCart;
 import static com.tourismelves.app.constant.UrlConstants.port;
@@ -76,9 +82,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                     if (!isLogin(getContext(), true)) {
                         return;
                     }
-                    Intent intent = new Intent(getContext(), SettlementActivity.class);
-                    getContext().startActivity(intent);
-//                    getContext().startActivity(new Intent(getContext(), AlreadyBoughtActivity.class));
+                    getContext().startActivity(new Intent(getContext(), AlreadyBoughtActivity.class));
                 }
             });
             holder.getView(R.id.home_footprint).setOnClickListener(this);
@@ -211,21 +215,43 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
         }
     }
 
+    private Call call = null;
 
     /**
      * 添加购物车
      */
     private void addCart(int orgId) {
-        OkHttpUtils.get(addCart + "userId=" + SPUtils.getInstance(getContext()).getString("putInt") + "&orgId=" + orgId,
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setMessage("正在加载中");
+        dialog.show();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (call != null) {
+                    call.cancel();
+                }
+            }
+        });
+
+        call = OkHttpUtils.get(addCart + "userId=" + SPUtils.getInstance(getContext()).getString("putInt") + "&orgId=" + orgId,
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(String response) {
-                        ToastUtil.show(JSON.parseObject(response).getString("message"));
+                        JSONObject object = JSON.parseObject(response);
+                        ToastUtil.show(object.getString("message"));
+                        if (object.getInteger("code") == 200) {
+                            Intent intent = new Intent(getContext(), SettlementActivity.class);
+                            getContext().startActivity(intent);
+                        }
+                        call = null;
+                        dialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        ToastUtil.show(R.string.no_found_network);
+                        call = null;
+                        ToastUtil.show(e.getMessage());
+                        dialog.dismiss();
                     }
                 });
     }

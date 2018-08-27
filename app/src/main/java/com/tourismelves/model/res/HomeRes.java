@@ -7,7 +7,7 @@ import java.util.List;
  * 景区数据
  */
 
-public class HomeRes implements Serializable{
+public class HomeRes implements Serializable {
     /**
      * orgId : 47
      * code : HB-QDL
@@ -66,6 +66,7 @@ public class HomeRes implements Serializable{
     private double longitude;
     private double latitude;
     private boolean status;
+    private int score=0;
     private String insertTime;
     private String insertIp;
     private String summary = "";
@@ -80,6 +81,14 @@ public class HomeRes implements Serializable{
     private int sceneryCount;
     private int distance = 0;
     private List<ArticleListBean> articleList;
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 
     public int getIsAutoplay() {
         return isAutoplay;

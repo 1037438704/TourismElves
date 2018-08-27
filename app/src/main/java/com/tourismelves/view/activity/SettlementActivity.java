@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -52,7 +53,8 @@ public class SettlementActivity extends StateBaseActivity {
     protected void initControls() {
         showStateLayout(1);
         setBaseTitle("结算");
-        showStateRightView(2);
+        showStateRightView(0);
+        setBaseRightTv("添加");
 
         cartIds = new ArrayList<>();
         settlementRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -76,7 +78,12 @@ public class SettlementActivity extends StateBaseActivity {
 
     @Override
     protected void initEvent() {
-
+        setBaseRightTvListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.settlement_pay)

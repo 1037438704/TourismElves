@@ -2,8 +2,10 @@ package com.tourismelves.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -29,24 +31,35 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.BitmapDescriptor;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.AttractionsBean;
 import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.CheckPermissionsActivity;
 import com.tourismelves.view.adapter.InterpretationListAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.tourismelves.app.constant.UrlConstants.delFavorite;
+import static com.tourismelves.app.constant.UrlConstants.isFavorite;
+import static com.tourismelves.app.constant.UrlConstants.saveFavorite;
 import static com.tourismelves.app.constant.UrlConstants.sceneryList;
 
 /**
@@ -69,6 +82,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     private String name;
     private ArrayList<AttractionsBean> attractionsBeans;
 
+
     /**
      * 用于显示当前的位置
      * <p>
@@ -80,6 +94,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     private AMapLocationClientOption mLocationOption;
     private AMap mAMap;
     private LatLng latLng;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +110,13 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
 
     @Override
     protected void initControls() {
+        EventBusUtil.register(this);
         showStateLayout(1);
         setBaseTitle("讲解列表");
         interpretationListComments = findViewById(R.id.interpretation_list_comments);
         interpretationListBottom = findViewById(R.id.interpretation_list_bottom);
 
+        userId = SPUtils.getInstance(getContext()).getString("putInt");
         if (mAMap == null) {
             mAMap = mMapView.getMap();
             mAMap.moveCamera(CameraUpdateFactory.zoomBy(6));
@@ -114,6 +131,9 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         name = intent.getStringExtra("name");
         interpretationListName.setText(name);
         sceneryList(ordId + "");
+
+        isFavorite();
+        initMarket();
     }
 
     @Override
@@ -242,9 +262,15 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.interpretation_list_like_btn:
+                boolean selected = interpretationListLikeBtn.isSelected();
+                if (selected) {
+                    delFavorite();
+                } else {
+                    saveFavorite();
+                }
                 break;
             case R.id.interpretation_list_visit_guidance_btn:
-//                startActivity(new Intent(this, VisitGuidanceActivity.class));
+                startActivity(new Intent(this, VisitGuidanceActivity.class));
                 break;
             case R.id.interpretation_list_search_around_comments_btn:
                 break;
@@ -279,7 +305,6 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
      */
     private void sceneryList(String ordId) {
         attractionsBeans = new ArrayList<>();
-        String userId = SPUtils.getInstance(getContext()).getString("putInt");
         OkHttpUtils.get(String.format(sceneryList, ordId, userId),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
@@ -322,6 +347,80 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     }
 
     /**
+     * 收藏部分
+     */
+    private void saveFavorite() {    //收藏
+        OkHttpUtils.get(saveFavorite + "userId=" + userId + "&contentId=" + ordId + "&type=" + 0,
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        String message = object.getString("message");
+                        ToastUtil.show(message);
+                        if (object.getInteger("code") == 200) {
+                            interpretationListLikeBtn.setSelected(true);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
+    }
+
+    private void delFavorite() {    //删除收藏
+        OkHttpUtils.get(delFavorite + "userId=" + userId + "&contentId=" + ordId + "&type=" + 0,
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        String message = object.getString("message");
+                        ToastUtil.show(message);
+                        if (object.getInteger("code") == 200) {
+                            interpretationListLikeBtn.setSelected(false);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
+    }
+
+    private void isFavorite() {    //是否收藏
+        OkHttpUtils.get(isFavorite + "userId=" + userId + "&contentId=" + ordId + "&type=" + 0,
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        Integer code = object.getInteger("code");
+                        if (code == 200) {
+                            Boolean isLike = Boolean.valueOf(object.getString("pk_id"));
+                            interpretationListLikeBtn.setSelected(isLike);
+                        } else {
+                            ToastUtil.show(object.getString("message"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void getIsLike(Boolean is) {
+        interpretationListLikeBtn.setSelected(is);
+    }
+
+    /* *******************************************************************
+     * ******************************* 地图 *******************************
+     * ******************************************************************/
+
+    /**
      * 方法必须重写
      */
     @Override
@@ -354,6 +453,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
      */
     @Override
     protected void onDestroy() {
+        EventBusUtil.unregister(this);
         mMapView.onDestroy();
         if (null != mlocationClient) {
             mlocationClient.onDestroy();
@@ -380,6 +480,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
 //            // 设置定位参数
             mlocationClient.setLocationOption(mLocationOption);
             mlocationClient.startLocation();
+
         }
     }
 
@@ -404,7 +505,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         // 自定义系统定位蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         // 自定义定位蓝点图标
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_12px));
+        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.feiji));
         // 自定义精度范围的圆形边框颜色
         myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));
         // 自定义精度范围的圆形边框宽度
@@ -417,12 +518,19 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
 
+        mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                LogUtil.i("点击了 marker");
+                return false;
+            }
+        });
 
         UiSettings uiSettings = mAMap.getUiSettings();
         uiSettings.setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
         uiSettings.setZoomInByScreenCenter(false);
         uiSettings.setZoomControlsEnabled(false);
-        uiSettings.setScaleControlsEnabled(false);
+
     }
 
     /**
@@ -431,16 +539,81 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
         if (mListener != null && amapLocation != null) {
-
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                latLng = new LatLng(amapLocation.getLatitude(),amapLocation.getLongitude());
+                latLng = new LatLng(39.9179400000, 116.3971400000);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mAMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+                    }
+                }, 800);
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": "
                         + amapLocation.getErrorInfo();
                 LogUtil.e(errText);
             }
         }
+    }
+
+    private void initMarket() {
+
+        List<LatLng> latLngs = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
+
+        latLngs.add(new LatLng(39.919066, 116.394399));
+        titles.add("慈宁宫");
+        latLngs.add(new LatLng(39.920803, 116.398643));
+        titles.add("永和宫");
+        latLngs.add(new LatLng(39.915271, 116.397165));
+        titles.add("太和门");
+        latLngs.add(new LatLng(39.922333,116.396942));
+        titles.add("神武门");
+        latLngs.add(new LatLng(39.920841,116.396912));
+        titles.add("坤宁宫");
+        latLngs.add(new LatLng(39.921262,116.395505));
+        titles.add("百子门");
+
+
+        for (int i = 0; i < latLngs.size(); i++) {
+            MarkerOptions markerOption2 = new MarkerOptions();
+            markerOption2.position(latLngs.get(i));
+            markerOption2.title(titles.get(i));
+            markerOption2.draggable(true);
+            BitmapDescriptor bitmapDescriptor2 = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.zidong));
+            markerOption2.icon(bitmapDescriptor2);
+            markerOption2.setFlat(true);
+            mAMap.addMarker(markerOption2);
+        }
+
+        mAMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
+            View infoWindow = null;
+
+            @Override
+            public View getInfoWindow(final Marker marker) {
+                if (infoWindow == null) {
+                    infoWindow = LayoutInflater.from(getContext()).inflate(R.layout.layout_map_icon, null);
+                }
+                AppCompatTextView name = infoWindow.findViewById(R.id.map_name);
+                name.setText(marker.getTitle());
+                marker.showInfoWindow();
+                marker.setFlat(false);
+                infoWindow.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        marker.hideInfoWindow();
+                        ToastUtil.show(marker.getTitle());
+                    }
+                });
+                return infoWindow;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                return null;
+            }
+
+        });
     }
 
 }

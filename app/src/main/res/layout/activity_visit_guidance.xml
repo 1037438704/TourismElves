@@ -4,9 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
+    <com.tourismelves.view.widget.custom.CustomScrollView
+        android:id="@+id/visit_guidance_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -56,7 +59,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="故宫博物院游玩指引"
+                        android:text="游玩指引"
                         android:textColor="#ff434f6d"
                         android:textSize="@dimen/sp16" />
 
@@ -116,27 +119,34 @@
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/visit_guidance_map"
+
+            <com.tourismelves.view.widget.custom.MapContainer
+                android:id="@+id/visit_guidance_map_rl"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp196"
-                android:layout_below="@id/visit_guidance_info"
-                android:layout_marginTop="@dimen/dp15"
-                android:background="@color/gray_c" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/visit_guidance_info">
+
+                <com.amap.api.maps.MapView
+                    android:id="@+id/visit_guidance_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp196"
+                    android:layout_marginTop="@dimen/dp15"
+                    android:background="@color/gray_c" />
+            </com.tourismelves.view.widget.custom.MapContainer>
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/visit_guidance_tip"
                 android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/dp25"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/visit_guidance_map_rl"
+                android:layout_marginBottom="@dimen/dp50"
                 android:layout_marginLeft="@dimen/dp25"
                 android:layout_marginRight="@dimen/dp25"
-                android:layout_marginBottom="@dimen/dp50"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp25"
                 android:gravity="center"
-                android:layout_below="@id/visit_guidance_map"
                 android:text="温馨提示：北京故宫以三大殿为中心，占地面积72万平方米，建筑面积约15万平方米，有大小宫殿七十多座，房屋九千余间。是世界上现存规模最大保存最为完整的木质结构古建筑之一。"
                 android:textColor="#ff777d84"
                 android:textSize="@dimen/sp14" />
         </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </com.tourismelves.view.widget.custom.CustomScrollView>
 </RelativeLayout>

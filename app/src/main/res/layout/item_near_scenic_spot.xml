@@ -116,8 +116,8 @@
         android:layout_below="@id/i_near_scenic_spot_img"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
-        android:layout_marginTop="@dimen/dp10"
-        android:background="@drawable/round_10_f4f8fb"
+        android:layout_marginTop="@dimen/dp2"
+        android:background="@mipmap/fujin_piao"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/dp15"
         android:paddingRight="@dimen/dp15">

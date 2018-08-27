@@ -114,7 +114,7 @@ public class PayActivity extends StateBaseActivity {
                         JSONObject object = JSON.parseObject(response);
                         Integer code = object.getInteger("code");
                         if (code == 200) {
-
+                            ToastUtil.show("支付成功");
                         } else {
                             ToastUtil.show(JSON.parseObject(response).getString("message"));
                         }

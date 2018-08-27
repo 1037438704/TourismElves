@@ -82,8 +82,7 @@ public class OkHttpUtils {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                log(call, e.getMessage());
-                sendFailCallback(callback, e);
+                sendFailCallback(callback, new Exception("网络开小差"));
             }
 
             @Override
@@ -92,6 +91,11 @@ public class OkHttpUtils {
                     int code = response.code();
                     String body = response.body().string();
                     log(call, body);
+
+                    if (body.contains("!DOCTYPE HTML")) {
+                        sendFailCallback(callback, new Exception("服务器出错啦！"));
+                        return;
+                    }
                     if (callback.mType == String.class) {
                         /**
                          * 返回字符串
@@ -107,7 +111,7 @@ public class OkHttpUtils {
                     }
                 } catch (final Exception e) {
                     log(call, e.getMessage());
-                    sendFailCallback(callback, e);
+                    sendFailCallback(callback, new Exception("数据异常"));
                 }
             }
         });
@@ -148,10 +152,10 @@ public class OkHttpUtils {
     /**
      * get请求
      */
-    private void getRequest(String url, final ResultCallback callback) {
+    private Call getRequest(String url, final ResultCallback callback) {
         final Request request = new Request.Builder()
                 .url(url).build();
-        deliveryResult(callback, request);
+        return deliveryResult(callback, request);
     }
 
     /**
@@ -225,8 +229,8 @@ public class OkHttpUtils {
     /**
      * get请求
      */
-    public static void get(String url, ResultCallback callback) {
-        getmInstance().getRequest(url, callback);
+    public static Call get(String url, ResultCallback callback) {
+        return getmInstance().getRequest(url, callback);
     }
 
     /**

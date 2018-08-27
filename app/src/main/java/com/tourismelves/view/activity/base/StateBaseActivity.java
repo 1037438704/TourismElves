@@ -161,6 +161,10 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         baseRight.setImageResource(resImg);
     }
 
+    public AppCompatImageView getBaseRight() {
+        return baseRight;
+    }
+
     protected void setBaseTitle(@StringRes int resStr) {
         baseTitle.setText(getString(resStr));
     }

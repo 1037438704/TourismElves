@@ -53,5 +53,13 @@ public interface UrlConstants {
     String alipayPay = port + "lyjl/app/alipayPay.do?";
     //金币支付
     String glodPay = port + "lyjl/app/goldPay.do?";
+    //收藏
+    String saveFavorite = port + "lyjl/app/saveFavorite.do?";
+    //删除收藏
+    String delFavorite = port + "lyjl/app/delFavorite.do?";
+    //是否收藏
+    String isFavorite = port + "lyjl/web/isFavorite.do?";
+    //评论列表
+    String getComment = port + "lyjl/web/getComment.do?";
 
 }

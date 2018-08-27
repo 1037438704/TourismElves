@@ -1,7 +1,6 @@
 package com.tourismelves.view.fragment;
 
 import android.content.Context;
-import android.location.Location;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,6 +33,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 
 import static com.tourismelves.app.constant.UrlConstants.searchOrganizationOrArticle;
+import static com.tourismelves.view.activity.MainActivity.latitude;
+import static com.tourismelves.view.activity.MainActivity.longitude;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
 /**
@@ -51,8 +52,6 @@ public class ScenicSpotFragment extends BaseFragment {
     private int page = 1;
     //总页数
     private int totalPage = 1;
-    //获取当前经纬度
-    private Location location;
     private ScenicSpotAdapter homeAdapter;
     private MainActivity mainActivity;
 
@@ -74,8 +73,6 @@ public class ScenicSpotFragment extends BaseFragment {
         homeAdapter = new ScenicSpotAdapter(getContext(), new ArrayList<HomeRes>(), mainActivity.getBasePositioning());
         swipeTarget.setAdapter(homeAdapter);
         swipeToLoadLayout.setLoadMoreEnabled(false);
-        //获取当前经纬度
-        location = LocationUtil.getInstance(getContext()).showLocation();
     }
 
     @Override
@@ -144,9 +141,8 @@ public class ScenicSpotFragment extends BaseFragment {
                                         HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
                                         int distance = 0;
-                                        if (location != null)
                                             distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
-                                                    location.getLongitude(), location.getLatitude());
+                                                    longitude, latitude);
 
                                         homeRes.setDistance(distance / 1000);
                                         homeResList.add(homeRes);

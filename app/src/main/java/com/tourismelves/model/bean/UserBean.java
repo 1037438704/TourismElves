@@ -3,7 +3,7 @@ package com.tourismelves.model.bean;
 import java.util.List;
 
 /**
- * Created by fanhui on 2018/8/9.
+ * 用户
  */
 
 public class UserBean {

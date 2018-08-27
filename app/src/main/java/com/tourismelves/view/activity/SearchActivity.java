@@ -38,6 +38,7 @@ import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.areaList;
 import static com.tourismelves.app.constant.UrlConstants.searchOrganizationOrArticle;
+import static com.tourismelves.view.activity.MainActivity.city;
 
 /**
  * 搜索
@@ -74,6 +75,9 @@ public class SearchActivity extends StateBaseActivity {
     protected void initControls() {
         EventBusUtil.register(this);
         showStateLayout(-1);
+        if (!city.equals("")){
+            searchPositioning.setText(city);
+        }
 
         provinces = new ArrayList<>();
         citys = new ArrayList<>();

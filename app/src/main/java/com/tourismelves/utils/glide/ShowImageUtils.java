@@ -55,6 +55,8 @@ public class ShowImageUtils {
         Glide.with(context).load(res)// 加载图片
                 .thumbnail(0.1f)
                 .priority(Priority.LOW)
+                .error(errorimg)// 设置错误图片
+                .placeholder(errorimg)
                 .centerCrop()
                 .crossFade()// 设置淡入淡出效果，默认300ms，可以传参
                 .into(imgeview);
@@ -67,6 +69,8 @@ public class ShowImageUtils {
             Glide.with(context)
                     .load(url)
                     .priority(Priority.LOW)
+                    .error(errorimg)// 设置错误图片
+                    .placeholder(errorimg)
                     .thumbnail(0.1f)
                     .bitmapTransform(new CropTransformation(context, w, h, CropTransformation.CropType.CENTER))
                     .into(imgeview);

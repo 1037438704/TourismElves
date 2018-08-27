@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.tourismelves.R;
 import com.tourismelves.model.res.HomeRes;
+import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
 import com.tourismelves.view.widget.RatingStar;
@@ -22,8 +23,11 @@ import java.util.List;
  */
 public class NearScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
 
+    private final int w;
+
     public NearScenicSpotAdapter(@NonNull Context context, @NonNull List<HomeRes> mDataList) {
         super(context, mDataList);
+        w = (int) getContext().getResources().getDimension(R.dimen.dp105);
     }
 
     @Override
@@ -40,6 +44,15 @@ public class NearScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
         RatingStar i_near_scenic_spot_rating = holder.getView(R.id.i_near_scenic_spot_rating);
         RelativeLayout i_near_scenic_spot_auto_play = holder.getView(R.id.i_near_scenic_spot_auto_play);
 
+
+        i_near_scenic_spot_auto_play.setVisibility(homeRes.getIsAutoplay() == 1 ? View.VISIBLE : View.GONE);
+        i_near_scenic_spot_rating.setCurRating(homeRes.getScore());
+        i_near_scenic_spot_score.setText(homeRes.getScore() + "");
+        i_near_scenic_spot_ticket_name.setText(homeRes.getName() + "门票");
+        i_near_scenic_spot_name.setText(homeRes.getName());
+        i_near_scenic_spot_ticket_money.setText("¥" + homeRes.getPrice());
+        i_near_scenic_spot_distance.setText(String.format(getContext().getString(R.string.distance), homeRes.getDistance() + ""));
+        ShowImageUtils.showImageView(getContext(), homeRes.getImage(), w, w, i_near_scenic_spot_img);
 
     }
 

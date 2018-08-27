@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp10"
+    android:paddingRight="@dimen/dp10">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/i_already_bought_icon"
+        android:layout_width="@dimen/dp105"
+        android:layout_height="@dimen/dp105"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp15"
+        android:src="@mipmap/ic_launcher" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_already_bought_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/i_already_bought_icon"
+        android:layout_toRightOf="@id/i_already_bought_icon"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textColor="#ff434f6d"
+        android:textSize="@dimen/sp16" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_already_bought_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/i_already_bought_name"
+        android:layout_marginTop="@dimen/dp8"
+        android:layout_toRightOf="@id/i_already_bought_icon"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="2"
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_already_bought_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/i_already_bought_icon"
+        android:layout_toRightOf="@id/i_already_bought_icon"
+        android:includeFontPadding="false"
+        android:singleLine="true"
+        android:textColor="#777D84"
+        android:textSize="@dimen/sp12" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@id/i_already_bought_icon"
+        android:background="@color/gray_c" />
+</RelativeLayout>
