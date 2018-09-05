@@ -1,5 +1,6 @@
 package com.tourismelves.view.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,19 +9,25 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okserver.download.DownloadManager;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.AttractionsBean;
 import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.model.res.ApkDownloadInfoRes;
 import com.tourismelves.utils.common.ToastUtil;
-import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.utils.file.RootFile;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.InterpretationListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
+import static com.tourismelves.app.constant.UrlConstants.port;
 import static com.tourismelves.app.constant.UrlConstants.sceneryList;
 import static com.tourismelves.view.widget.loadlayout.State.FAILED;
 import static com.tourismelves.view.widget.loadlayout.State.LOADING;
@@ -37,6 +44,7 @@ public class InterpretationList2Activity extends StateBaseActivity {
     AppCompatTextView interpretationList2Down;
     private InterpretationListAdapter interpretationListAdapter;
     private ArrayList<AttractionsBean> attractionsBeans;
+    private String name;
 
     @Override
     protected void setContentLayout() {
@@ -57,8 +65,10 @@ public class InterpretationList2Activity extends StateBaseActivity {
     @Override
     protected void obtainData() {
         attractionsBeans = getIntent().getParcelableArrayListExtra("attractionsBeans");
+        name = getIntent().getStringExtra("name");
         if (attractionsBeans != null) {
             interpretationListAdapter.replaceData(attractionsBeans);
+
         } else {
             getLoadLayout().setLayoutState(LOADING);
             int ordId = getIntent().getIntExtra("ordId", 0);
@@ -95,12 +105,14 @@ public class InterpretationList2Activity extends StateBaseActivity {
                 StringBuffer sb = new StringBuffer();
                 for (AttractionsBean a : interpretationListAdapter.getDataList()) {
                     if (a.isSelect()) {
-                        sb.append(a.getName()).append("-");
+                        ApkDownloadInfoRes apkInfo = a.getApkDownloadInfoRes();
+                        DownloadManager.getInstance().setTargetFolder(RootFile.getDownloadFiles().getPath() + "/" + name);
+                        GetRequest request = OkGo.get(apkInfo.getUrl());
+                        DownloadManager.getInstance().addTask(apkInfo.getFileName(), apkInfo.getDownKey(),
+                                apkInfo, request, null, false);
                     }
                 }
-                ToastUtil.showLong(sb.toString());
-                LogUtil.i(sb.toString());
-
+                startActivity(new Intent(getContext(), DownloadingActivity.class));
                 showStateRightView(1);
                 setBaseRightTv("全选");
                 interpretationList2Down.setVisibility(View.GONE);
@@ -134,6 +146,22 @@ public class InterpretationList2Activity extends StateBaseActivity {
                                     for (int i = 0; i < size; i++) {
                                         String string = dataList.getJSONObject(i).toString();
                                         AttractionsBean attractionsBean = JSON.parseObject(string, AttractionsBean.class);
+                                        List<AttractionsBean.AudioListBean> audioList = attractionsBean.getAudioList();
+                                        if (audioList != null && audioList.size() > 0) {
+                                            ApkDownloadInfoRes apkDownloadInfoRes = new ApkDownloadInfoRes();
+                                            String photoPath = "";
+                                            if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0)
+                                                photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
+
+                                            apkDownloadInfoRes.setImageUrl(photoPath);
+                                            apkDownloadInfoRes.setDownKey(attractionsBean.getName());
+                                            apkDownloadInfoRes.setContent(attractionsBean.getDescription());
+                                            apkDownloadInfoRes.setName(attractionsBean.getName());
+                                            apkDownloadInfoRes.setUrl(port + audioList.get(0).getAudioPath());
+                                            attractionsBean.setApkDownloadInfoRes(apkDownloadInfoRes);
+
+                                        } else
+                                            attractionsBean.setApkDownloadInfoRes(null);
                                         attractionsBeans.add(attractionsBean);
                                     }
 

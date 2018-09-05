@@ -20,7 +20,6 @@ import com.tourismelves.model.res.SelectCity2Res;
 import com.tourismelves.model.res.SelectCityRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
-import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.pinyin.PinyinUtils;
 import com.tourismelves.utils.pinyin.SelectCityComparator;
 import com.tourismelves.utils.system.PreferenceUtil;
@@ -30,6 +29,8 @@ import com.tourismelves.view.adapter.SearchAdapter;
 import com.tourismelves.view.adapter.SearchedAdapter;
 import com.tourismelves.view.widget.SideBar;
 import com.tourismelves.view.widget.loadlayout.State;
+import com.tourismelves.view.widget.swipetoloadlayout.OnRefreshListener;
+import com.tourismelves.view.widget.swipetoloadlayout.SwipeToLoadLayout;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -42,6 +43,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
 import static com.tourismelves.app.constant.UrlConstants.areaList;
 import static com.tourismelves.app.constant.UrlConstants.searchOrganizationOrArticle;
 import static com.tourismelves.view.activity.MainActivity.city;
@@ -63,8 +66,10 @@ public class SearchActivity extends StateBaseActivity {
     AppCompatTextView searchCityDialog;
     @BindView(R.id.search_rl)
     RelativeLayout searchRl;
-    @BindView(R.id.searched_recycler)
+    @BindView(R.id.swipe_target)
     RecyclerView searchedRecycler;
+    @BindView(R.id.swipeToLoadLayout)
+    SwipeToLoadLayout swipeToLoadLayout;
 
     private String SP_SEARCH_HISTORY = "searchHistory";
 
@@ -97,6 +102,7 @@ public class SearchActivity extends StateBaseActivity {
         mData = new ArrayList<>();
         selectCityComparator = new SelectCityComparator();
 
+        swipeToLoadLayout.setLoadMoreEnabled(false);
         searchedRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         searchedResArrayList = new ArrayList<>();
         searchedAdapter = new SearchedAdapter(getContext(), searchedResArrayList);
@@ -121,19 +127,18 @@ public class SearchActivity extends StateBaseActivity {
             String[] split = strHistory.split(",");
             searchAdapter.historyData.addAll(Arrays.asList(split));
         }
-
         areaList();
     }
 
     @Override
     protected void initEvent() {
+
         searchEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER &&
                         event.getAction() == KeyEvent.ACTION_UP) {
-                    LogUtil.i("搜索");
-                    //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
+                    sortType = 0;
                     searchOrganizationOrArticle(searchEdit.getText().toString());
                     addSP(searchEdit.getText().toString());
 
@@ -148,7 +153,7 @@ public class SearchActivity extends StateBaseActivity {
 //                    searchOrganizationOrArticle(charSequence.toString());
                 } else {
                     searchRl.setVisibility(View.VISIBLE);
-                    searchedRecycler.setVisibility(View.GONE);
+                    swipeToLoadLayout.setVisibility(View.GONE);
 
                     searchAdapter.historyData.clear();
                     String strHistory = PreferenceUtil.getString(getContext(), SP_SEARCH_HISTORY, "");
@@ -182,6 +187,17 @@ public class SearchActivity extends StateBaseActivity {
 
             }
         });
+        swipeToLoadLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (sortType == 0) {
+                    sortType = 1;
+                } else {
+                    sortType = 0;
+                }
+                searchOrganizationOrArticle(searchEdit.getText().toString());
+            }
+        });
     }
 
     @OnClick({R.id.search_cancel, R.id.search_positioning})
@@ -196,6 +212,7 @@ public class SearchActivity extends StateBaseActivity {
         }
     }
 
+    private int sortType = 0;
 
     /**
      * 请求景区
@@ -203,10 +220,15 @@ public class SearchActivity extends StateBaseActivity {
     private void searchOrganizationOrArticle(final String strAddress) {
         searchedResArrayList.clear();
         searchRl.setVisibility(View.GONE);
-        searchedRecycler.setVisibility(View.VISIBLE);
-
+        swipeToLoadLayout.setVisibility(View.VISIBLE);
         final boolean[] isLoaded = {false, false};
-        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 0, 1, 20, 1),
+
+        String latlng = "";
+        if (sortType == 0) {
+            latlng = "&latitude=" + latitude + "&longitude=" + longitude;
+        }
+
+        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 0, sortType, 20, 1) + latlng,
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(final String response) {
@@ -223,16 +245,20 @@ public class SearchActivity extends StateBaseActivity {
                         }
                         if (isLoaded[0] && isLoaded[1]) {
                             searchedAdapter.replaceData(searchedResArrayList);
+                            swipeToLoadLayout.setRefreshing(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Exception e) {
                         isLoaded[0] = true;
+                        if (isLoaded[1]) {
+                            swipeToLoadLayout.setRefreshing(false);
+                        }
                         ToastUtil.show(R.string.no_found_network);
                     }
                 });
-        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 1, 1, 20, 1),
+        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 1, sortType, 20, 1) + latlng,
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(final String response) {
@@ -249,12 +275,16 @@ public class SearchActivity extends StateBaseActivity {
                         }
                         if (isLoaded[0] && isLoaded[1]) {
                             searchedAdapter.replaceData(searchedResArrayList);
+                            swipeToLoadLayout.setRefreshing(false);
                         }
                     }
 
                     @Override
                     public void onFailure(Exception e) {
                         isLoaded[1] = true;
+                        if (isLoaded[0]) {
+                            swipeToLoadLayout.setRefreshing(false);
+                        }
                         ToastUtil.show(R.string.no_found_network);
                     }
                 });

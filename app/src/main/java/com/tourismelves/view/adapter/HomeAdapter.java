@@ -104,6 +104,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 public void onClick(View v) {//景点详情
                     Intent intent = new Intent(getContext(), InterpretationList2Activity.class);
                     intent.putExtra("ordId", homeRes.getOrgId());
+                    intent.putExtra("name", homeRes.getName());
                     getContext().startActivity(intent);
                 }
             });
@@ -123,8 +124,9 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             });
 
             home_auto_play.setVisibility(homeRes.getIsAutoplay() == 1 ? View.VISIBLE : View.GONE);
-            ShowImageUtils.showImageView(getContext(), port + homeRes.getImage(),
-                    (int) getContext().getResources().getDimension(R.dimen.dp105), (int) getContext().getResources().getDimension(R.dimen.dp105),
+            ShowImageUtils.showImageView(getContext(), port + homeRes.getImage()
+                            + "_" + (int) getContext().getResources().getDimension(R.dimen.dp105) + "x" +
+                            (int) getContext().getResources().getDimension(R.dimen.dp105) + ".jpg",
                     home_attractions_img);
             home_attractions_count.setText(String.format(getContext().getString(R.string.scenic_spot_count), homeRes.getSceneryCount() + ""));
             home_attractions_money.setText(Html.fromHtml("¥<b>" + homeRes.getPrice() + "</b>"));
@@ -137,8 +139,9 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
 
             if (homeRes.getArticleList() != null && homeRes.getArticleList().size() != 0) {
                 details.setVisibility(View.VISIBLE);
-                ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(),
-                        (int) getContext().getResources().getDimension(R.dimen.dp45), (int) getContext().getResources().getDimension(R.dimen.dp45),
+                ShowImageUtils.showRounded(getContext(), port + homeRes.getImage()
+                        + "_" + (int) getContext().getResources().getDimension(R.dimen.dp45) + "x" +
+                                (int) getContext().getResources().getDimension(R.dimen.dp45) + ".jpg",
                         home_attractions2_img, 10);
                 home_attractions2_content.setText(homeRes.getSummary());
                 home_attractions2_name.setText(homeRes.getName());
@@ -151,7 +154,8 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             AppCompatTextView home_attractions3_name = holder.getView(R.id.home_attractions3_name);
             AppCompatTextView home_attractions3_content = holder.getView(R.id.home_attractions3_content);
 
-            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), home_attractions3_img, 10);
+            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage()
+                    + "_-" +(int) getContext().getResources().getDimension(R.dimen.dp180) + ".jpg", home_attractions3_img, 10);
             final String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + "");
             home_attractions3_address.setText(sAddress);
             home_attractions3_content.setText(homeRes.getDescription());
@@ -164,7 +168,7 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                     Intent intent = new Intent(getContext(), InterpretationListActivity.class);
                     intent.putExtra("ordId", homeRes.getOrgId());
                     intent.putExtra("name", homeRes.getName());
-                    intent.putExtra("distance", homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() );
+                    intent.putExtra("distance", homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName());
                     intent.putExtra("latlng", new LatLng(homeRes.getLatitude(), homeRes.getLongitude()));
                     getContext().startActivity(intent);
                 }

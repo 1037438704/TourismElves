@@ -88,19 +88,21 @@
         android:gravity="center_vertical">
 
         <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/interpretation_details_play"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/bofangqi" />
 
-        <ProgressBar
-            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        <SeekBar
+            android:id="@+id/interpretation_details_seekbar"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dp12"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp16"
             android:layout_marginRight="@dimen/dp16"
             android:layout_weight="1" />
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/interpretation_details_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0:00/0:00"

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.tourismelves.R;
 import com.tourismelves.model.bean.AttractionsBean;
+import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.view.activity.InterpretationDetailsActivity;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
@@ -36,7 +37,12 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
 
     public void selectAll(boolean flag) {
         for (AttractionsBean a : getDataList()) {
-            a.setSelect(flag);
+            if (a.getApkDownloadInfoRes() != null) {
+                a.setSelect(flag);
+            }else {
+                a.setSelect(false);
+                ToastUtil.show("下载地址为空，不可选中");
+            }
         }
         notifyDataSetChanged();
     }
@@ -68,7 +74,9 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
 
         name.setText(attractionsBean.getName());
         if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
-            String photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
+            String photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath()
+                    + "_" + (int) getContext().getResources().getDimension(R.dimen.dp75) + "x" +
+                    (int) getContext().getResources().getDimension(R.dimen.dp75) + ".jpg";
             ShowImageUtils.showImageView(getContext(), photoPath, icon);
         } else {
             ShowImageUtils.showImageView(getContext(), R.mipmap.ic_launcher, icon);
@@ -80,8 +88,12 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
             @Override
             public void onClick(View v) {
                 if (isEdit) {
-                    attractionsBean.setSelect(!attractionsBean.isSelect());
-                    select.setSelected(attractionsBean.isSelect());
+                    if (attractionsBean.getApkDownloadInfoRes() != null) {
+                        attractionsBean.setSelect(!attractionsBean.isSelect());
+                        select.setSelected(attractionsBean.isSelect());
+                    } else {
+                        ToastUtil.show("下载地址为空，不可选中");
+                    }
                 } else {
                     Intent intent = new Intent(getContext(), InterpretationDetailsActivity.class);
                     intent.putParcelableArrayListExtra("attractionsBeans", (ArrayList<? extends Parcelable>) getDataList());

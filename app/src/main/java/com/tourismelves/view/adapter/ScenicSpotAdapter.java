@@ -64,7 +64,8 @@ public class ScenicSpotAdapter extends RecyclerBaseAdapter<HomeRes> {
         AppCompatTextView money = holder.getView(R.id.i_scenic_spot_money);
 
         autoPlay.setVisibility(homeRes.getIsAutoplay() == 1 ? View.VISIBLE : View.GONE);
-        ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), w, h, img, 0);
+        ShowImageUtils.showRounded(getContext(), port + homeRes.getImage()
+                + "_-" +(int) getContext().getResources().getDimension(R.dimen.dp170) + ".jpg", img, 0);
         name.setText(homeRes.getName());
         final String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName();
         address.setText(sAddress + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + ""));

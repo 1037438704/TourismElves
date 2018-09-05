@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF4F8FB"
-    android:orientation="vertical"
-    tools:context="com.tourismelves.view.activity.HelpActivity">
+    android:orientation="vertical">
 
 
 

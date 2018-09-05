@@ -4,10 +4,13 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.lzy.okgo.OkGo;
+import com.lzy.okserver.download.DownloadManager;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tourismelves.R;
 import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.file.RootFile;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.LocationUtil;
 
@@ -32,7 +35,16 @@ public class App extends Application {
 
         IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, getString(R.string.WX_APPID), true);
         iwxapi.registerApp(getString(R.string.WX_APPID));
+        okhttp();
+    }
 
+    /**
+     * 多线程下载
+     */
+    private void okhttp() {
+        OkGo.init(this);
+        DownloadManager.getInstance().setTargetFolder(RootFile.getDownloadFiles().getPath());
+        DownloadManager.getInstance().getThreadPool().setCorePoolSize(5);
     }
 
 

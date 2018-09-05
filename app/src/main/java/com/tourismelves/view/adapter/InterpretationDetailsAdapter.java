@@ -38,10 +38,9 @@ public class InterpretationDetailsAdapter extends RecyclerBaseAdapter<Attraction
 
         if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
             String photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
-            ShowImageUtils.showImageView(getContext(), photoPath,
-                    (int)  getContext().getResources().getDimension(R.dimen.dp150),
-                    (int)  getContext().getResources().getDimension(R.dimen.dp84),
-                    icon);
+            ShowImageUtils.showImageView(getContext(), photoPath
+                    + "_" + (int) getContext().getResources().getDimension(R.dimen.dp150) + "x" +
+                    (int) getContext().getResources().getDimension(R.dimen.dp84) + ".jpg", icon);
         } else {
             ShowImageUtils.showImageView(getContext(), R.mipmap.ic_launcher, icon);
         }

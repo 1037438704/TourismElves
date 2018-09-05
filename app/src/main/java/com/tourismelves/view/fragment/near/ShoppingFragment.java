@@ -1,5 +1,6 @@
 package com.tourismelves.view.fragment.near;
 
+import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.tourismelves.R;
 import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.view.activity.NearScenicSpotActivity;
 import com.tourismelves.view.adapter.NearScenicSpotAdapter;
 import com.tourismelves.view.fragment.base.BaseFragment;
 import com.tourismelves.view.widget.loadlayout.State;
@@ -32,6 +34,13 @@ public class ShoppingFragment extends BaseFragment implements PoiSearch.OnPoiSea
     private PoiSearch.Query query;
     private PoiResult poiResult;
     private NearScenicSpotAdapter nearScenicSpotAdapter;
+    private NearScenicSpotActivity nearScenicSpotActivity;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        nearScenicSpotActivity = (NearScenicSpotActivity) context;
+    }
 
     @Override
     protected int setContentLayout() {
@@ -52,7 +61,7 @@ public class ShoppingFragment extends BaseFragment implements PoiSearch.OnPoiSea
     protected void obtainData() {
         getLoadLayout().setLayoutState(State.LOADING);
         // 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query = new PoiSearch.Query("", "购物服务", address);
+        query = new PoiSearch.Query("", "购物服务", nearScenicSpotActivity.mAddress);
         //这里没有做分页加载了,默认给50条数据
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);// 设置查第一页

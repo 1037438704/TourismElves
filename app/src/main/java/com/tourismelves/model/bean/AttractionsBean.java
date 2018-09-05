@@ -3,7 +3,8 @@ package com.tourismelves.model.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
+import com.tourismelves.model.res.ApkDownloadInfoRes;
+
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  */
 
 public class AttractionsBean implements Parcelable {
-
+    private ApkDownloadInfoRes apkDownloadInfoRes;
     private boolean isSelect=false;
     private int sceneryId;
     private int orgId;
@@ -37,6 +38,13 @@ public class AttractionsBean implements Parcelable {
     private List<AudioListBean> audioList;
     private List<DoorListBean> doorList;
 
+    public ApkDownloadInfoRes getApkDownloadInfoRes() {
+        return apkDownloadInfoRes;
+    }
+
+    public void setApkDownloadInfoRes(ApkDownloadInfoRes apkDownloadInfoRes) {
+        this.apkDownloadInfoRes = apkDownloadInfoRes;
+    }
 
     public boolean isSelect() {
         return isSelect;
@@ -230,7 +238,7 @@ public class AttractionsBean implements Parcelable {
         this.doorList = doorList;
     }
 
-    public static class PhotoListBean {
+    public static class PhotoListBean implements Parcelable {
         /**
          * photoId : 446
          * photoTypeId : 61
@@ -252,6 +260,8 @@ public class AttractionsBean implements Parcelable {
          * insertIp : 117.11.214.111
          * addUserId : 17
          */
+
+
 
         private int photoId;
         private int photoTypeId;
@@ -424,9 +434,76 @@ public class AttractionsBean implements Parcelable {
         public void setAddUserId(int addUserId) {
             this.addUserId = addUserId;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.photoId);
+            dest.writeInt(this.photoTypeId);
+            dest.writeInt(this.orgId);
+            dest.writeInt(this.sceneryId);
+            dest.writeString(this.author);
+            dest.writeString(this.name);
+            dest.writeString(this.photoAlt);
+            dest.writeString(this.photoPath);
+            dest.writeString(this.photoUrl);
+            dest.writeString(this.photoText);
+            dest.writeString(this.info);
+            dest.writeInt(this.photoSize);
+            dest.writeInt(this.width);
+            dest.writeInt(this.height);
+            dest.writeString(this.suffix);
+            dest.writeByte(this.audit ? (byte) 1 : (byte) 0);
+            dest.writeString(this.insertTime);
+            dest.writeString(this.insertIp);
+            dest.writeInt(this.addUserId);
+        }
+
+        public PhotoListBean() {
+        }
+
+        protected PhotoListBean(Parcel in) {
+            this.photoId = in.readInt();
+            this.photoTypeId = in.readInt();
+            this.orgId = in.readInt();
+            this.sceneryId = in.readInt();
+            this.author = in.readString();
+            this.name = in.readString();
+            this.photoAlt = in.readString();
+            this.photoPath = in.readString();
+            this.photoUrl = in.readString();
+            this.photoText = in.readString();
+            this.info = in.readString();
+            this.photoSize = in.readInt();
+            this.width = in.readInt();
+            this.height = in.readInt();
+            this.suffix = in.readString();
+            this.audit = in.readByte() != 0;
+            this.insertTime = in.readString();
+            this.insertIp = in.readString();
+            this.addUserId = in.readInt();
+        }
+
+        public static final Creator<PhotoListBean> CREATOR = new Creator<PhotoListBean>() {
+            @Override
+            public PhotoListBean createFromParcel(Parcel source) {
+                return new PhotoListBean(source);
+            }
+
+            @Override
+            public PhotoListBean[] newArray(int size) {
+                return new PhotoListBean[size];
+            }
+        };
     }
 
-    public static class AudioListBean {
+    public static class AudioListBean implements Parcelable {
+
+
         /**
          * audioId : 1391
          * audioTypeId : 67
@@ -610,9 +687,74 @@ public class AttractionsBean implements Parcelable {
         public void setAddUserId(int addUserId) {
             this.addUserId = addUserId;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.audioId);
+            dest.writeInt(this.audioTypeId);
+            dest.writeInt(this.orgId);
+            dest.writeInt(this.sceneryId);
+            dest.writeString(this.name);
+            dest.writeString(this.image);
+            dest.writeString(this.audioPath);
+            dest.writeString(this.audioUrl);
+            dest.writeInt(this.duration);
+            dest.writeString(this.info);
+            dest.writeString(this.author);
+            dest.writeInt(this.audioSize);
+            dest.writeString(this.suffix);
+            dest.writeString(this.insertTime);
+            dest.writeString(this.insertIp);
+            dest.writeByte(this.isOriginal ? (byte) 1 : (byte) 0);
+            dest.writeByte(this.audit ? (byte) 1 : (byte) 0);
+            dest.writeInt(this.addUserId);
+        }
+
+        public AudioListBean() {
+        }
+
+        protected AudioListBean(Parcel in) {
+            this.audioId = in.readInt();
+            this.audioTypeId = in.readInt();
+            this.orgId = in.readInt();
+            this.sceneryId = in.readInt();
+            this.name = in.readString();
+            this.image = in.readString();
+            this.audioPath = in.readString();
+            this.audioUrl = in.readString();
+            this.duration = in.readInt();
+            this.info = in.readString();
+            this.author = in.readString();
+            this.audioSize = in.readInt();
+            this.suffix = in.readString();
+            this.insertTime = in.readString();
+            this.insertIp = in.readString();
+            this.isOriginal = in.readByte() != 0;
+            this.audit = in.readByte() != 0;
+            this.addUserId = in.readInt();
+        }
+
+        public static final Creator<AudioListBean> CREATOR = new Creator<AudioListBean>() {
+            @Override
+            public AudioListBean createFromParcel(Parcel source) {
+                return new AudioListBean(source);
+            }
+
+            @Override
+            public AudioListBean[] newArray(int size) {
+                return new AudioListBean[size];
+            }
+        };
     }
 
-    public static class DoorListBean {
+    public static class DoorListBean implements Parcelable {
+
+
         /**
          * id : 59
          * orgId : 7
@@ -624,10 +766,19 @@ public class AttractionsBean implements Parcelable {
 
         private int id;
         private int orgId;
+        private String name;
         private double longitude;
         private double latitude;
         private int playDistance;
         private int locked;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public int getId() {
             return id;
@@ -676,6 +827,50 @@ public class AttractionsBean implements Parcelable {
         public void setLocked(int locked) {
             this.locked = locked;
         }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeInt(this.id);
+            dest.writeInt(this.orgId);
+            dest.writeString(this.name);
+            dest.writeDouble(this.longitude);
+            dest.writeDouble(this.latitude);
+            dest.writeInt(this.playDistance);
+            dest.writeInt(this.locked);
+        }
+
+        public DoorListBean() {
+        }
+
+        protected DoorListBean(Parcel in) {
+            this.id = in.readInt();
+            this.orgId = in.readInt();
+            this.name = in.readString();
+            this.longitude = in.readDouble();
+            this.latitude = in.readDouble();
+            this.playDistance = in.readInt();
+            this.locked = in.readInt();
+        }
+
+        public static final Creator<DoorListBean> CREATOR = new Creator<DoorListBean>() {
+            @Override
+            public DoorListBean createFromParcel(Parcel source) {
+                return new DoorListBean(source);
+            }
+
+            @Override
+            public DoorListBean[] newArray(int size) {
+                return new DoorListBean[size];
+            }
+        };
+    }
+
+    public AttractionsBean() {
     }
 
     @Override
@@ -685,6 +880,7 @@ public class AttractionsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeSerializable(this.apkDownloadInfoRes);
         dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
         dest.writeInt(this.sceneryId);
         dest.writeInt(this.orgId);
@@ -706,15 +902,13 @@ public class AttractionsBean implements Parcelable {
         dest.writeInt(this.playDistance);
         dest.writeInt(this.unLocked);
         dest.writeInt(this.locked);
-        dest.writeList(this.photoList);
-        dest.writeList(this.audioList);
-        dest.writeList(this.doorList);
-    }
-
-    public AttractionsBean() {
+        dest.writeTypedList(this.photoList);
+        dest.writeTypedList(this.audioList);
+        dest.writeTypedList(this.doorList);
     }
 
     protected AttractionsBean(Parcel in) {
+        this.apkDownloadInfoRes = (ApkDownloadInfoRes) in.readSerializable();
         this.isSelect = in.readByte() != 0;
         this.sceneryId = in.readInt();
         this.orgId = in.readInt();
@@ -736,15 +930,12 @@ public class AttractionsBean implements Parcelable {
         this.playDistance = in.readInt();
         this.unLocked = in.readInt();
         this.locked = in.readInt();
-        this.photoList = new ArrayList<PhotoListBean>();
-        in.readList(this.photoList, PhotoListBean.class.getClassLoader());
-        this.audioList = new ArrayList<AudioListBean>();
-        in.readList(this.audioList, AudioListBean.class.getClassLoader());
-        this.doorList = new ArrayList<DoorListBean>();
-        in.readList(this.doorList, DoorListBean.class.getClassLoader());
+        this.photoList = in.createTypedArrayList(PhotoListBean.CREATOR);
+        this.audioList = in.createTypedArrayList(AudioListBean.CREATOR);
+        this.doorList = in.createTypedArrayList(DoorListBean.CREATOR);
     }
 
-    public static final Parcelable.Creator<AttractionsBean> CREATOR = new Parcelable.Creator<AttractionsBean>() {
+    public static final Creator<AttractionsBean> CREATOR = new Creator<AttractionsBean>() {
         @Override
         public AttractionsBean createFromParcel(Parcel source) {
             return new AttractionsBean(source);

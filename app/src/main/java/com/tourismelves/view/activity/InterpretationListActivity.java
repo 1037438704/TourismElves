@@ -41,6 +41,7 @@ import com.amap.api.maps.model.MyLocationStyle;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.AttractionsBean;
 import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.model.res.ApkDownloadInfoRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
@@ -59,6 +60,7 @@ import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.delFavorite;
 import static com.tourismelves.app.constant.UrlConstants.isFavorite;
+import static com.tourismelves.app.constant.UrlConstants.port;
 import static com.tourismelves.app.constant.UrlConstants.saveFavorite;
 import static com.tourismelves.app.constant.UrlConstants.sceneryList;
 
@@ -79,7 +81,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
 
     private BottomSheetDialog mBottomSheetDialog;
     private int ordId;
-    private String name;
+    private String name = "";
     private ArrayList<AttractionsBean> attractionsBeans;
 
 
@@ -164,7 +166,9 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                         //计算出需要移动的距离
                         dy = (int) event.getRawY() - lastY2;
                         if (dy <= 0) {
-                            mBottomSheetDialog.show();
+                            if (mBottomSheetDialog != null) {
+                                mBottomSheetDialog.show();
+                            }
                         }
                         return true;
                 }
@@ -244,6 +248,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                             mBottomSheetDialog.dismiss();
                             Intent intent = new Intent(getContext(), InterpretationList2Activity.class);
                             intent.putParcelableArrayListExtra("attractionsBeans", attractionsBeans);
+                            intent.putExtra("name", name);
                             startActivity(intent);
                         }
                         return true;
@@ -281,6 +286,9 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                 startActivity(intent);
                 break;
             case R.id.interpretation_list_search_around_comments_btn:
+                Intent intent1 = new Intent(this, NearScenicSpotActivity.class);
+                intent1.putExtra("address", name);
+                startActivity(intent1);
                 break;
             case R.id.interpretation_list_facebook_btn:
 //                startActivity(new Intent(this, CommentsActivity.class));
@@ -331,6 +339,23 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                                     for (int i = 0; i < size; i++) {
                                         String string = dataList.getJSONObject(i).toString();
                                         AttractionsBean attractionsBean = JSON.parseObject(string, AttractionsBean.class);
+
+                                        List<AttractionsBean.AudioListBean> audioList = attractionsBean.getAudioList();
+                                        if (audioList != null && audioList.size() > 0) {
+                                            ApkDownloadInfoRes apkDownloadInfoRes = new ApkDownloadInfoRes();
+                                            String photoPath = "";
+                                            if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0)
+                                                photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
+
+                                            apkDownloadInfoRes.setImageUrl(photoPath);
+                                            apkDownloadInfoRes.setDownKey(attractionsBean.getName());
+                                            apkDownloadInfoRes.setContent(attractionsBean.getDescription());
+                                            apkDownloadInfoRes.setName(attractionsBean.getName());
+                                            apkDownloadInfoRes.setUrl(port + audioList.get(0).getAudioPath());
+                                            attractionsBean.setApkDownloadInfoRes(apkDownloadInfoRes);
+
+                                        } else
+                                            attractionsBean.setApkDownloadInfoRes(null);
                                         attractionsBeans.add(attractionsBean);
                                     }
                                 } else {
