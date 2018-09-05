@@ -5,5 +5,6 @@ package com.tourismelves.app.constant;
  */
 
 public class CommentConstants {
-
+    public static double longitude = 0.0, latitude = 0.0;
+    public static String address="";
 }

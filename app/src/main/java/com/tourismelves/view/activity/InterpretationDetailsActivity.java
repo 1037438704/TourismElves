@@ -1,6 +1,9 @@
 package com.tourismelves.view.activity;
 
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.tourismelves.view.adapter.InterpretationDetailsAdapter;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.delFavorite;
 import static com.tourismelves.app.constant.UrlConstants.isFavorite;
@@ -38,6 +42,20 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
     AppCompatImageView interpretationDetailsIcon;
     @BindView(R.id.interpretation_details_recycler)
     RecyclerView interpretationDetailsRecycler;
+    @BindView(R.id.interpretation_details_name)
+    AppCompatTextView interpretationDetailsName;
+    @BindView(R.id.interpretation_details_content)
+    AppCompatTextView interpretationDetailsContent;
+    @BindView(R.id.interpretation_details_content_sc)
+    NestedScrollView interpretationDetailsContentSc;
+    @BindView(R.id.interpretation_details_name2)
+    AppCompatTextView interpretationDetailsName2;
+    @BindView(R.id.interpretation_details_content2)
+    AppCompatTextView interpretationDetailsContent2;
+    @BindView(R.id.interpretation_details_content_sc2)
+    NestedScrollView interpretationDetailsContentSc2;
+    @BindView(R.id.interpretation_details_card2)
+    CardView interpretationDetailsCard2;
     private ArrayList<AttractionsBean> attractionsBeans;
     private InterpretationDetailsAdapter interpretationDetailsAdapter;
     private String userId;
@@ -65,7 +83,6 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
         interpretationDetailsRecycler.setAdapter(interpretationDetailsAdapter);
 
         AttractionsBean attractionsBean = attractionsBeans.get(getIntent().getIntExtra("position", 0));
-
         ordId = attractionsBeans.get(0).getPhotoList().get(0).getOrgId();
 
         String photoPath = "";
@@ -73,6 +90,10 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
             photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
         }
 
+        interpretationDetailsName.setText(attractionsBean.getName());
+        interpretationDetailsContent.setText(attractionsBean.getDescription());
+        interpretationDetailsName2.setText(attractionsBean.getName());
+        interpretationDetailsContent2.setText(attractionsBean.getDescription());
         ShowImageUtils.showRounded(getContext(), photoPath,
                 (int) getResources().getDimension(R.dimen.dp295),
                 (int) getResources().getDimension(R.dimen.dp190),
@@ -97,6 +118,18 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
                     photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
                 }
 
+                String audioPath="";
+                if (attractionsBean.getAudioList() != null && attractionsBean.getAudioList().size() > 0) {
+                    audioPath = port + attractionsBean.getAudioList().get(0).getAudioPath();
+                }
+
+
+                interpretationDetailsName.setText(attractionsBean.getName());
+                interpretationDetailsContent.setText(attractionsBean.getDescription());
+                interpretationDetailsContentSc.scrollTo(0, 0);
+                interpretationDetailsName2.setText(attractionsBean.getName());
+                interpretationDetailsContent2.setText(attractionsBean.getDescription());
+                interpretationDetailsContentSc2.scrollTo(0, 0);
                 ShowImageUtils.showRounded(getContext(), photoPath,
                         (int) getResources().getDimension(R.dimen.dp295),
                         (int) getResources().getDimension(R.dimen.dp190),
@@ -187,6 +220,18 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
                         ToastUtil.show(R.string.no_found_network);
                     }
                 });
+    }
+
+    @OnClick({R.id.interpretation_details_show, R.id.interpretation_details_show2})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.interpretation_details_show:
+                interpretationDetailsCard2.setVisibility(View.VISIBLE);
+                break;
+            case R.id.interpretation_details_show2:
+                interpretationDetailsCard2.setVisibility(View.GONE);
+                break;
+        }
     }
 
 }

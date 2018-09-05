@@ -8,8 +8,7 @@
     <com.amap.api.maps.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </com.amap.api.maps.MapView>
+        android:layout_height="match_parent"></com.amap.api.maps.MapView>
 
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
@@ -88,15 +87,15 @@
                 android:background="@color/gray_c" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/interpretation_list_comments_btn"
+                android:id="@+id/interpretation_list_facebook_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:drawableLeft="@mipmap/pinglun"
+                android:drawableLeft="@mipmap/fankui"
                 android:drawablePadding="@dimen/dp4"
                 android:gravity="center"
                 android:paddingLeft="@dimen/dp15"
                 android:paddingRight="@dimen/dp17"
-                android:text="评论"
+                android:text="反馈"
                 android:textColor="#606869"
                 android:textSize="@dimen/sp12" />
         </LinearLayout>

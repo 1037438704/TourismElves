@@ -11,6 +11,7 @@
         android:background="@color/gray_c" />
 
     <android.support.v7.widget.CardView
+        android:id="@+id/interpretation_details_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,9 +22,92 @@
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/interpretation_details_icon"
             android:layout_width="@dimen/dp285"
-            android:layout_height="@dimen/dp190" />
+            android:layout_height="@dimen/dp190"
+            android:scaleType="center" />
 
     </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/interpretation_details_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/interpretation_details_card"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp20"
+        android:includeFontPadding="false"
+        android:textColor="#ff434f6d"
+        android:textSize="@dimen/sp18" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/interpretation_details_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/interpretation_details_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_marginLeft="@dimen/dp60"
+        android:layout_marginRight="@dimen/dp60"
+        android:layout_marginTop="@dimen/dp5"
+        android:src="@mipmap/geci_zhankai" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/interpretation_details_ll"
+        android:layout_below="@id/interpretation_details_show"
+        android:layout_marginLeft="@dimen/dp60"
+        android:layout_marginRight="@dimen/dp60">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/interpretation_details_content_sc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/interpretation_details_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#434F6D"
+                android:textSize="@dimen/sp14" />
+        </android.support.v4.widget.NestedScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shape_rectangle" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/interpretation_details_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/interpretation_details_recycler"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/bofangqi" />
+
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp12"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginRight="@dimen/dp16"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0:00/0:00"
+            android:textColor="#ff777d84"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/interpretation_details_recycler"
@@ -32,4 +116,70 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/dp10"
         android:layout_marginTop="@dimen/dp10" />
+
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/interpretation_details_card2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/interpretation_details_ll"
+        android:layout_marginBottom="@dimen/dp8"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp4"
+        android:visibility="gone"
+        card:cardCornerRadius="@dimen/dp5"
+        card:cardElevation="@dimen/dp5">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginRight="@dimen/dp15">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/interpretation_details_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/dp20"
+                android:includeFontPadding="false"
+                android:textColor="#ff434f6d"
+                android:textSize="@dimen/sp18" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/interpretation_details_show2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/interpretation_details_name2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/dp5"
+                android:layout_marginTop="@dimen/dp5"
+                android:rotation="180"
+                android:src="@mipmap/geci_zhankai" />
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/interpretation_details_content_sc2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/interpretation_details_show2"
+                android:layout_marginBottom="@dimen/dp15"
+                android:overScrollMode="never">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/interpretation_details_content2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#434F6D"
+                    android:textSize="@dimen/sp14" />
+            </android.support.v4.widget.NestedScrollView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/shape_rectangle" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

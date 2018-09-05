@@ -3,6 +3,9 @@ package com.tourismelves.utils.glide;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.AppCompatImageView;
 import android.widget.ImageView;
 
@@ -10,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.tourismelves.R;
 import com.tourismelves.utils.system.ResolutionUtil;
 
@@ -113,19 +117,28 @@ public class ShowImageUtils {
     }
 
     @SuppressLint("NewApi")
-    public static void showRounded(Context context, String url, AppCompatImageView imgeview, int px) {
+    public static void showRounded(final Context context, String url, final AppCompatImageView imgeview, final int px) {
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
                 Glide.with(context)
                         .load(url)
+                        .asBitmap()
+                        .placeholder(errorimg)
                         .error(errorimg)
                         .thumbnail(0.1f)
+                        .centerCrop()
                         .priority(Priority.LOW)
-                        .bitmapTransform(new CenterCrop(context), new RoundedCornersTransformation(context,
-                                ResolutionUtil.getInstance(context).px2dp2pxWidth(px), 0,
-                                RoundedCornersTransformation.CornerType.ALL))
-                        .diskCacheStrategy(DiskCacheStrategy.RESULT)
-                        .into(imgeview);
+                        .diskCacheStrategy(DiskCacheStrategy.RESULT) //设置缓存
+                        .into(new BitmapImageViewTarget(imgeview) {
+                            @Override
+                            protected void setResource(Bitmap resource) {
+                                super.setResource(resource);
+                                RoundedBitmapDrawable circularBitmapDrawable =
+                                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                                circularBitmapDrawable.setCornerRadius(ResolutionUtil.getInstance(context).px2dp2pxWidth(px)); //设置圆角弧度
+                                imgeview.setImageDrawable(circularBitmapDrawable);
+                            }
+                        });
             }
         }
     }
@@ -137,6 +150,7 @@ public class ShowImageUtils {
                 Glide.with(context)
                         .load(url)
                         .error(errorimg)
+                        .centerCrop()
                         .thumbnail(0.1f)
                         .priority(Priority.LOW)
                         .bitmapTransform(new CropTransformation(context, w, h, CropTransformation.CropType.CENTER),

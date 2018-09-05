@@ -18,7 +18,9 @@
         android:id="@+id/i_near_scenic_spot_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/i_near_scenic_spot_auto_play"
         android:layout_toRightOf="@id/i_near_scenic_spot_img"
+        android:singleLine="true"
         android:text="故宫博物院"
         android:textColor="#ff434f6d"
         android:textSize="@dimen/sp16" />
@@ -62,18 +64,12 @@
             android:textSize="@dimen/sp16" />
     </LinearLayout>
 
-    <android.support.v7.widget.AppCompatTextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/i_near_scenic_spot_types"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp20"
         android:layout_alignBottom="@id/i_near_scenic_spot_img"
-        android:layout_toRightOf="@id/i_near_scenic_spot_img"
-        android:background="@drawable/round_4585f5"
-        android:gravity="center"
-        android:paddingLeft="@dimen/dp8"
-        android:paddingRight="@dimen/dp8"
-        android:text="古建类"
-        android:textColor="#4A90E2"
-        android:textSize="@dimen/sp12" />
+        android:layout_toRightOf="@id/i_near_scenic_spot_img" />
 
     <RelativeLayout
         android:id="@+id/i_near_scenic_spot_auto_play"

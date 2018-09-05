@@ -23,6 +23,15 @@ public class ShopListBean {
     private String image;
     private double price;
     private double preferential;
+    private boolean isSelect=false;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public int getCartId() {
         return cartId;

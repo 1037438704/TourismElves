@@ -1,11 +1,13 @@
 package com.tourismelves.view.activity;
 
 import android.Manifest;
+import android.os.Process;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
@@ -13,11 +15,13 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.tourismelves.R;
+import com.tourismelves.model.event.SelectCityBus;
 import com.tourismelves.model.event.TabSelectBus;
 import com.tourismelves.utils.common.EventBusUtil;
+import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.PermissionUtil;
-import com.tourismelves.view.activity.base.StateBaseActivity;
+import com.tourismelves.view.activity.base.CheckPermissionsActivity;
 import com.tourismelves.view.adapter.FragmentAdapter;
 import com.tourismelves.view.fragment.ElfSaidFragment;
 import com.tourismelves.view.fragment.HomeFragment;
@@ -34,10 +38,14 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.tourismelves.app.constant.CommentConstants.address;
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
+
 /**
  * 主页
  */
-public class MainActivity extends StateBaseActivity {
+public class MainActivity extends CheckPermissionsActivity {
     @BindView(R.id.main_viewpager)
     NoScrollViewPager mainViewpager;
     @BindView(R.id.main_icon_home)
@@ -58,11 +66,18 @@ public class MainActivity extends StateBaseActivity {
     private ElfSaidFragment elfSaidFragment;
     private MyFragment myFragment;
     public static String city = "";
-    public static double longitude=0.0, latitude=0.0;
 
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
 
+
+    @Override
+    public void onResume() {
+        needPermissions = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE};
+        super.onResume();
+    }
 
     @Override
     protected void setContentLayout() {
@@ -84,7 +99,6 @@ public class MainActivity extends StateBaseActivity {
         locationOption = new AMapLocationClientOption();
         //初始化定位
         initLocation();
-
 
         boolean b = PermissionUtil.requestPerssions(this, 99, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION);
         if (b) {
@@ -247,7 +261,7 @@ public class MainActivity extends StateBaseActivity {
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setGpsFirst(false);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
         mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
+        mOption.setInterval(1000 * 60);//可选，设置定位间隔。默认为60秒
         mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
         mOption.setOnceLocation(true);//可选，设置是否单次定位。默认是false
         mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
@@ -283,7 +297,8 @@ public class MainActivity extends StateBaseActivity {
                     // 获取当前提供定位服务的卫星个数
                     sb.append("星    数    : " + location.getSatellites() + "\n");
                     sb.append("国    家    : " + location.getCountry() + "\n");
-                    sb.append("省            : " + location.getProvince() + "\n");
+                    address=location.getProvince();
+                    sb.append("省            : " + address+ "\n");
                     sb.append("市            : " + location.getCity() + "\n");
                     sb.append("城市编码 : " + location.getCityCode() + "\n");
                     sb.append("区            : " + location.getDistrict() + "\n");
@@ -291,7 +306,9 @@ public class MainActivity extends StateBaseActivity {
                     sb.append("地    址    : " + location.getAddress() + "\n");
                     sb.append("兴趣点    : " + location.getPoiName() + "\n");
 
-                    setBasePositioning(location.getProvince());
+
+                    EventBusUtil.postEvent(new SelectCityBus("天津市"));
+                    setBasePositioning("天津市");
                     city = location.getProvince();
                 } else {
                     //定位失败
@@ -328,5 +345,24 @@ public class MainActivity extends StateBaseActivity {
             locationOption = null;
         }
     }
+
+    private long mExitTime;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //双击退出
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            long secondTime = System.currentTimeMillis();
+            if (secondTime - mExitTime > 2000) {
+                ToastUtil.show("再按一次退出程序");
+                mExitTime = secondTime;
+                return true;
+            } else {
+                Process.killProcess(Process.myPid());  //杀死进程
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 
 }

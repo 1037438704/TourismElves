@@ -63,19 +63,36 @@
             android:layout_marginLeft="@dimen/dp11"
             android:background="@color/gray_c" />
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/pay_jb"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp50"
-            android:drawableLeft="@mipmap/jb"
-            android:drawablePadding="@dimen/dp10"
-            android:drawableRight="@drawable/anonymous_select"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/dp11"
-            android:paddingRight="@dimen/dp8"
-            android:text="金币"
-            android:textColor="#ff434f6d"
-            android:textSize="@dimen/sp16" />
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/pay_jb_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dp40"
+                android:text="余额0.00金币"
+                android:textColor="#ff606980"
+                android:textSize="@dimen/sp14" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/pay_jb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp50"
+                android:drawableLeft="@mipmap/jb"
+                android:drawablePadding="@dimen/dp10"
+                android:drawableRight="@drawable/anonymous_select"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dp11"
+                android:paddingRight="@dimen/dp8"
+                android:text="金币"
+                android:textColor="#ff434f6d"
+                android:textSize="@dimen/sp16" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"

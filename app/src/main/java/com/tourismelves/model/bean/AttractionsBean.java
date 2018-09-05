@@ -13,29 +13,30 @@ import java.util.List;
 public class AttractionsBean implements Parcelable {
 
     private boolean isSelect=false;
-
-    private String name;
-    private String description;
-    private double longitude;
-    private double latitude;
-    private int unLocked;
-    private List<PhotoListBean> photoList;
-    private List<String> audioList;
-    private List<DoorListBean> doorList;
     private int sceneryId;
     private int orgId;
+    private String name;
     private String shortName;
     private String foreignName;
     private String photo;
+    private String description;
     private String descriptionVoice;
+    private double ticketPrice;
     private String ticketDescription;
+    private double longitude;
+    private double latitude;
     private String insertTime;
+    private int hot;
+    private int praise;
     private boolean status;
+    private int orders;
     private int playDistance;
-    private int modifyUserId;
-    private String updateTime;
-    private int isAutoplay;
+    private int unLocked;
     private int locked;
+    private List<PhotoListBean> photoList;
+    private List<AudioListBean> audioList;
+    private List<DoorListBean> doorList;
+
 
     public boolean isSelect() {
         return isSelect;
@@ -43,70 +44,6 @@ public class AttractionsBean implements Parcelable {
 
     public void setSelect(boolean select) {
         isSelect = select;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public int getUnLocked() {
-        return unLocked;
-    }
-
-    public void setUnLocked(int unLocked) {
-        this.unLocked = unLocked;
-    }
-
-    public List<PhotoListBean> getPhotoList() {
-        return photoList;
-    }
-
-    public void setPhotoList(List<PhotoListBean> photoList) {
-        this.photoList = photoList;
-    }
-
-    public List<String> getAudioList() {
-        return audioList;
-    }
-
-    public void setAudioList(List<String> audioList) {
-        this.audioList = audioList;
-    }
-
-    public List<DoorListBean> getDoorList() {
-        return doorList;
-    }
-
-    public void setDoorList(List<DoorListBean> doorList) {
-        this.doorList = doorList;
     }
 
     public int getSceneryId() {
@@ -123,6 +60,14 @@ public class AttractionsBean implements Parcelable {
 
     public void setOrgId(int orgId) {
         this.orgId = orgId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getShortName() {
@@ -149,12 +94,28 @@ public class AttractionsBean implements Parcelable {
         this.photo = photo;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getDescriptionVoice() {
         return descriptionVoice;
     }
 
     public void setDescriptionVoice(String descriptionVoice) {
         this.descriptionVoice = descriptionVoice;
+    }
+
+    public double getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(double ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     public String getTicketDescription() {
@@ -165,12 +126,44 @@ public class AttractionsBean implements Parcelable {
         this.ticketDescription = ticketDescription;
     }
 
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
     public String getInsertTime() {
         return insertTime;
     }
 
     public void setInsertTime(String insertTime) {
         this.insertTime = insertTime;
+    }
+
+    public int getHot() {
+        return hot;
+    }
+
+    public void setHot(int hot) {
+        this.hot = hot;
+    }
+
+    public int getPraise() {
+        return praise;
+    }
+
+    public void setPraise(int praise) {
+        this.praise = praise;
     }
 
     public boolean isStatus() {
@@ -181,6 +174,14 @@ public class AttractionsBean implements Parcelable {
         this.status = status;
     }
 
+    public int getOrders() {
+        return orders;
+    }
+
+    public void setOrders(int orders) {
+        this.orders = orders;
+    }
+
     public int getPlayDistance() {
         return playDistance;
     }
@@ -189,28 +190,12 @@ public class AttractionsBean implements Parcelable {
         this.playDistance = playDistance;
     }
 
-    public int getModifyUserId() {
-        return modifyUserId;
+    public int getUnLocked() {
+        return unLocked;
     }
 
-    public void setModifyUserId(int modifyUserId) {
-        this.modifyUserId = modifyUserId;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public int getIsAutoplay() {
-        return isAutoplay;
-    }
-
-    public void setIsAutoplay(int isAutoplay) {
-        this.isAutoplay = isAutoplay;
+    public void setUnLocked(int unLocked) {
+        this.unLocked = unLocked;
     }
 
     public int getLocked() {
@@ -221,32 +206,57 @@ public class AttractionsBean implements Parcelable {
         this.locked = locked;
     }
 
-    public static class PhotoListBean implements Parcelable {
+    public List<PhotoListBean> getPhotoList() {
+        return photoList;
+    }
+
+    public void setPhotoList(List<PhotoListBean> photoList) {
+        this.photoList = photoList;
+    }
+
+    public List<AudioListBean> getAudioList() {
+        return audioList;
+    }
+
+    public void setAudioList(List<AudioListBean> audioList) {
+        this.audioList = audioList;
+    }
+
+    public List<DoorListBean> getDoorList() {
+        return doorList;
+    }
+
+    public void setDoorList(List<DoorListBean> doorList) {
+        this.doorList = doorList;
+    }
+
+    public static class PhotoListBean {
         /**
-         * photoId : 601
-         * photoTypeId : 66
-         * orgId : 68
+         * photoId : 446
+         * photoTypeId : 61
+         * orgId : 7
+         * sceneryId : 17
          * author :
-         * name : 故宫博物馆
+         * name : 丽正门
          * photoAlt :
-         * photoPath : M00/00/18/052iAltNboOAWdG2AAQAZ_aEKmg926.jpg
+         * photoPath : M00/00/15/052iAlsWQfmAB02DAAPQ50SbnCE862.jpg
          * photoUrl :
          * photoText :
          * info :
-         * photoSize : 262247
+         * photoSize : 250087
          * width : 710
          * height : 380
          * suffix : jpg
          * audit : true
-         * insertTime : 2018-07-16 12:20:33
-         * insertIp : 117.9.22.165
+         * insertTime : 2018-06-05 03:55:40
+         * insertIp : 117.11.214.111
          * addUserId : 17
          */
-
 
         private int photoId;
         private int photoTypeId;
         private int orgId;
+        private int sceneryId;
         private String author;
         private String name;
         private String photoAlt;
@@ -285,6 +295,14 @@ public class AttractionsBean implements Parcelable {
 
         public void setOrgId(int orgId) {
             this.orgId = orgId;
+        }
+
+        public int getSceneryId() {
+            return sceneryId;
+        }
+
+        public void setSceneryId(int sceneryId) {
+            this.sceneryId = sceneryId;
         }
 
         public String getAuthor() {
@@ -406,78 +424,200 @@ public class AttractionsBean implements Parcelable {
         public void setAddUserId(int addUserId) {
             this.addUserId = addUserId;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.photoId);
-            dest.writeInt(this.photoTypeId);
-            dest.writeInt(this.orgId);
-            dest.writeString(this.author);
-            dest.writeString(this.name);
-            dest.writeString(this.photoAlt);
-            dest.writeString(this.photoPath);
-            dest.writeString(this.photoUrl);
-            dest.writeString(this.photoText);
-            dest.writeString(this.info);
-            dest.writeInt(this.photoSize);
-            dest.writeInt(this.width);
-            dest.writeInt(this.height);
-            dest.writeString(this.suffix);
-            dest.writeByte(this.audit ? (byte) 1 : (byte) 0);
-            dest.writeString(this.insertTime);
-            dest.writeString(this.insertIp);
-            dest.writeInt(this.addUserId);
-        }
-
-        public PhotoListBean() {
-        }
-
-        protected PhotoListBean(Parcel in) {
-            this.photoId = in.readInt();
-            this.photoTypeId = in.readInt();
-            this.orgId = in.readInt();
-            this.author = in.readString();
-            this.name = in.readString();
-            this.photoAlt = in.readString();
-            this.photoPath = in.readString();
-            this.photoUrl = in.readString();
-            this.photoText = in.readString();
-            this.info = in.readString();
-            this.photoSize = in.readInt();
-            this.width = in.readInt();
-            this.height = in.readInt();
-            this.suffix = in.readString();
-            this.audit = in.readByte() != 0;
-            this.insertTime = in.readString();
-            this.insertIp = in.readString();
-            this.addUserId = in.readInt();
-        }
-
-        public static final Creator<PhotoListBean> CREATOR = new Creator<PhotoListBean>() {
-            @Override
-            public PhotoListBean createFromParcel(Parcel source) {
-                return new PhotoListBean(source);
-            }
-
-            @Override
-            public PhotoListBean[] newArray(int size) {
-                return new PhotoListBean[size];
-            }
-        };
     }
 
-    public static class DoorListBean implements Parcelable {
-
+    public static class AudioListBean {
         /**
-         * id : 91
-         * orgId : 68
-         * longitude : 116.39727
-         * latitude : 39.912754
+         * audioId : 1391
+         * audioTypeId : 67
+         * orgId : 7
+         * sceneryId : 17
+         * name : 丽正门
+         * image :
+         * audioPath : M00/00/15/052iAlsV6juAXMDAAAf1uZmYIkY179.mp3
+         * audioUrl :
+         * duration : 65
+         * info :
+         * author :
+         * audioSize : 521657
+         * suffix : mp3
+         * insertTime : 2018-06-04 21:41:17
+         * insertIp : 117.11.214.111
+         * isOriginal : true
+         * audit : true
+         * addUserId : 17
+         */
+
+        private int audioId;
+        private int audioTypeId;
+        private int orgId;
+        private int sceneryId;
+        private String name;
+        private String image;
+        private String audioPath;
+        private String audioUrl;
+        private int duration;
+        private String info;
+        private String author;
+        private int audioSize;
+        private String suffix;
+        private String insertTime;
+        private String insertIp;
+        private boolean isOriginal;
+        private boolean audit;
+        private int addUserId;
+
+        public int getAudioId() {
+            return audioId;
+        }
+
+        public void setAudioId(int audioId) {
+            this.audioId = audioId;
+        }
+
+        public int getAudioTypeId() {
+            return audioTypeId;
+        }
+
+        public void setAudioTypeId(int audioTypeId) {
+            this.audioTypeId = audioTypeId;
+        }
+
+        public int getOrgId() {
+            return orgId;
+        }
+
+        public void setOrgId(int orgId) {
+            this.orgId = orgId;
+        }
+
+        public int getSceneryId() {
+            return sceneryId;
+        }
+
+        public void setSceneryId(int sceneryId) {
+            this.sceneryId = sceneryId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
+        }
+
+        public String getAudioPath() {
+            return audioPath;
+        }
+
+        public void setAudioPath(String audioPath) {
+            this.audioPath = audioPath;
+        }
+
+        public String getAudioUrl() {
+            return audioUrl;
+        }
+
+        public void setAudioUrl(String audioUrl) {
+            this.audioUrl = audioUrl;
+        }
+
+        public int getDuration() {
+            return duration;
+        }
+
+        public void setDuration(int duration) {
+            this.duration = duration;
+        }
+
+        public String getInfo() {
+            return info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public int getAudioSize() {
+            return audioSize;
+        }
+
+        public void setAudioSize(int audioSize) {
+            this.audioSize = audioSize;
+        }
+
+        public String getSuffix() {
+            return suffix;
+        }
+
+        public void setSuffix(String suffix) {
+            this.suffix = suffix;
+        }
+
+        public String getInsertTime() {
+            return insertTime;
+        }
+
+        public void setInsertTime(String insertTime) {
+            this.insertTime = insertTime;
+        }
+
+        public String getInsertIp() {
+            return insertIp;
+        }
+
+        public void setInsertIp(String insertIp) {
+            this.insertIp = insertIp;
+        }
+
+        public boolean isIsOriginal() {
+            return isOriginal;
+        }
+
+        public void setIsOriginal(boolean isOriginal) {
+            this.isOriginal = isOriginal;
+        }
+
+        public boolean isAudit() {
+            return audit;
+        }
+
+        public void setAudit(boolean audit) {
+            this.audit = audit;
+        }
+
+        public int getAddUserId() {
+            return addUserId;
+        }
+
+        public void setAddUserId(int addUserId) {
+            this.addUserId = addUserId;
+        }
+    }
+
+    public static class DoorListBean {
+        /**
+         * id : 59
+         * orgId : 7
+         * longitude : 117.940755
+         * latitude : 40.981444
          * playDistance : 20
          * locked : 0
          */
@@ -536,45 +676,6 @@ public class AttractionsBean implements Parcelable {
         public void setLocked(int locked) {
             this.locked = locked;
         }
-
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeInt(this.id);
-            dest.writeInt(this.orgId);
-            dest.writeDouble(this.longitude);
-            dest.writeDouble(this.latitude);
-            dest.writeInt(this.playDistance);
-            dest.writeInt(this.locked);
-        }
-
-        public DoorListBean() {
-        }
-
-        protected DoorListBean(Parcel in) {
-            this.id = in.readInt();
-            this.orgId = in.readInt();
-            this.longitude = in.readDouble();
-            this.latitude = in.readDouble();
-            this.playDistance = in.readInt();
-            this.locked = in.readInt();
-        }
-
-        public static final Creator<DoorListBean> CREATOR = new Creator<DoorListBean>() {
-            @Override
-            public DoorListBean createFromParcel(Parcel source) {
-                return new DoorListBean(source);
-            }
-
-            @Override
-            public DoorListBean[] newArray(int size) {
-                return new DoorListBean[size];
-            }
-        };
     }
 
     @Override
@@ -584,59 +685,63 @@ public class AttractionsBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.description);
-        dest.writeDouble(this.longitude);
-        dest.writeDouble(this.latitude);
-        dest.writeInt(this.unLocked);
-        dest.writeList(this.photoList);
-        dest.writeList(this.audioList);
-        dest.writeList(this.doorList);
+        dest.writeByte(this.isSelect ? (byte) 1 : (byte) 0);
         dest.writeInt(this.sceneryId);
         dest.writeInt(this.orgId);
+        dest.writeString(this.name);
         dest.writeString(this.shortName);
         dest.writeString(this.foreignName);
         dest.writeString(this.photo);
+        dest.writeString(this.description);
         dest.writeString(this.descriptionVoice);
+        dest.writeDouble(this.ticketPrice);
         dest.writeString(this.ticketDescription);
+        dest.writeDouble(this.longitude);
+        dest.writeDouble(this.latitude);
         dest.writeString(this.insertTime);
+        dest.writeInt(this.hot);
+        dest.writeInt(this.praise);
         dest.writeByte(this.status ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.orders);
         dest.writeInt(this.playDistance);
-        dest.writeInt(this.modifyUserId);
-        dest.writeString(this.updateTime);
-        dest.writeInt(this.isAutoplay);
+        dest.writeInt(this.unLocked);
         dest.writeInt(this.locked);
+        dest.writeList(this.photoList);
+        dest.writeList(this.audioList);
+        dest.writeList(this.doorList);
     }
 
     public AttractionsBean() {
     }
 
     protected AttractionsBean(Parcel in) {
-        this.name = in.readString();
-        this.description = in.readString();
-        this.longitude = in.readDouble();
-        this.latitude = in.readDouble();
-        this.unLocked = in.readInt();
-        this.photoList = new ArrayList<PhotoListBean>();
-        in.readList(this.photoList, PhotoListBean.class.getClassLoader());
-        this.audioList = new ArrayList<String>();
-        in.readList(this.audioList, String.class.getClassLoader());
-        this.doorList = new ArrayList<DoorListBean>();
-        in.readList(this.doorList, DoorListBean.class.getClassLoader());
+        this.isSelect = in.readByte() != 0;
         this.sceneryId = in.readInt();
         this.orgId = in.readInt();
+        this.name = in.readString();
         this.shortName = in.readString();
         this.foreignName = in.readString();
         this.photo = in.readString();
+        this.description = in.readString();
         this.descriptionVoice = in.readString();
+        this.ticketPrice = in.readDouble();
         this.ticketDescription = in.readString();
+        this.longitude = in.readDouble();
+        this.latitude = in.readDouble();
         this.insertTime = in.readString();
+        this.hot = in.readInt();
+        this.praise = in.readInt();
         this.status = in.readByte() != 0;
+        this.orders = in.readInt();
         this.playDistance = in.readInt();
-        this.modifyUserId = in.readInt();
-        this.updateTime = in.readString();
-        this.isAutoplay = in.readInt();
+        this.unLocked = in.readInt();
         this.locked = in.readInt();
+        this.photoList = new ArrayList<PhotoListBean>();
+        in.readList(this.photoList, PhotoListBean.class.getClassLoader());
+        this.audioList = new ArrayList<AudioListBean>();
+        in.readList(this.audioList, AudioListBean.class.getClassLoader());
+        this.doorList = new ArrayList<DoorListBean>();
+        in.readList(this.doorList, DoorListBean.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<AttractionsBean> CREATOR = new Parcelable.Creator<AttractionsBean>() {

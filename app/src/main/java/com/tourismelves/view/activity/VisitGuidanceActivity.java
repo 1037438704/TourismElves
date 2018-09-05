@@ -1,58 +1,68 @@
 package com.tourismelves.view.activity;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.UiSettings;
-import com.amap.api.maps.model.BitmapDescriptor;
-import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MyLocationStyle;
 import com.tourismelves.R;
+import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.model.res.VisitGuidanceRes;
 import com.tourismelves.utils.common.ToastUtil;
-import com.tourismelves.utils.log.LogUtil;
+import com.tourismelves.utils.glide.ShowImageUtils;
+import com.tourismelves.utils.system.LocationUtil;
+import com.tourismelves.utils.system.ResolutionUtil;
 import com.tourismelves.view.activity.base.CheckPermissionsActivity;
 import com.tourismelves.view.widget.custom.CustomScrollView;
-import com.tourismelves.view.widget.custom.MapContainer;
+import com.tourismelves.view.widget.loadlayout.State;
+
+import java.util.List;
 
 import butterknife.BindView;
+
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
+import static com.tourismelves.app.constant.UrlConstants.port;
+import static com.tourismelves.app.constant.UrlConstants.scenicSpotInfo;
 
 /**
  * 游玩指引
  */
 
-public class VisitGuidanceActivity extends CheckPermissionsActivity implements LocationSource, AMapLocationListener {
-    @BindView(R.id.visit_guidance_map)
-    MapView mMapView;
+public class VisitGuidanceActivity extends CheckPermissionsActivity {
     @BindView(R.id.visit_guidance_scroll)
     CustomScrollView visitGuidanceScroll;
-    @BindView(R.id.visit_guidance_map_rl)
-    MapContainer visitGuidanceMapRl;
+    @BindView(R.id.visit_guidance_img)
+    AppCompatImageView visitGuidanceImg;
+    @BindView(R.id.visit_guidance_distance)
+    AppCompatTextView visitGuidanceDistance;
+    @BindView(R.id.visit_guidance_price)
+    AppCompatTextView visitGuidancePrice;
+    @BindView(R.id.visit_guidance_openingHours)
+    AppCompatTextView visitGuidanceOpeningHours;
+    @BindView(R.id.visit_guidance_favouredPolicy)
+    AppCompatTextView visitGuidanceFavouredPolicy;
+    @BindView(R.id.visit_guidance_eason)
+    AppCompatTextView visitGuidanceEason;
+    @BindView(R.id.visit_guidance_playtime)
+    AppCompatTextView visitGuidancePlaytime;
+    @BindView(R.id.visit_guidance_address)
+    AppCompatTextView visitGuidanceAddress;
+    @BindView(R.id.visit_guidance_tip)
+    AppCompatTextView visitGuidanceTip;
+    @BindView(R.id.visit_guidance_name)
+    AppCompatTextView visitGuidanceName;
 
-    private AMapLocationClient mlocationClient;
-    private LocationSource.OnLocationChangedListener mListener;
-    private AMapLocationClientOption mLocationOption;
-    private AMap mAMap;
-    private LatLng latLng, latLng2;
+    private LatLng start, end;
+    private int orgId;
+    private VisitGuidanceRes visitGuidanceRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMapView.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -66,192 +76,68 @@ public class VisitGuidanceActivity extends CheckPermissionsActivity implements L
         setBaseTitle("游玩指引");
         showStateRightView(2);
 
-        visitGuidanceMapRl.setScrollView(visitGuidanceScroll);
+        orgId = getIntent().getIntExtra("orgId", 0);
+        String name = getIntent().getStringExtra("name");
+        String address = getIntent().getStringExtra("distance");
+        end = getIntent().getParcelableExtra("latlng");
 
-        if (mAMap == null) {
-            mAMap = mMapView.getMap();
-            mAMap.moveCamera(CameraUpdateFactory.zoomBy(12));
-            setUpMap();
-        }
+        int distance = (int) (LocationUtil.getInstance(getContext()).getDistance(end.longitude, end.latitude, longitude, latitude) / 1000);
+
+        visitGuidanceDistance.setText(address + " " + String.format(getContext().getString(R.string.distance), distance + ""));
+        visitGuidanceName.setText(name + "游玩指引");
     }
+
 
     @Override
     protected void obtainData() {
-
+        scenicSpotInfo();
     }
 
     @Override
     protected void initEvent() {
-        mAMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
-            View infoWindow = null;
 
-            @Override
-            public View getInfoWindow(final Marker marker) {
-                if (infoWindow == null) {
-                    infoWindow = LayoutInflater.from(getContext()).inflate(R.layout.layout_map_icon, null);
-                }
-                marker.showInfoWindow();
-                marker.setFlat(false);
-                infoWindow.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void scenicSpotInfo() {
+        OkHttpUtils.get(scenicSpotInfo + "orgId=" + orgId,
+                new OkHttpUtils.ResultCallback<String>() {
                     @Override
-                    public void onClick(View v) {
-                        marker.hideInfoWindow();
-                        ToastUtil.show("mAMap");
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        Integer code = object.getInteger("code");
+                        if (code == 200) {
+                            JSONArray dataList = object.getJSONArray("dataList");
+                            if (dataList != null && dataList.size() > 0) {
+                                String string = dataList.getJSONObject(0).toString();
+                                visitGuidanceRes = JSON.parseObject(string, VisitGuidanceRes.class);
+
+                                List<VisitGuidanceRes.ImagelistBean> imagelist = visitGuidanceRes.getImagelist();
+                                if (imagelist != null && imagelist.size() > 0)
+                                    ShowImageUtils.showImageView(getContext(), port + imagelist.get(0).getImagePath(),
+                                            ResolutionUtil.getInstance(getContext()).getWidth(),
+                                            (int) getResources().getDimension(R.dimen.dp196), visitGuidanceImg);
+
+                                visitGuidanceAddress.setText("地址：" + visitGuidanceRes.getAddress());
+                                visitGuidanceEason.setText("适宜游玩季节：" + visitGuidanceRes.getSeason());
+                                visitGuidanceFavouredPolicy.setText("优惠政策：" + visitGuidanceRes.getFavouredPolicy());
+                                visitGuidanceOpeningHours.setText("开放时间：" + visitGuidanceRes.getOpeningHours());
+                                visitGuidancePrice.setText("门票：¥" + visitGuidanceRes.getPrice());
+                                visitGuidanceTip.setText("温馨提示：" + visitGuidanceRes.getTips());
+                                visitGuidancePlaytime.setText("建议游玩时间：" + visitGuidanceRes.getPlaytime());
+                            } else {
+                                getLoadLayout().setLayoutState(State.NO_DATA);
+                            }
+                        } else {
+                            getLoadLayout().setLayoutState(State.NO_DATA);
+                            ToastUtil.show(object.getString("message"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        getLoadLayout().setLayoutState(State.FAILED);
+                        ToastUtil.show(R.string.no_found_network);
                     }
                 });
-                return infoWindow;
-            }
-
-            @Override
-            public View getInfoContents(Marker marker) {
-                return null;
-            }
-
-        });
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-        deactivate();
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        mMapView.onSaveInstanceState(outState);
-    }
-
-    /**
-     * 方法必须重写
-     */
-    @Override
-    protected void onDestroy() {
-        mMapView.onDestroy();
-        if (null != mlocationClient) {
-            mlocationClient.onDestroy();
-        }
-        super.onDestroy();
-    }
-
-
-    /**
-     * 激活定位
-     */
-    @Override
-    public void activate(OnLocationChangedListener listener) {
-        mListener = listener;
-        if (mlocationClient == null) {
-            mlocationClient = new AMapLocationClient(this);
-            mLocationOption = new AMapLocationClientOption();
-            // 设置定位监听
-            mlocationClient.setLocationListener(this);
-            // 设置为高精度定位模式
-            mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-            // 只是为了获取当前位置，所以设置为单次定位
-            mLocationOption.setOnceLocation(true);
-//            // 设置定位参数
-            mlocationClient.setLocationOption(mLocationOption);
-            mlocationClient.startLocation();
-
-        }
-    }
-
-
-    /**
-     * 停止定位
-     */
-    public void deactivate() {
-        mListener = null;
-        if (mlocationClient != null) {
-            mlocationClient.stopLocation();
-            mlocationClient.onDestroy();
-        }
-        mlocationClient = null;
-    }
-
-    /**
-     * 设置一些amap的属性
-     */
-    private void setUpMap() {
-        mAMap.setLocationSource(this);// 设置定位监听
-        // 自定义系统定位蓝点
-        MyLocationStyle myLocationStyle = new MyLocationStyle();
-        // 自定义定位蓝点图标
-        myLocationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(R.mipmap.feiji));
-        // 自定义精度范围的圆形边框颜色
-        myLocationStyle.strokeColor(Color.argb(0, 0, 0, 0));
-        // 自定义精度范围的圆形边框宽度
-        myLocationStyle.strokeWidth(0);
-        // 设置圆形的填充颜色
-        myLocationStyle.radiusFillColor(Color.argb(0, 0, 0, 0));
-        // 将自定义的 myLocationStyle 对象添加到地图上
-        mAMap.setMyLocationStyle(myLocationStyle);
-        mAMap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
-        // 设置定位的类型为定位模式 ，可以由定位、跟随或地图根据面向方向旋转几种
-        mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
-
-        mAMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                LogUtil.i("点击了 marker");
-                return false;
-            }
-        });
-
-        UiSettings uiSettings = mAMap.getUiSettings();
-        uiSettings.setMyLocationButtonEnabled(false);// 设置默认定位按钮是否显示
-        uiSettings.setZoomInByScreenCenter(false);
-        uiSettings.setZoomControlsEnabled(false);
-
-    }
-
-    /**
-     * 定位成功后回调函数
-     */
-    @Override
-    public void onLocationChanged(AMapLocation amapLocation) {
-        if (mListener != null && amapLocation != null) {
-
-            if (amapLocation != null && amapLocation.getErrorCode() == 0) {
-                mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                latLng = new LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
-                latLng2 = new LatLng(39.9179400000, 116.3971400000);
-                setMarket();
-            } else {
-                String errText = "定位失败," + amapLocation.getErrorCode() + ": "
-                        + amapLocation.getErrorInfo();
-                LogUtil.e(errText);
-            }
-        }
-    }
-
-    private void setMarket() {
-
-        MarkerOptions markerOption2 = new MarkerOptions();
-        markerOption2.position(latLng2);
-        markerOption2.title("目的地");
-        markerOption2.draggable(true);
-        BitmapDescriptor bitmapDescriptor2 = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.feiji_dian));
-        markerOption2.icon(bitmapDescriptor2);
-        markerOption2.setFlat(true);
-        mAMap.addMarker(markerOption2);
-
     }
 }

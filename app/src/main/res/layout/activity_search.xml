@@ -54,7 +54,8 @@
                 android:layout_height="match_parent"
                 android:paddingLeft="@dimen/dp10"
                 android:paddingRight="@dimen/dp18"
-                android:src="@mipmap/yuyin" />
+                android:src="@mipmap/yuyin"
+                android:visibility="gone" />
         </LinearLayout>
 
 
@@ -76,6 +77,7 @@
         android:background="@color/gray_c" />
 
     <RelativeLayout
+        android:id="@+id/search_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -104,4 +106,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/searched_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

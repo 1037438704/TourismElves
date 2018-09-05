@@ -159,7 +159,8 @@
         <RelativeLayout
             android:id="@+id/home_elf_said_details"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp15">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/home_attractions2_img"
@@ -174,7 +175,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/home_attractions2_img"
                 android:singleLine="true"
-                android:text="天坛"
                 android:textColor="#ff434f6d"
                 android:textSize="@dimen/sp16" />
 
@@ -188,7 +188,6 @@
                 android:layout_toRightOf="@id/home_attractions2_img"
                 android:drawableRight="@mipmap/qianjin_hei"
                 android:singleLine="true"
-                android:text="天坛是明、清两朝皇帝祭天、求雨和祈祷丰年的专用祭坛。 "
                 android:textColor="#ff606980"
                 android:textSize="@dimen/sp14" />
         </RelativeLayout>
@@ -198,15 +197,13 @@
             android:id="@+id/home_attractions3_img_rl"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp180"
-            android:layout_below="@id/home_elf_said_details"
-            android:layout_marginTop="@dimen/dp15">
+            android:layout_below="@id/home_elf_said_details">
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/home_attractions3_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/gray_c"
-                android:scaleType="centerCrop" />
+                android:background="@color/gray_c" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/home_attractions3_address"

@@ -119,38 +119,6 @@
 
     </LinearLayout>
 
-
-    <!--<RelativeLayout-->
-    <!--android:id="@+id/i_scenic_spot_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginBottom="@dimen/dp6">-->
-
-    <!--<android.support.v7.widget.AppCompatTextView-->
-    <!--android:id="@+id/i_scenic_spot_elf_said"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/dp31"-->
-    <!--android:text="@string/Scenic_area_in_the_province"-->
-    <!--android:textColor="#434949"-->
-    <!--android:textSize="@dimen/sp12" />-->
-
-    <!--<android.support.v7.widget.AppCompatImageView-->
-    <!--android:id="@+id/i_scenic_spot_more"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
-    <!--android:layout_marginRight="@dimen/dp25"-->
-    <!--android:padding="@dimen/dp5"-->
-    <!--android:src="@mipmap/scenic_more_image" />-->
-    <!--</RelativeLayout>-->
-
-
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/i_scenic_spot_elf_said_list"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content" />-->
-
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"

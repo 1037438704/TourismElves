@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -14,15 +15,19 @@ import com.alibaba.fastjson.JSONObject;
 import com.tourismelves.R;
 import com.tourismelves.model.event.SelectCityBus;
 import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.model.res.SearchedRes;
 import com.tourismelves.model.res.SelectCity2Res;
 import com.tourismelves.model.res.SelectCityRes;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.pinyin.PinyinUtils;
 import com.tourismelves.utils.pinyin.SelectCityComparator;
+import com.tourismelves.utils.system.PreferenceUtil;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.OnTextWatcherAdapter;
 import com.tourismelves.view.adapter.SearchAdapter;
+import com.tourismelves.view.adapter.SearchedAdapter;
 import com.tourismelves.view.widget.SideBar;
 import com.tourismelves.view.widget.loadlayout.State;
 
@@ -30,6 +35,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,7 +61,12 @@ public class SearchActivity extends StateBaseActivity {
     SideBar searchCitySideBar;
     @BindView(R.id.search_city_dialog)
     AppCompatTextView searchCityDialog;
+    @BindView(R.id.search_rl)
+    RelativeLayout searchRl;
+    @BindView(R.id.searched_recycler)
+    RecyclerView searchedRecycler;
 
+    private String SP_SEARCH_HISTORY = "searchHistory";
 
     private List<SelectCityRes> provinces;
     private List<SelectCityRes> citys;
@@ -64,6 +75,8 @@ public class SearchActivity extends StateBaseActivity {
     private SearchAdapter searchAdapter;
     private SelectCityComparator selectCityComparator;
     private LinearLayoutManager manager;
+    private ArrayList<SearchedRes> searchedResArrayList;
+    private SearchedAdapter searchedAdapter;
 
 
     @Override
@@ -75,7 +88,7 @@ public class SearchActivity extends StateBaseActivity {
     protected void initControls() {
         EventBusUtil.register(this);
         showStateLayout(-1);
-        if (!city.equals("")){
+        if (!city.equals("")) {
             searchPositioning.setText(city);
         }
 
@@ -83,6 +96,11 @@ public class SearchActivity extends StateBaseActivity {
         citys = new ArrayList<>();
         mData = new ArrayList<>();
         selectCityComparator = new SelectCityComparator();
+
+        searchedRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchedResArrayList = new ArrayList<>();
+        searchedAdapter = new SearchedAdapter(getContext(), searchedResArrayList);
+        searchedRecycler.setAdapter(searchedAdapter);
 
         manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -97,6 +115,13 @@ public class SearchActivity extends StateBaseActivity {
     @Override
     protected void obtainData() {
         searchAdapter.insertItem(new Object());
+        searchAdapter.historyData.clear();
+        String strHistory = PreferenceUtil.getString(getContext(), SP_SEARCH_HISTORY, "");
+        if (!strHistory.equals("")) {
+            String[] split = strHistory.split(",");
+            searchAdapter.historyData.addAll(Arrays.asList(split));
+        }
+
         areaList();
     }
 
@@ -105,9 +130,13 @@ public class SearchActivity extends StateBaseActivity {
         searchEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER &&
+                        event.getAction() == KeyEvent.ACTION_UP) {
+                    LogUtil.i("搜索");
                     //进行搜索操作的方法，在该方法中可以加入mEditSearchUser的非空判断
                     searchOrganizationOrArticle(searchEdit.getText().toString());
+                    addSP(searchEdit.getText().toString());
+
                 }
                 return false;
             }
@@ -115,7 +144,28 @@ public class SearchActivity extends StateBaseActivity {
         searchEdit.addTextChangedListener(new OnTextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence charSequence, int length, int i1, int i2) {
-                searchOrganizationOrArticle(charSequence.toString());
+                if (charSequence.length() > 0) {
+//                    searchOrganizationOrArticle(charSequence.toString());
+                } else {
+                    searchRl.setVisibility(View.VISIBLE);
+                    searchedRecycler.setVisibility(View.GONE);
+
+                    searchAdapter.historyData.clear();
+                    String strHistory = PreferenceUtil.getString(getContext(), SP_SEARCH_HISTORY, "");
+                    if (!strHistory.equals("")) {
+                        String[] split = strHistory.split(",");
+                        searchAdapter.historyData.addAll(Arrays.asList(split));
+                        searchAdapter.notifyItemChanged(0);
+                    }
+                }
+            }
+        });
+
+        searchAdapter.setOnSearchListener(new SearchAdapter.OnSearchListener() {
+            @Override
+            public void onSearch(String search) {
+                searchEdit.setText(search);
+                searchEdit.setSelection(search.length());
             }
         });
 
@@ -150,17 +200,61 @@ public class SearchActivity extends StateBaseActivity {
     /**
      * 请求景区
      */
-    private void searchOrganizationOrArticle(String strAddress) {
-        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 0, 0, 20, 1),
+    private void searchOrganizationOrArticle(final String strAddress) {
+        searchedResArrayList.clear();
+        searchRl.setVisibility(View.GONE);
+        searchedRecycler.setVisibility(View.VISIBLE);
+
+        final boolean[] isLoaded = {false, false};
+        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 0, 1, 20, 1),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(final String response) {
-
+                        isLoaded[0] = true;
+                        SearchedRes searchedRes = JSON.parseObject(response, SearchedRes.class);
+                        if (searchedRes.getCode() == 200) {
+                            List<SearchedRes.DataListBean> dataList = searchedRes.getDataList();
+                            if (dataList.size() > 0) {
+                                searchedRes.setName("景区");
+                                searchedResArrayList.add(searchedRes);
+                            }
+                        } else {
+                            ToastUtil.show(searchedRes.getMessage());
+                        }
+                        if (isLoaded[0] && isLoaded[1]) {
+                            searchedAdapter.replaceData(searchedResArrayList);
+                        }
                     }
 
                     @Override
                     public void onFailure(Exception e) {
-                        getLoadLayout().setLayoutState(State.LOADING);
+                        isLoaded[0] = true;
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
+        OkHttpUtils.get(String.format(searchOrganizationOrArticle, strAddress, 1, 1, 20, 1),
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(final String response) {
+                        isLoaded[1] = true;
+                        SearchedRes searchedRes = JSON.parseObject(response, SearchedRes.class);
+                        if (searchedRes.getCode() == 200) {
+                            List<SearchedRes.DataListBean> dataList = searchedRes.getDataList();
+                            if (dataList.size() > 0) {
+                                searchedRes.setName("精灵说");
+                                searchedResArrayList.add(searchedRes);
+                            }
+                        } else {
+                            ToastUtil.show(searchedRes.getMessage());
+                        }
+                        if (isLoaded[0] && isLoaded[1]) {
+                            searchedAdapter.replaceData(searchedResArrayList);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        isLoaded[1] = true;
                         ToastUtil.show(R.string.no_found_network);
                     }
                 });
@@ -268,6 +362,31 @@ public class SearchActivity extends StateBaseActivity {
     }
 
 
+    /**
+     * 添加到历史搜索
+     */
+    private boolean addSP(String value) {
+        StringBuilder string = new StringBuilder(PreferenceUtil.getString(getContext(), SP_SEARCH_HISTORY, ""));
+        if (!string.toString().contains(value)) {
+            String[] split = string.toString().split(",");
+            if (split.length >= 10) {
+                string = new StringBuilder();
+                string.append(value);
+                for (int i = 0; i < 9; i++) {
+                    string.append(",").append(split[i]);
+                }
+                PreferenceUtil.putString(getContext(), SP_SEARCH_HISTORY, string.toString());
+            } else if (split.length == 0) {
+                PreferenceUtil.putString(getContext(), SP_SEARCH_HISTORY, value);
+            } else {
+                PreferenceUtil.putString(getContext(), SP_SEARCH_HISTORY, value + "," + string.toString());
+            }
+            return true;
+        }
+
+        return false;
+    }
+
     @Override
     public void onDestroy() {
         //移除事件
@@ -280,5 +399,4 @@ public class SearchActivity extends StateBaseActivity {
     public void getSelectCityBus(final SelectCityBus selectCityBus) {
         searchPositioning.setText(selectCityBus.getCity());
     }
-
 }

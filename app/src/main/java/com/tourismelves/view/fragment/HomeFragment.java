@@ -27,10 +27,10 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
 import static com.tourismelves.app.constant.UrlConstants.organizationList;
 import static com.tourismelves.app.constant.UrlConstants.posterList;
-import static com.tourismelves.view.activity.MainActivity.latitude;
-import static com.tourismelves.view.activity.MainActivity.longitude;
 import static com.tourismelves.view.widget.loadlayout.State.FAILED;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
@@ -134,8 +134,7 @@ public class HomeFragment extends BaseFragment {
                                         String string = dataList.getJSONObject(i).toString();
                                         HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
-                                        int distance = 0;
-                                            distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
+                                        int distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
                                                     longitude, latitude);
 
                                         homeRes.setDistance(distance / 1000);

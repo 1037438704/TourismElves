@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.amap.api.maps.model.LatLng;
 import com.tourismelves.R;
 import com.tourismelves.model.event.TabSelectBus;
 import com.tourismelves.model.net.OkHttpUtils;
@@ -95,22 +96,14 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                 home_look_all_rl.setVisibility(View.GONE);
             }
             //查看全部
-            holder.getView(R.id.home_elf_said_details).setOnClickListener(this);
+            RelativeLayout details = holder.getView(R.id.home_elf_said_details);
+            details.setOnClickListener(this);
             holder.getView(R.id.home_look_all).setOnClickListener(this);
             holder.getView(R.id.home_attractions_details).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {//景点详情
                     Intent intent = new Intent(getContext(), InterpretationList2Activity.class);
                     intent.putExtra("ordId", homeRes.getOrgId());
-                    getContext().startActivity(intent);
-                }
-            });
-            holder.getView(R.id.home_scenic_spot_details).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {//景区详情
-                    Intent intent = new Intent(getContext(), InterpretationListActivity.class);
-                    intent.putExtra("ordId", homeRes.getOrgId());
-                    intent.putExtra("name", homeRes.getName());
                     getContext().startActivity(intent);
                 }
             });
@@ -143,16 +136,14 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             AppCompatTextView home_attractions2_content = holder.getView(R.id.home_attractions2_content);
 
             if (homeRes.getArticleList() != null && homeRes.getArticleList().size() != 0) {
-                home_attractions2_content.setVisibility(View.VISIBLE);
-                home_attractions2_name.setVisibility(View.VISIBLE);
+                details.setVisibility(View.VISIBLE);
                 ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(),
                         (int) getContext().getResources().getDimension(R.dimen.dp45), (int) getContext().getResources().getDimension(R.dimen.dp45),
                         home_attractions2_img, 10);
                 home_attractions2_content.setText(homeRes.getSummary());
                 home_attractions2_name.setText(homeRes.getName());
             } else {
-                home_attractions2_content.setVisibility(View.GONE);
-                home_attractions2_name.setVisibility(View.GONE);
+                details.setVisibility(View.GONE);
             }
 
             AppCompatImageView home_attractions3_img = holder.getView(R.id.home_attractions3_img);
@@ -160,12 +151,24 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
             AppCompatTextView home_attractions3_name = holder.getView(R.id.home_attractions3_name);
             AppCompatTextView home_attractions3_content = holder.getView(R.id.home_attractions3_content);
 
-//            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), home_attractions3_img, 10);
-            String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + "");
+            ShowImageUtils.showRounded(getContext(), port + homeRes.getImage(), home_attractions3_img, 10);
+            final String sAddress = homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() + " " + String.format(getContext().getString(R.string.distance), homeRes.getDistance() + "");
             home_attractions3_address.setText(sAddress);
-//            String content3 = homeRes.getSummary().trim().equals("") ? homeRes.getDescription() : homeRes.getSummary();
-//            home_attractions3_content.setText(content3);
-//            home_attractions3_name.setText(homeRes.getName());
+            home_attractions3_content.setText(homeRes.getDescription());
+            home_attractions3_name.setText(homeRes.getName());
+
+
+            holder.getView(R.id.home_scenic_spot_details).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {//景区详情
+                    Intent intent = new Intent(getContext(), InterpretationListActivity.class);
+                    intent.putExtra("ordId", homeRes.getOrgId());
+                    intent.putExtra("name", homeRes.getName());
+                    intent.putExtra("distance", homeRes.getArea().getParentArea().getName() + " " + homeRes.getArea().getName() );
+                    intent.putExtra("latlng", new LatLng(homeRes.getLatitude(), homeRes.getLongitude()));
+                    getContext().startActivity(intent);
+                }
+            });
         }
 
 
@@ -221,6 +224,9 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
      * 添加购物车
      */
     private void addCart(int orgId) {
+        if (!isLogin(getContext(), true)) {
+            return;
+        }
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setMessage("正在加载中");
         dialog.show();
@@ -239,10 +245,8 @@ public class HomeAdapter extends RecyclerBaseAdapter<Object> implements View.OnC
                     public void onSuccess(String response) {
                         JSONObject object = JSON.parseObject(response);
                         ToastUtil.show(object.getString("message"));
-                        if (object.getInteger("code") == 200) {
-                            Intent intent = new Intent(getContext(), SettlementActivity.class);
-                            getContext().startActivity(intent);
-                        }
+                        Intent intent = new Intent(getContext(), SettlementActivity.class);
+                        getContext().startActivity(intent);
                         call = null;
                         dialog.dismiss();
                     }

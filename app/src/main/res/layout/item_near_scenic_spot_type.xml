@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_near_scenic_spot_type_name"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/round_4585f5"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp8"
+        android:paddingRight="@dimen/dp8"
+        android:textColor="#4A90E2"
+        android:textSize="@dimen/sp12" />
+</RelativeLayout>

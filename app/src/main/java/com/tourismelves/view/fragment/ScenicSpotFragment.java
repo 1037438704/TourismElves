@@ -32,9 +32,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
 import static com.tourismelves.app.constant.UrlConstants.searchOrganizationOrArticle;
-import static com.tourismelves.view.activity.MainActivity.latitude;
-import static com.tourismelves.view.activity.MainActivity.longitude;
 import static com.tourismelves.view.widget.loadlayout.State.SUCCESS;
 
 /**
@@ -117,7 +117,7 @@ public class ScenicSpotFragment extends BaseFragment {
      * 请求景区
      */
     private void searchOrganizationOrArticle(final boolean isRefresh) {
-        OkHttpUtils.get(String.format(searchOrganizationOrArticle, mainActivity.getBasePositioning(), 0, 0, 20, page),
+        OkHttpUtils.get(String.format(searchOrganizationOrArticle, mainActivity.getBasePositioning(), 0, 1, 20, page),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(final String response) {

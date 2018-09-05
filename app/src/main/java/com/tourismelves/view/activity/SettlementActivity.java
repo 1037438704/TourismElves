@@ -25,6 +25,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.cartList;
+import static com.tourismelves.app.constant.UrlConstants.getUserCoupon;
 import static com.tourismelves.app.constant.UrlConstants.settlement;
 
 /**
@@ -42,7 +43,7 @@ public class SettlementActivity extends StateBaseActivity {
 
     private double sumPreferential = 0;
     private double sumPrice = 0;
-    private List<Integer> cartIds;
+    private List<String> cartIds;
 
     @Override
     protected void setContentLayout() {
@@ -73,7 +74,7 @@ public class SettlementActivity extends StateBaseActivity {
     public void onResume() {
         super.onResume();
         getLoadLayout().setLayoutState(State.LOADING);
-        cartList();
+        getUserCoupon();
     }
 
     @Override
@@ -84,11 +85,61 @@ public class SettlementActivity extends StateBaseActivity {
                 finish();
             }
         });
+
+        settlementAdapter.setOnSelectListener(new SettlementAdapter.OnSelectListener() {
+            @Override
+            public void onSelect(int position) {
+                ShopListBean shopListBean = settlementAdapter.getItem(position);
+                String cardId = shopListBean.getCartId() + "";
+                if (shopListBean.isSelect()) {
+                    if (!cartIds.contains(cardId)) {
+                        cartIds.add(cardId);
+
+                        sumPrice += (shopListBean.getPrice() - shopListBean.getPreferential());
+                        sumPreferential += shopListBean.getPreferential();
+                    }
+                } else {
+                    if (cartIds.contains(cardId)) {
+                        cartIds.remove(cardId);
+
+                        sumPrice -= (shopListBean.getPrice() - shopListBean.getPreferential());
+                        sumPreferential -= shopListBean.getPreferential();
+                    }
+                }
+
+                settlementMoney.setText("¥" + sumPrice);
+                settlementPreferential.setText("已优惠¥" + sumPreferential);
+            }
+        });
     }
 
     @OnClick(R.id.settlement_pay)
     public void onViewClicked() {
-        settlement(cartIds.toString().substring(1, cartIds.toString().length() - 1));
+        if (cartIds.size() <= 0)
+            ToastUtil.show("至少选择一件商品");
+        else
+            settlement(cartIds.toString().substring(1, cartIds.toString().length() - 1));
+    }
+
+    private void getUserCoupon() {
+        OkHttpUtils.get(getUserCoupon + "userId=" + SPUtils.getInstance(this).getString("putInt") + "&status=0",
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        Integer code = object.getInteger("code");
+                        settlementAdapter.couponsCount=0;
+                        if (code == 200) {
+                            settlementAdapter.couponsCount=object.getJSONArray("dataList").size();
+                        }
+                        cartList();
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+
+                    }
+                });
     }
 
     /**
@@ -106,6 +157,7 @@ public class SettlementActivity extends StateBaseActivity {
      * }
      */
     private void cartList() {
+        settlementAdapter.removeAll();
         OkHttpUtils.get(cartList + "userId=" + SPUtils.getInstance(this).getString("putInt"),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
@@ -119,12 +171,7 @@ public class SettlementActivity extends StateBaseActivity {
                                 String string = dataList.getJSONObject(i).toString();
                                 ShopListBean shopListBean = JSON.parseObject(string, ShopListBean.class);
                                 settlementAdapter.insertItem(shopListBean);
-                                sumPrice += (shopListBean.getPrice() - shopListBean.getPreferential());
-                                sumPreferential += shopListBean.getPreferential();
-                                cartIds.add(shopListBean.getCartId());
                             }
-                            settlementMoney.setText("¥" + sumPrice);
-                            settlementPreferential.setText("已优惠¥" + sumPreferential);
 
                             if (size > 0) {
                                 getLoadLayout().setLayoutState(State.SUCCESS);
@@ -134,7 +181,6 @@ public class SettlementActivity extends StateBaseActivity {
                         } else {
                             ToastUtil.show(JSON.parseObject(response).getString("message"));
                         }
-
                     }
 
                     @Override
@@ -162,6 +208,7 @@ public class SettlementActivity extends StateBaseActivity {
                         if (code == 200) {
                             Intent intent = new Intent(getContext(), PayActivity.class);
                             intent.putExtra("pk_id", object.getString("pk_id"));
+                            intent.putExtra("sumPrice", sumPrice);
                             startActivity(intent);
                         } else {
                             ToastUtil.show(JSON.parseObject(response).getString("message"));

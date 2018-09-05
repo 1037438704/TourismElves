@@ -47,6 +47,10 @@ public interface UrlConstants {
     String cartList = port + "lyjl/app/cartList.do?";
     //购物车结算
     String settlement = port + "lyjl/app/settlement.do?";
+    //我的优惠券
+    String getUserCoupon = port + "lyjl/app/getUserCoupon.do?";
+    //我的优惠券
+    String getUserCount = port + "lyjl/web/getUserCount.do?";
     //微信支付
     String wxPayPay = port + "lyjl/app/wxPayPay.do?";
     //支付宝支付
@@ -61,5 +65,7 @@ public interface UrlConstants {
     String isFavorite = port + "lyjl/web/isFavorite.do?";
     //评论列表
     String getComment = port + "lyjl/web/getComment.do?";
+    //游玩指引
+    String scenicSpotInfo = port + "lyjl/web/scenicSpotInfo.do?";
 
 }

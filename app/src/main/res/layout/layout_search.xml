@@ -8,8 +8,8 @@
         android:id="@+id/base_status"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
-        android:background="@drawable/gradient_interpretation" />
+        android:background="@drawable/gradient_interpretation"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/base_search_layout"
@@ -58,7 +58,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dp18"
-                android:src="@mipmap/yuyin" />
+                android:src="@mipmap/yuyin"
+                android:visibility="gone" />
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatImageView

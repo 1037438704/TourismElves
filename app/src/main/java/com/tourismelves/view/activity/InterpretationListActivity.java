@@ -66,7 +66,7 @@ import static com.tourismelves.app.constant.UrlConstants.sceneryList;
  * 讲解列表 地图
  */
 
-public class InterpretationListActivity extends CheckPermissionsActivity implements LocationSource, AMapLocationListener {
+public class InterpretationListActivity extends CheckPermissionsActivity implements LocationSource, AMapLocationListener, AMap.OnMapLoadedListener {
     @BindView(R.id.interpretation_list_like_btn)
     AppCompatTextView interpretationListLikeBtn;
     @BindView(R.id.interpretation_list_name)
@@ -93,8 +93,9 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     private LocationSource.OnLocationChangedListener mListener;
     private AMapLocationClientOption mLocationOption;
     private AMap mAMap;
-    private LatLng latLng;
     private String userId;
+    private String distance;
+    private LatLng latlng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +130,14 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         Intent intent = getIntent();
         ordId = intent.getIntExtra("ordId", 0);
         name = intent.getStringExtra("name");
+        distance = intent.getStringExtra("distance");
+        latlng = intent.getParcelableExtra("latlng");
+
         interpretationListName.setText(name);
         sceneryList(ordId + "");
 
         isFavorite();
-        initMarket();
+//        initMarket();
     }
 
     @Override
@@ -214,7 +218,6 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                     mBottomSheetDialog.dismiss();
                     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                 }
-
             }
 
             @Override
@@ -258,7 +261,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     }
 
     @OnClick({R.id.interpretation_list_like_btn, R.id.interpretation_list_visit_guidance_btn, R.id.interpretation_list_search_around_comments_btn,
-            R.id.interpretation_list_comments_btn, R.id.iv_zoom_small, R.id.iv_zoom_large, R.id.iv_map_restore})
+            R.id.interpretation_list_facebook_btn, R.id.iv_zoom_small, R.id.iv_zoom_large, R.id.iv_map_restore})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.interpretation_list_like_btn:
@@ -270,11 +273,16 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                 }
                 break;
             case R.id.interpretation_list_visit_guidance_btn:
-                startActivity(new Intent(this, VisitGuidanceActivity.class));
+                Intent intent = new Intent(this, VisitGuidanceActivity.class);
+                intent.putExtra("orgId", ordId);
+                intent.putExtra("name", name);
+                intent.putExtra("distance", distance);
+                intent.putExtra("latlng", latlng);
+                startActivity(intent);
                 break;
             case R.id.interpretation_list_search_around_comments_btn:
                 break;
-            case R.id.interpretation_list_comments_btn:
+            case R.id.interpretation_list_facebook_btn:
 //                startActivity(new Intent(this, CommentsActivity.class));
                 break;
             case R.id.iv_zoom_small:
@@ -284,7 +292,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                 scaleLargeMap(1);
                 break;
             case R.id.iv_map_restore:
-                mAMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
+                mAMap.moveCamera(CameraUpdateFactory.changeLatLng(latlng));
                 break;
         }
     }
@@ -332,6 +340,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        initMarket();
                                         setBehaviorCallback();
                                     }
                                 });
@@ -501,6 +510,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
      * 设置一些amap的属性
      */
     private void setUpMap() {
+        mAMap.setOnMapLoadedListener(this);
         mAMap.setLocationSource(this);// 设置定位监听
         // 自定义系统定位蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
@@ -531,6 +541,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         uiSettings.setZoomInByScreenCenter(false);
         uiSettings.setZoomControlsEnabled(false);
 
+
     }
 
     /**
@@ -541,13 +552,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         if (mListener != null && amapLocation != null) {
             if (amapLocation != null && amapLocation.getErrorCode() == 0) {
                 mListener.onLocationChanged(amapLocation);// 显示系统小蓝点
-                latLng = new LatLng(39.9179400000, 116.3971400000);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAMap.moveCamera(CameraUpdateFactory.changeLatLng(latLng));
-                    }
-                }, 800);
+
             } else {
                 String errText = "定位失败," + amapLocation.getErrorCode() + ": "
                         + amapLocation.getErrorInfo();
@@ -557,33 +562,40 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
     }
 
     private void initMarket() {
+        int size = attractionsBeans.size();
+        for (int i = 0; i < size; i++) {
+            MarkerOptions markerOption = new MarkerOptions();
+            AttractionsBean attractionsBean = attractionsBeans.get(i);
+            //坐标
+            LatLng latLng = new LatLng(attractionsBean.getLatitude(), attractionsBean.getLongitude());
+            markerOption.position(latLng);
+            markerOption.title(attractionsBean.getName());
+            markerOption.draggable(true);
+            //是否解锁
+            boolean isLocked = attractionsBean.getUnLocked() == 1;
+            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(
+                    BitmapFactory.decodeResource(getResources(), isLocked ? R.mipmap.jingdian_jiesuo : R.mipmap.jingdian_daijiesuo));
+            markerOption.icon(bitmapDescriptor);
+            mAMap.addMarker(markerOption);
 
-        List<LatLng> latLngs = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
 
-        latLngs.add(new LatLng(39.919066, 116.394399));
-        titles.add("慈宁宫");
-        latLngs.add(new LatLng(39.920803, 116.398643));
-        titles.add("永和宫");
-        latLngs.add(new LatLng(39.915271, 116.397165));
-        titles.add("太和门");
-        latLngs.add(new LatLng(39.922333,116.396942));
-        titles.add("神武门");
-        latLngs.add(new LatLng(39.920841,116.396912));
-        titles.add("坤宁宫");
-        latLngs.add(new LatLng(39.921262,116.395505));
-        titles.add("百子门");
-
-
-        for (int i = 0; i < latLngs.size(); i++) {
-            MarkerOptions markerOption2 = new MarkerOptions();
-            markerOption2.position(latLngs.get(i));
-            markerOption2.title(titles.get(i));
-            markerOption2.draggable(true);
-            BitmapDescriptor bitmapDescriptor2 = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.zidong));
-            markerOption2.icon(bitmapDescriptor2);
-            markerOption2.setFlat(true);
-            mAMap.addMarker(markerOption2);
+            List<AttractionsBean.DoorListBean> doorList = attractionsBean.getDoorList();
+            if (doorList != null && doorList.size() > 0) {
+                int size1 = doorList.size();
+                for (int j = 0; j < size1; j++) {
+                    AttractionsBean.DoorListBean doorListBean = doorList.get(j);
+                    MarkerOptions markerOption2 = new MarkerOptions();
+                    //坐标
+                    LatLng latLng2 = new LatLng(doorListBean.getLatitude(), doorListBean.getLongitude());
+                    markerOption.position(latLng2);
+                    markerOption.title(doorListBean.getName());
+                    markerOption.draggable(true);
+                    BitmapDescriptor bitmapDescriptor2 = BitmapDescriptorFactory.fromBitmap(
+                            BitmapFactory.decodeResource(getResources(), R.mipmap.jingdian_jiesuo));
+                    markerOption.icon(bitmapDescriptor2);
+                    mAMap.addMarker(markerOption);
+                }
+            }
         }
 
         mAMap.setInfoWindowAdapter(new AMap.InfoWindowAdapter() {
@@ -616,4 +628,17 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
         });
     }
 
+
+    /**
+     * 监听amap地图加载成功事件回调
+     */
+    @Override
+    public void onMapLoaded() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mAMap.moveCamera(CameraUpdateFactory.changeLatLng(latlng));
+            }
+        }, 500);
+    }
 }

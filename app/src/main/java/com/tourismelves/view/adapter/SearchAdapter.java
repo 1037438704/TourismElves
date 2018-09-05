@@ -1,7 +1,6 @@
 package com.tourismelves.view.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,13 +11,13 @@ import android.view.ViewGroup;
 
 import com.tourismelves.R;
 import com.tourismelves.model.res.SelectCity2Res;
-import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.view.adapter.base.RecyclerBaseAdapter;
 import com.tourismelves.view.adapter.base.ViewHolder;
 import com.tourismelves.view.widget.flowlayout.FlowLayout;
 import com.tourismelves.view.widget.flowlayout.TagAdapter;
 import com.tourismelves.view.widget.flowlayout.TagFlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +25,7 @@ import java.util.List;
  */
 
 public class SearchAdapter extends RecyclerBaseAdapter<Object> {
-    private String[] mVals = new String[]
-            {"故宫博物院", "恭王府", "景山", "故宫博物院", "景山", "故宫博物院"};
+    public ArrayList<String> historyData = new ArrayList<>();
 
 
     public SearchAdapter(@NonNull Context context, @NonNull List<Object> mDataList) {
@@ -40,17 +38,19 @@ public class SearchAdapter extends RecyclerBaseAdapter<Object> {
             AppCompatTextView search_title = holder.getView(R.id.search_title);
             final TagFlowLayout search_flow = holder.getView(R.id.search_flow);
 
-            search_flow.setAdapter(new TagAdapter<String>(mVals) {
+            search_title.setVisibility(historyData.size() == 0 ? View.GONE : View.VISIBLE);
+
+            search_flow.setAdapter(new TagAdapter<String>(historyData) {
                 @Override
                 public View getView(FlowLayout parent, int position, String s) {
                     View inflate = LayoutInflater.from(getContext()).inflate(R.layout.item_hot_textview, search_flow, false);
                     AppCompatTextView tv = inflate.findViewById(R.id.hot_tv);
-                    if (position % 2 == 0) {
-                        Drawable drawable = getContext().getResources().getDrawable(R.mipmap.resou);
-                        tv.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
-                    }else {
-                        tv.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
-                    }
+//                    if (position % 2 == 0) {
+//                        Drawable drawable = getContext().getResources().getDrawable(R.mipmap.resou);
+//                        tv.setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null);
+//                    } else {
+//                        tv.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+//                    }
                     tv.setText(s);
                     return inflate;
                 }
@@ -58,7 +58,9 @@ public class SearchAdapter extends RecyclerBaseAdapter<Object> {
             search_flow.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
                 @Override
                 public boolean onTagClick(View view, int position, FlowLayout parent) {
-                    ToastUtil.show(mVals[position]);
+                    if (onSearchListener != null) {
+                        onSearchListener.onSearch(historyData.get(position));
+                    }
                     return true;
                 }
             });
@@ -76,7 +78,9 @@ public class SearchAdapter extends RecyclerBaseAdapter<Object> {
             search2Adapter.setOnClickSearch2Listener(new Search2Adapter.OnClickSearch2Listener() {
                 @Override
                 public void onSearch(String s) {
-
+                    if (onSearchListener != null) {
+                        onSearchListener.onSearch(s);
+                    }
                 }
             });
         }
@@ -110,5 +114,15 @@ public class SearchAdapter extends RecyclerBaseAdapter<Object> {
             }
         }
         return -1;
+    }
+
+    private OnSearchListener onSearchListener;
+
+    public void setOnSearchListener(OnSearchListener onSearchListener) {
+        this.onSearchListener = onSearchListener;
+    }
+
+    public interface OnSearchListener {
+        void onSearch(String search);
     }
 }

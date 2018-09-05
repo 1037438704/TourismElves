@@ -18,6 +18,8 @@ import com.tourismelves.view.widget.loadlayout.LoadLayout;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+import static com.tourismelves.app.constant.CommentConstants.address;
+
 
 /**
  * 加载布局（正文，加载中，加载失败，无数据）的activity基类
@@ -131,7 +133,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         baseSearchLayout.setVisibility(state == 0 ? View.VISIBLE : View.GONE);
         baseTitleLayout.setVisibility(state == 1 ? View.VISIBLE : View.GONE);
 
-        baseStatus.setVisibility((state == 1 || state == 0||state==-1) ? View.VISIBLE : View.GONE);
+        baseStatus.setVisibility((state == 1 || state == 0 || state == -1) ? View.VISIBLE : View.GONE);
     }
 
     /**
@@ -176,8 +178,9 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     protected void setBaseRightTv(@NonNull String resStr) {
         baseRightTv.setText(resStr);
     }
+
     protected String getBaseRightTv() {
-       return baseRightTv.getText().toString();
+        return baseRightTv.getText().toString();
     }
 
     protected void setBaseRightTv(@StringRes int resStr) {
@@ -185,6 +188,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
     }
 
     public void setBasePositioning(@NonNull String resStr) {
+        address = resStr;
         basePositioning.setText(resStr.equals("") ? "定位" : resStr);
     }
 

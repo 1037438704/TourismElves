@@ -25,6 +25,7 @@ import butterknife.OnClick;
 
 import static com.tourismelves.app.constant.UrlConstants.alipayPay;
 import static com.tourismelves.app.constant.UrlConstants.glodPay;
+import static com.tourismelves.app.constant.UrlConstants.userinfo;
 import static com.tourismelves.app.constant.UrlConstants.wxPayPay;
 
 /**
@@ -39,7 +40,10 @@ public class PayActivity extends StateBaseActivity {
     AppCompatTextView payJb;
     @BindView(R.id.pay_money)
     AppCompatTextView payMoney;
+    @BindView(R.id.pay_jb_remaining)
+    AppCompatTextView payJbRemaining;
     private String pk_id;
+    private double sumPrice;
 
 
     @Override
@@ -54,11 +58,13 @@ public class PayActivity extends StateBaseActivity {
         showStateRightView(2);
 
         pk_id = getIntent().getStringExtra("pk_id");
+        sumPrice = getIntent().getDoubleExtra("sumPrice", 0.00);
+        payMoney.setText("¥" + sumPrice);
     }
 
     @Override
     protected void obtainData() {
-
+        userInfo();
     }
 
     @Override
@@ -236,4 +242,27 @@ public class PayActivity extends StateBaseActivity {
         }
     };
 
+
+    private void userInfo() {
+        OkHttpUtils.get(String.format(userinfo, SPUtils.getInstance(this).getString("putInt")),
+                new OkHttpUtils.ResultCallback<String>() {
+                    @Override
+                    public void onSuccess(String response) {
+                        JSONObject object = JSON.parseObject(response);
+                        Integer code = object.getInteger("code");
+                        if (code == 200) {
+                            JSONObject dataList = object.getJSONArray("dataList").getJSONObject(0);
+                            int gold = dataList.getIntValue("gold");
+                            payJbRemaining.setText("余额" + gold + "金币");
+                        } else {
+                            ToastUtil.show(object.getString("message"));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        ToastUtil.show(R.string.no_found_network);
+                    }
+                });
+    }
 }

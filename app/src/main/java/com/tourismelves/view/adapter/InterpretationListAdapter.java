@@ -61,9 +61,10 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
             select.setVisibility(View.GONE);
         }
 
+
         int unLocked = attractionsBean.getUnLocked();
-        locked.setVisibility(unLocked == 1 ? View.VISIBLE : View.GONE);
-        play.setVisibility(unLocked == 0 ? View.VISIBLE : View.GONE);
+        locked.setVisibility(unLocked == 0 ? View.VISIBLE : View.GONE);
+        play.setVisibility(unLocked == 1 ? View.VISIBLE : View.GONE);
 
         name.setText(attractionsBean.getName());
         if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
