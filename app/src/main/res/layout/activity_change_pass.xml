@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tourismelves.view.activity.ChangePassActivity">
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp15"
+            android:text="旧密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:textSize="@dimen/sp15"
+            android:id="@+id/pet_one"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请输入您之前的密码"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp15"
+            android:text="新密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:textSize="@dimen/sp15"
+            android:id="@+id/pet_two"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请输入您需要修改的密码"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp15"
+            android:text="确认密码"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:textSize="@dimen/sp15"
+            android:id="@+id/pet_three"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请再次输入您需要修改的密码"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp30"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+
+            android:layout_width="@dimen/dp350"
+            android:layout_height="@dimen/dp45"
+            android:background="@mipmap/bar"
+            android:text="保存"
+            android:textColor="#ffffff"
+            android:id="@+id/petname_save"
+            />
+
+    </LinearLayout>
+</LinearLayout>

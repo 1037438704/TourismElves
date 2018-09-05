@@ -43,6 +43,8 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
     private boolean isLoaded;
 
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (mContentView == null) {
@@ -121,6 +123,7 @@ public abstract class BaseFragment extends Fragment implements IBaseFragment {
      */
     @Override
     public void onDestroyView() {
+
         if (mContentView != null) {
             ViewGroup parent = (ViewGroup) mContentView.getParent();
             if (parent != null) {

@@ -7,19 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.okhttp.Request;
 import com.tourismelves.R;
+import com.tourismelves.model.bean.OrderNumBean;
 import com.tourismelves.model.bean.UserBean;
 import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.common.EventBusUtil;
+import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPConstants;
 import com.tourismelves.utils.system.SPUtils;
+import com.tourismelves.view.activity.CollectActivity;
 import com.tourismelves.view.activity.CooperationActivity;
 import com.tourismelves.view.activity.CouponActivity;
 import com.tourismelves.view.activity.FootMarkActivity;
+import com.tourismelves.view.activity.HelpActivity;
 import com.tourismelves.view.activity.InviteActivity;
 import com.tourismelves.view.activity.LoginActivity;
 import com.tourismelves.view.activity.MyAccountActivity;
@@ -28,6 +35,7 @@ import com.tourismelves.view.activity.RechargeActivity;
 import com.tourismelves.view.activity.SetupActivity;
 import com.tourismelves.view.dialog.ActivityCodeDialog;
 import com.tourismelves.view.fragment.base.BaseFragment;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import static com.tourismelves.app.constant.UrlConstants.login;
 import static com.tourismelves.app.constant.UrlConstants.userinfo;
@@ -37,10 +45,12 @@ import static com.tourismelves.app.constant.UrlConstants.userinfo;
  */
 public class MyFragment extends BaseFragment {
 
-    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite,mLinearCode;
+    LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite,mLinearCode,exit_login,ll_help;
     TextView tv_order,tv_loginname,tv_recharge;
     TextView tv_title;
     TextView tv_name;
+    TextView tv_collect,tv_ordernum,tv_xiazai,tv_money,tv_collectbo;
+    UserBean userBean;
 
     @Override
     protected int setContentLayout() {
@@ -147,6 +157,7 @@ public class MyFragment extends BaseFragment {
                     return;
                 }
                 Intent intent = new Intent(getActivity(), RechargeActivity.class);
+                intent.putExtra("gold",userBean.getDataList().get(0).getGold()+"");
                 startActivity(intent);
             }
         });
@@ -167,7 +178,52 @@ public class MyFragment extends BaseFragment {
         mLinearCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
                 new ActivityCodeDialog().show(((AppCompatActivity) getContext()).getSupportFragmentManager());
+            }
+        });
+
+        tv_collect = view.findViewById(R.id.my_collect);
+        tv_ordernum = view.findViewById(R.id.my_order);
+        tv_xiazai = view.findViewById(R.id.my_xiazai);
+        tv_money = view.findViewById(R.id.my_money);
+        //退出登录
+        exit_login = view.findViewById(R.id.my_exitlogin);
+        exit_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SPUtils.getInstance(getActivity()).clear();
+
+                Intent intent =new Intent(getActivity(),LoginActivity.class);
+                startActivity(intent);
+                Toast.makeText(getActivity(), "退出成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //我的收藏
+        tv_collectbo = view.findViewById(R.id.my_collectc);
+        tv_collectbo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), CollectActivity.class);
+                startActivity(intent);
+            }
+        });
+        //帮助与反馈
+        ll_help = view.findViewById(R.id.ll_help);
+        ll_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), HelpActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -177,11 +233,9 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void obtainData() {
-//        if (!isLogin(getActivity(),true)){
-//            tv_name.setText("请登录");
-//            return;
-//        }
+
         UserInfo();
+        OrderNum();
     }
 
     @Override
@@ -193,6 +247,17 @@ public class MyFragment extends BaseFragment {
     private void UserInfo(){
         String userid = SPUtils.getInstance(getActivity()).getString("putInt");  //取出这个int值
         Log.e("用户id",userid);
+        if (userid.equals("")){
+            tv_name.setText("请登录");
+            tv_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(),LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+            return;
+        }
         OkHttpUtils.get(String.format(userinfo, userid+""),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
@@ -200,29 +265,49 @@ public class MyFragment extends BaseFragment {
 
                         Log.e("USER",response);
                         Gson gson = new Gson();
-                        UserBean userBean;
+
                         userBean = gson.fromJson(response,UserBean.class);
-                        if (!userBean.getDataList().isEmpty()){
-                            tv_name.setText("请登录");
-                            tv_name.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Intent intent = new Intent(getActivity(),LoginActivity.class);
-                                    startActivity(intent);
-                                }
-                            });
-                            return;
-                        }
+                       // tv_money.setText(userBean.getDataList().get(0).getGold()+"");
+//                        if (userBean.getDataList().size()<=0){
+
+
+
+
+//
+//                        }
                         tv_name.setText(userBean.getDataList().get(0).getNickName());
-
+                        tv_money.setText(userBean.getDataList().get(0).getGold()+"");
                     }
-
                     @Override
                     public void onFailure(Exception e) {
 
                     }
                 }
         );
+    }
+
+    //获取订单数量等
+    private void OrderNum(){
+        com.zhy.http.okhttp.OkHttpUtils.get().url(ApiManager.ALL_URL+"lyjl/app/getUserCount.do")
+                .addParams("userId",SPUtils.getInstance(getActivity()).getString("putInt"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Request request, Exception e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response) {
+
+                        Gson gson = new Gson();
+                        OrderNumBean orderNumBean;
+                        orderNumBean = gson.fromJson(response,OrderNumBean.class);
+                        Log.e("用户购物信息",response);
+                        tv_collect.setText(orderNumBean.getDataList().get(0).getFavoriteNum()+"");
+                        tv_ordernum.setText(orderNumBean.getDataList().get(0).getPayedOrderNum()+orderNumBean.getDataList().get(0).getUnPayOrderNum()+"");
+                    }
+                });
     }
 
     /**

@@ -8,10 +8,11 @@ import java.util.List;
 
 public class CouponBean {
 
+
     /**
      * type : json
      * code : 200
-     * dataList : [{"couponId":6,"userId":14,"type":1,"createDate":"2018-07-22 00:00:37","expiryTime":"2018-08-22 00:00:37","status":0}]
+     * dataList : [{"couponId":8,"userId":37,"type":1,"createDate":"2018-09-03 00:00:00","expiryTime":"2018-09-30 00:00:00","status":0,"name":"名称","conditions":"使用条件","description":"同时购买景区大于或等于两个景区时，可以抵用其中一个景区"},{"couponId":9,"userId":37,"type":1,"createDate":"2018-09-03 00:00:00","expiryTime":"2018-09-30 00:00:00","status":0,"name":"名称","conditions":"使用条件","description":"同时购买景区大于或等于两个景区时，可以抵用其中一个景区"},{"couponId":10,"userId":37,"type":1,"createDate":"2018-09-03 00:00:00","expiryTime":"2018-09-30 00:00:00","status":0,"name":"名称","conditions":"使用条件","description":"同时购买景区大于或等于两个景区时，可以抵用其中一个景区"}]
      */
 
     private String type;
@@ -44,12 +45,15 @@ public class CouponBean {
 
     public static class DataListBean {
         /**
-         * couponId : 6
-         * userId : 14
+         * couponId : 8
+         * userId : 37
          * type : 1
-         * createDate : 2018-07-22 00:00:37
-         * expiryTime : 2018-08-22 00:00:37
+         * createDate : 2018-09-03 00:00:00
+         * expiryTime : 2018-09-30 00:00:00
          * status : 0
+         * name : 名称
+         * conditions : 使用条件
+         * description : 同时购买景区大于或等于两个景区时，可以抵用其中一个景区
          */
 
         private int couponId;
@@ -58,6 +62,9 @@ public class CouponBean {
         private String createDate;
         private String expiryTime;
         private int status;
+        private String name;
+        private String conditions;
+        private String description;
 
         public int getCouponId() {
             return couponId;
@@ -105,6 +112,30 @@ public class CouponBean {
 
         public void setStatus(int status) {
             this.status = status;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getConditions() {
+            return conditions;
+        }
+
+        public void setConditions(String conditions) {
+            this.conditions = conditions;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
         }
     }
 }

@@ -81,6 +81,7 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
         holder.tv_title.setText(listBeen.get(position).getTitle());
         holder.tv_colletc.setText(listBeen.get(position).getHot()+"");
         holder.tv_watch.setText(listBeen.get(position).getCommentNum()+"");
+       // if ()
 
 
 
@@ -104,6 +105,7 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
 
         ImageView im_elfsaid;
         TextView tv_title,tv_colletc,tv_content,tv_watch;
+        ImageView im_coll;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
@@ -112,6 +114,7 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
             tv_colletc = itemView.findViewById(R.id.elfsaid_collect);
             tv_content = itemView.findViewById(R.id.elfsaid_content);
             tv_watch = itemView.findViewById(R.id.elfsaid_watch);
+            im_coll = itemView.findViewById(R.id.elfsaid_collm);
 
         }
     }

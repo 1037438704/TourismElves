@@ -48,10 +48,11 @@
                     android:layout_weight="1" />
 
                 <ImageView
+                    android:id="@+id/elfsaid_collm"
                     android:layout_width="@dimen/dp15"
                     android:layout_height="@dimen/dp13"
                     android:layout_gravity="center"
-                    android:src="@mipmap/icon_16px_sc_1" />
+                    android:src="@mipmap/icon_16px_sc_11" />
 
                 <TextView
                     android:id="@+id/elfsaid_collect"

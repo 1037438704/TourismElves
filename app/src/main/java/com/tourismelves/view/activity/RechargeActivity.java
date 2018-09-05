@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.Request;
@@ -33,6 +35,8 @@ public class RechargeActivity extends StateBaseActivity {
     RechargeAdapter rechargeAdapter;
     RechargeBean rechargeBean;
     List<RechargeBean.DataListBean> listBeen;
+    TextView tv_gold;
+    ImageView im_back;
 
 
 
@@ -46,7 +50,9 @@ public class RechargeActivity extends StateBaseActivity {
 //        tv_title = findViewById(R.id.title_name);
 //        tv_title.setText("充值金币");
         recyclerView = findViewById(R.id.recharge_recy);
+        tv_gold = findViewById(R.id.recharge_gold);
         listBeen = new ArrayList<>();
+        im_back = findViewById(R.id.iv_help_back);
     }
 
     @Override
@@ -54,6 +60,15 @@ public class RechargeActivity extends StateBaseActivity {
         setStatusBar(R.id.recharge_status);
 //        setStatusUi();
         rechargeAdapter = new RechargeAdapter(RechargeActivity.this,listBeen);
+        Intent intent = getIntent();
+        String gold = intent.getStringExtra("gold");
+        tv_gold.setText(gold);
+        im_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         OkHttpUtils.get(String.format(moneyinfo),

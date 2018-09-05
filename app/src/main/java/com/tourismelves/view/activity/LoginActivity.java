@@ -7,6 +7,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,17 +16,22 @@ import com.squareup.okhttp.Request;
 import com.tencent.connect.UserInfo;
 import com.tencent.connect.auth.QQToken;
 import com.tencent.connect.common.Constants;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.LoginBean;
+import com.tourismelves.model.bean.RegisterBean;
 import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.widget.loadlayout.State;
+import com.tourismelves.wxapi.WXEntryActivity;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
@@ -40,6 +46,9 @@ public class LoginActivity extends StateBaseActivity {
     private static final String APP_ID = "1107474298";//官方获取的APPID
 
 
+    //WXLOGIN
+    private static final String APP_IDWX = "wx127d8dd53cf7aabc";
+    private static IWXAPI WXapi;
     private Tencent mTencent;
     private UserInfo mUserInfo;
     private BaseUiListener mIUiListener;
@@ -49,7 +58,17 @@ public class LoginActivity extends StateBaseActivity {
     EditText ed_username,ed_pass;
     Button bt_login;
     TextView tv_register;
-    ImageView im_qqlogin;
+    ImageView im_qqlogin,im_wxlogin;
+
+    ImageView im_register;
+    LinearLayout ll_login,ll_register;
+    TextView tv_login,tv_regi,tv_smscode;
+    EditText ed_phone,ed_code,ed_password,ed_name;
+    String mobile,code;
+    Button bt_register;
+    int register=1;
+
+
     @Override
     protected void setContentLayout() {
         setContentView(R.layout.activity_login);
@@ -61,6 +80,19 @@ public class LoginActivity extends StateBaseActivity {
     }
 
     private void initView() {
+
+        im_register = findViewById(R.id.im_register);
+        ed_name = findViewById(R.id.login_nickname);
+        bt_register = findViewById(R.id.bt_login_register);
+        tv_smscode = findViewById(R.id.tv_smscode);
+        ed_password = findViewById(R.id.ed_password);
+        ed_phone = findViewById(R.id.ed_phone);
+        ed_code = findViewById(R.id.ed_smscode);
+        tv_login = findViewById(R.id.tv_login);
+        tv_regi = findViewById(R.id.tv_register);
+        ll_login = findViewById(R.id.login_login);
+        ll_register = findViewById(R.id.linear_register);
+        im_wxlogin = findViewById(R.id.login_wx);
         tv_register = findViewById(R.id.login_register);
         bt_login = (Button) findViewById(R.id.bt_login_login);
         ed_username = (EditText) findViewById(R.id.login_username);
@@ -78,6 +110,20 @@ public class LoginActivity extends StateBaseActivity {
     @Override
     protected void obtainData() {
 
+        tv_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_login.setVisibility(View.VISIBLE);
+                ll_register.setVisibility(View.GONE);
+            }
+        });
+        tv_regi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ll_login.setVisibility(View.GONE);
+                ll_register.setVisibility(View.VISIBLE);
+            }
+        });
         im_qqlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,6 +191,109 @@ public class LoginActivity extends StateBaseActivity {
 
             }
         });
+        im_wxlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WXLogin(1);
+            }
+        });
+
+        //发送验证码
+
+        tv_smscode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mobile = ed_phone.getText().toString();
+                com.zhy.http.okhttp.OkHttpUtils.get()
+                        .url("http://211.157.162.2/lyjl/web/getAppSMSCode.do")
+                        .addParams("mobile",mobile)
+                        .addParams("randomCode",123456+"")
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+
+                                Log.e("获取验证码",response);
+                                Toast.makeText(LoginActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
+                                ll_login.setVisibility(View.VISIBLE);
+                                ll_register.setVisibility(View.GONE);
+                            }
+                        });
+            }
+        });
+
+        im_register.setTag(1);
+        im_register.setImageResource(R.mipmap.chioce);
+        im_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int isSelect = (int) v.getTag();
+
+
+                if (isSelect==0){
+
+                    v.setTag(1);
+                    im_register.setImageResource(R.mipmap.chioce);
+                    register=1;
+                }else {
+
+                    v.setTag(0);
+                    im_register.setImageResource(R.mipmap.chioce_no);
+                    register = 0;
+                }
+
+            }
+
+
+
+        });
+
+        //注册按钮
+        bt_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pass = ed_password.getText().toString();
+                String code = ed_code.getText().toString();
+                String name = ed_name.getText().toString();
+                if (register==0){
+                    Toast.makeText(LoginActivity.this, "请遵守用户协议", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                com.zhy.http.okhttp.OkHttpUtils.get()
+                        .url(ApiManager.ALL_URL+"lyjl/web/register.do")
+                        .addParams("loginName",mobile)
+                        .addParams("password",pass)
+                        .addParams("smsCode",code)
+                        .addParams("channel","android")
+                        .addParams("shareCode","")
+                        .addParams("nikeName",name)
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+
+                                Log.e("注册",response);
+                                Gson gson = new Gson();
+                                RegisterBean registerBean;
+                                registerBean = gson.fromJson(response,RegisterBean.class);
+                                if (registerBean.getCode()==200){
+                                    Toast.makeText(LoginActivity.this, registerBean.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+        });
+
     }
 
     @Override
@@ -230,6 +379,30 @@ public class LoginActivity extends StateBaseActivity {
         }
 
 
+    }
+
+    /**
+     * 登录微信
+     */
+    private void WXLogin(int statusCode) {
+
+        WXEntryActivity.statusCode = statusCode;
+
+        WXapi = WXAPIFactory.createWXAPI(this, "wx127d8dd53cf7aabc", true);
+        WXapi.registerApp("wx127d8dd53cf7aabc");
+        if (WXapi != null && WXapi.isWXAppInstalled()) {
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo_test_neng";
+            boolean checkArgs = req.checkArgs();
+            boolean sendReq = WXapi.sendReq(req);
+
+            Log.d(TAG,"checkArgs - " + checkArgs + " sendReq - " + sendReq);
+
+
+        } else
+            Toast.makeText(this, "用户未安装微信", Toast.LENGTH_SHORT).show();
+        Log.v("--------huitiao---","WXLogin");
     }
     /**
      * 在调用Login的Activity或者Fragment中重写onActivityResult方法

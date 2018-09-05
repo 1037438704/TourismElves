@@ -72,7 +72,7 @@ public class ScenicFragment extends BaseFragment {
 
     private void ScenicInfo() {
 
-        OkHttpUtils.get(String.format("http://211.157.162.2/lyjl/web/searchOrganizationOrArticle.do?key=天津&type=0&sortType=0"),
+        OkHttpUtils.get(String.format("http://211.157.162.2/lyjl/app/getUserHistory.do?userId=2"),
                 new OkHttpUtils.ResultCallback<String>() {
                     @Override
                     public void onSuccess(String response) {

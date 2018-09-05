@@ -22,4 +22,7 @@ public class ApiManager {
 
     //登录接口
     public static final String LOGIN = getBaseUrl()+"lyjl/web/login.do";
+
+    //修改密码
+    public static final String CHANGEPASS = getBaseUrl()+"lyjl/web/changePassword.do";
 }

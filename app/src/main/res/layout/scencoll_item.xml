@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="天坛"
+            android:textColor="@color/jls_name"
+            android:textSize="@dimen/sp18" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp13"
+            android:layout_gravity="center"
+            android:src="@mipmap/icon_16px_sc_1" />
+
+        <TextView
+            android:layout_marginRight="@dimen/dp10"
+            android:id="@+id/elfsaid_collect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="124"
+            android:textColor="@color/jls_jl"
+            android:textSize="@dimen/sp12" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:ellipsize="end"
+        android:lines="2"
+        android:id="@+id/elfsaid_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"
+        android:text="天坛天坛天坛天坛天坛天坛天坛天坛天坛天坛天坛"
+        android:textColor="@color/jls_content"
+        android:textSize="@dimen/sp14" />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <ImageView
+
+            android:layout_marginLeft="@dimen/dp10"
+            android:src="@mipmap/ic_launcher"
+            android:layout_width="@dimen/dp174"
+            android:layout_height="@dimen/dp174" />
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>

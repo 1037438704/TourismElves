@@ -7,4 +7,9 @@
     tools:context="com.tourismelves.view.activity.InviteActivity">
 
 
+    <ImageView
+        android:id="@+id/invite_im"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>

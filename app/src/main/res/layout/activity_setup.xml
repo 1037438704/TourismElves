@@ -54,17 +54,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="性别"
+            android:text="检查更新"
             android:textSize="@dimen/sp14" />
 
         <TextView
 
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
-            android:text="男"
+            android:text="V1.0"
             android:textSize="@dimen/sp13"
             android:layout_weight="0.00" />
 
@@ -95,11 +95,11 @@
         <TextView
 
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
-            android:text="男"
+            android:text="022-25327712"
             android:textSize="@dimen/sp13"
             android:layout_weight="0.00" />
 
@@ -112,6 +112,7 @@
             android:src="@mipmap/mine_icon_next"/>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="@dimen/dp1"
         android:background="@color/white"
@@ -124,17 +125,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="官方网站"
+            android:text="官方网址"
             android:textSize="@dimen/sp14" />
 
         <TextView
 
             android:gravity="center"
-            android:layout_width="@dimen/dp25"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dp25"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dp10"
-            android:text="男"
+            android:text="www.jinglingshuo.com"
             android:textSize="@dimen/sp13"
             android:layout_weight="0.00" />
 

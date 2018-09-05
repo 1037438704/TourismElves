@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tourismelves.R;
+import com.tourismelves.model.bean.CouponBean;
 import com.tourismelves.model.bean.ElfsaidBean;
 
 import java.util.List;
@@ -22,11 +23,12 @@ import java.util.List;
 public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.MyViewHolder> {
 
     Context context;
+    List<CouponBean.DataListBean> listBeen;
 
 
-    public CouponAdapter(Context context) {
+    public CouponAdapter(Context context, List<CouponBean.DataListBean> listBeen) {
         this.context = context;
-
+        this.listBeen = listBeen;
     }
 
     public void replaceData(@NonNull List<ElfsaidBean.DataListBean> list) {
@@ -61,20 +63,30 @@ public class CouponAdapter extends RecyclerView.Adapter<CouponAdapter.MyViewHold
     @Override
     public void onBindViewHolder(CouponAdapter.MyViewHolder holder, final int position) {
 
+        holder.tv_name.setText(listBeen.get(position).getName());
+        holder.tv_content.setText(listBeen.get(position).getDescription());
+        holder.tv_cond.setText(listBeen.get(position).getConditions());
+        holder.tv_time.setText(listBeen.get(position).getCreateDate()+"-"+listBeen.get(position).getExpiryTime());
+
 
 
 
     }
     @Override
     public int getItemCount() {
-        return 10;
+        return listBeen.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
+        TextView tv_name,tv_price,tv_content,tv_cond,tv_time;
         public MyViewHolder(final View itemView) {
             super(itemView);
 
+            tv_name = itemView.findViewById(R.id.coupon_name);
+            tv_content = itemView.findViewById(R.id.coupon_content);
+            tv_cond = itemView.findViewById(R.id.coupon_cond);
+            tv_time = itemView.findViewById(R.id.coupon_time);
 
         }
     }
