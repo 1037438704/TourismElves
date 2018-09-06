@@ -766,11 +766,14 @@ public class AttractionsBean implements Parcelable {
 
         private int id;
         private int orgId;
-        private String name;
+
         private double longitude;
         private double latitude;
         private int playDistance;
         private int locked;
+        private String name;
+
+
 
         public String getName() {
             return name;

@@ -48,8 +48,8 @@ public class WaitPayFragment extends BaseFragment {
 
     @Override
     protected void obtainData() {
-        OkHttpUtils.get().url(ApiManager.ALL_URL+"lyjl/app/orderList.do?userId=2")
-              //  .addParams("userId", SPUtils.getInstance(getActivity()).getString("putInt"))
+        OkHttpUtils.get().url(ApiManager.ALL_URL+"lyjl/app/orderList.do")
+                .addParams("userId", SPUtils.getInstance(getActivity()).getString("putInt"))
                 .build()
                 .execute(new StringCallback() {
                     @Override
@@ -64,15 +64,16 @@ public class WaitPayFragment extends BaseFragment {
                         Gson gson = new Gson();
                         waitpayBean = gson.fromJson(response,WaitpayBean.class);
                         listBeen = waitpayBean.getDataList();
-                        for (int i = 0; i<listBeen.size();i++)
-                        {
-
-                            Log.e("订单list",list+"");
+                        WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),listBeen);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        recyclerView.setAdapter(waitpayAdapter);
+//                        for (int i = 0; i<listBeen.size();i++)
+//                        {
 //
-                            WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),listBeen);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                            recyclerView.setAdapter(waitpayAdapter);
-                        }
+//                            Log.e("订单list",list+"");
+////
+//
+//                        }
                     }
                 });
     }

@@ -186,6 +186,9 @@ public class ElfSaidFragment extends BaseFragment {
                 Intent intent = new Intent(getActivity(), ElverSayDetailsActivity.class);
                 intent.putExtra("titlename",listBeen.get(position).getShortTitle());
                 intent.putExtra("acticleid",listBeen.get(position).getArticleId()+"");
+                intent.putExtra("time",listBeen.get(position).getPublishTime());
+                intent.putExtra("hot",listBeen.get(position).getPraise()+"");
+             //   intent.putExtra("id")
                 startActivity(intent);
 
             }

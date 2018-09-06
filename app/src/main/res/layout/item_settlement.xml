@@ -8,8 +8,8 @@
         android:id="@+id/i_settlement_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/i_settlement_img"
-        android:layout_alignTop="@id/i_settlement_img"
+        android:layout_alignBottom="@+id/i_settlement_img"
+        android:layout_alignTop="@+id/i_settlement_img"
         android:layout_marginLeft="@dimen/dp10"
         android:src="@drawable/anonymous_select" />
 

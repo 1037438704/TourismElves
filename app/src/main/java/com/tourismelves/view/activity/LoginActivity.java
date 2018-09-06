@@ -104,6 +104,7 @@ public class LoginActivity extends StateBaseActivity {
     @Override
     protected void initControls() {
        // setStatusBar(R.id.select_city_status);
+        setStatusBar(R.id.recharge_status);
         setStatusUi();
     }
 

@@ -18,7 +18,7 @@
         android:id="@+id/i_near_scenic_spot_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/i_near_scenic_spot_auto_play"
+        android:layout_toLeftOf="@+id/i_near_scenic_spot_auto_play"
         android:layout_toRightOf="@id/i_near_scenic_spot_img"
         android:singleLine="true"
         android:text="故宫博物院"

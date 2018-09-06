@@ -3,6 +3,9 @@ package com.tourismelves.view.activity;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tourismelves.R;
@@ -34,12 +37,19 @@ public class OrderActivity extends StateBaseActivity {
 
         fragments.add(new WaitPayFragment());
         fragments.add(new BuyFragment());
-        list.add("待支付");
-        list.add("已购");
+//        list.add("待支付");
+//        list.add("已购");
+//        SubscribeAdapter subscribeAdapter = new SubscribeAdapter(getSupportFragmentManager(),fragments,list);
+//        viewpager.setAdapter(subscribeAdapter);
+//        tab_layout.setupWithViewPager(viewpager);
+//        tab_layout.setTabsFromPagerAdapter(subscribeAdapter);
         SubscribeAdapter subscribeAdapter = new SubscribeAdapter(getSupportFragmentManager(),fragments,list);
         viewpager.setAdapter(subscribeAdapter);
-        tab_layout.setupWithViewPager(viewpager);
-        tab_layout.setTabsFromPagerAdapter(subscribeAdapter);
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("待支付",R.drawable.add_switch2)));
+        tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("已购",R.drawable.add_switch2)));
+        //Tablayout自定义view绑定ViewPager
+        viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
+        tab_layout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewpager));
 
     }
 
@@ -60,5 +70,14 @@ public class OrderActivity extends StateBaseActivity {
     @Override
     protected void initEvent() {
 
+    }
+
+    private View tab_icon(String name, int iconID) {
+        View newtab = LayoutInflater.from(this).inflate(R.layout.footmark_item, null);
+        TextView tv = newtab.findViewById(R.id.tabtext);
+        tv.setText(name);
+        ImageView im = newtab.findViewById(R.id.tabicon);
+        im.setImageResource(iconID);
+        return newtab;
     }
 }

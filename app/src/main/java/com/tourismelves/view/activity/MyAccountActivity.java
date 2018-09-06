@@ -1,10 +1,15 @@
 package com.tourismelves.view.activity;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,8 +31,9 @@ public class MyAccountActivity extends StateBaseActivity {
 
 
     TextView tv_name,tv_phone,tv_xb,top_name;
-    LinearLayout mLinear_sex,mLinear_pass,mLinear_phone;
+    LinearLayout mLinear_sex,mLinear_pass,mLinear_phone,mLinear_head;
     UserBean userBean;
+    Dialog dialog;
 
 
 
@@ -39,7 +45,7 @@ public class MyAccountActivity extends StateBaseActivity {
     }
 
     private void initView() {
-
+        mLinear_head = findViewById(R.id.changeHeadLayout);
         top_name = findViewById(R.id.account_topname);
         mLinear_phone = findViewById(R.id.llaccount_phone);
         mLinear_pass = findViewById(R.id.llaccount_pass);
@@ -47,6 +53,27 @@ public class MyAccountActivity extends StateBaseActivity {
         tv_name = findViewById(R.id.account_name);
         tv_phone = findViewById(R.id.account_phone);
         tv_xb = findViewById(R.id.account_xb);
+        //修改头像
+        mLinear_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog = new Dialog(MyAccountActivity.this,R.style.ActionSheetDialogStyle);
+                View inflate = LayoutInflater.from(MyAccountActivity.this).inflate(R.layout.changehead_item, null);
+                //将布局设置给Dialog
+                dialog.setContentView(inflate);
+                //获取当前Activity所在的窗体
+                Window dialogWindow = dialog.getWindow();
+                //设置Dialog从窗体底部弹出
+                dialogWindow.setGravity( Gravity.BOTTOM);
+                //获得窗体的属性
+                WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+                lp.width = MyAccountActivity.this.getResources().getDisplayMetrics().widthPixels; // 宽度
+                dialogWindow.setGravity(Gravity.BOTTOM);
+                //       将属性设置给窗体
+                dialogWindow.setAttributes(lp);
+                dialog.show();//显示对话框
+            }
+        });
         //修改昵称
         tv_name.setOnClickListener(new View.OnClickListener() {
             @Override

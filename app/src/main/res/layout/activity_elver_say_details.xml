@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,6 +11,7 @@
     tools:context="com.tourismelves.view.activity.ElverSayDetailsActivity">
 
     <TextView
+        android:id="@+id/say_details_title"
         android:layout_marginTop="@dimen/dp20"
         android:layout_marginLeft="@dimen/dp10"
         android:textColor="#FF434F6D"
@@ -25,6 +29,7 @@
 
 
         <TextView
+            android:id="@+id/details_time"
             android:layout_marginLeft="@dimen/dp10"
             android:textColor="#FF777D84"
             android:textSize="@dimen/sp12"
@@ -39,12 +44,14 @@
             android:layout_height="wrap_content" />
 
         <ImageView
+            android:id="@+id/details_love"
             android:layout_width="@dimen/dp19"
             android:layout_height="@dimen/dp17"
             android:layout_gravity="center"
-            android:src="@mipmap/icon_16px_sc_1" />
+            android:src="@mipmap/icon_16px_sc_11" />
 
         <TextView
+            android:layout_marginLeft="@dimen/dp5"
             android:layout_marginRight="@dimen/dp10"
             android:id="@+id/elfsaid_collect"
             android:layout_width="wrap_content"
@@ -62,4 +69,31 @@
         android:layout_height="wrap_content"></WebView>
 
 
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_gravity="center"
+        android:background="@drawable/shape5"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="@dimen/dp100"
+        android:layout_height="@dimen/dp50">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:src="@mipmap/dianzan"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp16" />
+
+        <TextView
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_gravity="center"
+            android:text="点赞"
+            android:textColor="#FF434F6D"
+            android:textSize="@dimen/sp16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
 </LinearLayout>
+</ScrollView>

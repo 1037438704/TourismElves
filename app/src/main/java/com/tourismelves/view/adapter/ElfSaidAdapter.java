@@ -9,10 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonObject;
+import com.squareup.okhttp.Request;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.ElfsaidBean;
+import com.tourismelves.utils.pinyin.ApiManager;
+import com.tourismelves.utils.system.SPUtils;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.util.List;
 
@@ -79,8 +86,8 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
                 .into(holder.im_elfsaid);
 
         holder.tv_title.setText(listBeen.get(position).getTitle());
-        holder.tv_colletc.setText(listBeen.get(position).getHot()+"");
-        holder.tv_watch.setText(listBeen.get(position).getCommentNum()+"");
+        holder.tv_colletc.setText(listBeen.get(position).getPraise()+"");
+        holder.tv_watch.setText(listBeen.get(position).getHot()+"");
        // if ()
 
 
@@ -91,6 +98,32 @@ public class ElfSaidAdapter extends RecyclerView.Adapter<ElfSaidAdapter.MyViewHo
 
         Log.e("str",str);
         holder.tv_content.setText(str);
+        holder.im_coll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OkHttpUtils.get().url(ApiManager.ALL_URL+"lyjl/app/praiseArticle.do")
+                        .addParams("articleId",listBeen.get(position).getArticleId()+"")
+                        .addParams("userId", SPUtils.getInstance(context).getString("putInt"))
+                        .build()
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onError(Request request, Exception e) {
+
+                            }
+
+                            @Override
+                            public void onResponse(String response) {
+
+
+                                Log.e("精灵说点赞",response);
+                                holder.im_coll.setImageResource(R.mipmap.dianzan);
+                                Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+            }
+        });
     }
 //    public static String format(String s){
 //        s = listBeen.get(position).getContent()

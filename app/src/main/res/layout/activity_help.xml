@@ -27,4 +27,78 @@
 
 
     </LinearLayout>
+    
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:background="@color/white"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp12"
+            android:text="景点信息有误"
+            android:layout_width="@dimen/dp90"
+            android:layout_height="@dimen/dp30" />
+        <TextView
+            android:background="@color/white"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp12"
+            android:text="定位不准"
+            android:layout_width="@dimen/dp68"
+            android:layout_height="@dimen/dp30" />
+        <TextView
+            android:background="@color/white"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp12"
+            android:text="缺个景点"
+            android:layout_width="@dimen/dp68"
+            android:layout_height="@dimen/dp30" />
+        <TextView
+            android:background="@color/white"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp10"
+            android:gravity="center"
+            android:textSize="@dimen/sp12"
+            android:text="路线错误"
+            android:layout_width="@dimen/dp68"
+            android:layout_height="@dimen/dp30" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp259">
+
+        <EditText
+            android:paddingLeft="@dimen/dp10"
+            android:background="@null"
+            android:textSize="@dimen/sp14"
+            android:textColor="#FFA8A8A8"
+            android:hint="反馈您的建议……"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp150" />
+
+
+    </LinearLayout>
+
+
+    <EditText
+        android:layout_marginTop="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:background="@color/white"
+        android:textSize="@dimen/sp14"
+        android:textColor="#FFA8A8A8"
+        android:hint="留下您的联系方式方便联系"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp30" />
 </LinearLayout>

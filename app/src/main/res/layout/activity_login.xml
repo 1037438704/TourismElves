@@ -20,13 +20,18 @@
 
 
     <LinearLayout
+
         android:id="@+id/linear_one"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="@mipmap/bar"
+        android:background="@mipmap/one"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp220">
 
+        <View
+            android:id="@+id/recharge_status"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
         <ImageView
             android:src="@mipmap/myheader"
             android:layout_gravity="center"
@@ -69,7 +74,7 @@
     <LinearLayout
 
         android:id="@+id/login_login"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_below="@+id/linear_one"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -296,7 +301,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/linear_register"
         android:layout_below="@+id/linear_one"
         android:layout_width="match_parent"

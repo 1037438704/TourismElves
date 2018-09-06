@@ -78,11 +78,13 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
 
 
 
-        try {
-            Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+//        try {
+//            Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage());
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+        Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage())
+        .into(holder.im_shop);
 
 
 

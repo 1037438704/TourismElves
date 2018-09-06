@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     
     <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
        
-        
+
         <ImageView
+            android:scaleType="fitXY"
             android:id="@+id/waitpay_im"
             android:layout_marginLeft="@dimen/dp10"
             android:src="@mipmap/ic_launcher"

@@ -53,8 +53,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/interpretation_details_ll"
-        android:layout_below="@id/interpretation_details_show"
+        android:layout_above="@+id/interpretation_details_ll"
+        android:layout_below="@+id/interpretation_details_show"
         android:layout_marginLeft="@dimen/dp60"
         android:layout_marginRight="@dimen/dp60">
 
@@ -82,7 +82,7 @@
         android:id="@+id/interpretation_details_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/interpretation_details_recycler"
+        android:layout_above="@+id/interpretation_details_recycler"
         android:layout_marginLeft="@dimen/dp10"
         android:layout_marginRight="@dimen/dp10"
         android:gravity="center_vertical">

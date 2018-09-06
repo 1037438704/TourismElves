@@ -52,9 +52,10 @@
                     android:layout_width="@dimen/dp15"
                     android:layout_height="@dimen/dp13"
                     android:layout_gravity="center"
-                    android:src="@mipmap/icon_16px_sc_11" />
+                    android:src="@mipmap/nozan" />
 
                 <TextView
+                    android:layout_marginLeft="@dimen/dp5"
                     android:id="@+id/elfsaid_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
