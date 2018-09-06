@@ -3,7 +3,6 @@ package com.tourismelves.view.adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,15 @@ import com.tourismelves.model.bean.WaitpayBean;
 import java.util.List;
 
 /**
- * Created by fanhui on 2018/8/23.
+ * Created by fanhui on 2018/9/6.
  */
 
-public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHolder> {
+public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.MyViewHolder> {
 
     Context context;
     List<WaitpayBean.DataListBean> listBeen;
 
-    public WaitpayAdapter(Context context, List<WaitpayBean.DataListBean> listBeen) {
+    public BuyAdapter(Context context, List<WaitpayBean.DataListBean> listBeen) {
         this.context = context;
         this.listBeen = listBeen;
     }
@@ -53,15 +52,15 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
 
 
     @Override
-    public WaitpayAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.wait_pay_item,parent,false);
-        WaitpayAdapter.MyViewHolder myViewHolder = new WaitpayAdapter.MyViewHolder(view);
+    public BuyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(context).inflate(R.layout.buyorder_item,parent,false);
+        BuyAdapter.MyViewHolder myViewHolder = new BuyAdapter.MyViewHolder(view);
         return myViewHolder;
         //     return view;
     }
 
     @Override
-    public void onBindViewHolder(final WaitpayAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final BuyAdapter.MyViewHolder holder, final int position) {
 
 
 
@@ -84,9 +83,10 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
 //            e.printStackTrace();
 //        }
         Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage())
-        .into(holder.im_shop);
+                .into(holder.im_shop);
         holder.tv_name.setText(listBeen.get(position).getOrgList().get(0).getName());
-        holder.tv_money.setText(listBeen.get(position).getOrgList().get(0).getPrice()+"");
+        holder.tv_money.setText(listBeen.get(position).getOrgList().get(0).getInsertTime()+"");
+        holder.tv_content.setText(listBeen.get(position).getOrgList().get(0).getDescription());
 
 
 
@@ -101,10 +101,11 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
 
 
         ImageView im_shop;
-        TextView tv_name,tv_money;
+        TextView tv_name,tv_money,tv_content;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
+            tv_content = itemView.findViewById(R.id.buyorder_content);
             im_shop = itemView.findViewById(R.id.waitpay_im);
             tv_name = itemView.findViewById(R.id.waitpay_name);
             tv_money = itemView.findViewById(R.id.waitpay_money);
@@ -118,8 +119,8 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
         void OnItem(View view,int position);
 
     }
-    private ElfSaidAdapter.OnItemClickListener onItemClickListener;
-    public void setOnItemClickListener(ElfSaidAdapter.OnItemClickListener onItemClickListener){
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
 }

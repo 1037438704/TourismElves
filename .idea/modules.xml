@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/TourismElves.iml" filepath="$PROJECT_DIR$/TourismElves.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/okgo/okgo.iml" filepath="$PROJECT_DIR$/okgo/okgo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okgo/okgo.iml" filepath="$PROJECT_DIR$/okgo/okgo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/okserver/okserver.iml" filepath="$PROJECT_DIR$/okserver/okserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/okserver/okserver.iml" filepath="$PROJECT_DIR$/okserver/okserver.iml" />
     </modules>
   </component>

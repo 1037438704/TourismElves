@@ -28,6 +28,7 @@ import com.tourismelves.view.activity.InviteActivity;
 import com.tourismelves.view.activity.LoginActivity;
 import com.tourismelves.view.activity.MyAccountActivity;
 import com.tourismelves.view.activity.OrderActivity;
+import com.tourismelves.view.activity.RechargeActivity;
 import com.tourismelves.view.activity.SetupActivity;
 import com.tourismelves.view.dialog.ActivityCodeDialog;
 import com.tourismelves.view.fragment.base.BaseFragment;
@@ -131,7 +132,7 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-        //订单管理
+        //金币
         tv_recharge = view.findViewById(R.id.tv_recharge);
         tv_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +140,7 @@ public class MyFragment extends BaseFragment {
                 if (!isLogin(getActivity(),true)){
                     return;
                 }
-                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                Intent intent = new Intent(getActivity(), RechargeActivity.class);
                 startActivity(intent);
             }
         });

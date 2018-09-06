@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -32,11 +32,12 @@
             android:src="@mipmap/icon_16px_sc_1" />
 
         <TextView
-            android:layout_marginRight="@dimen/dp10"
+            android:layout_marginLeft="@dimen/dp5"
             android:id="@+id/elfsaid_collect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginRight="@dimen/dp10"
             android:text="124"
             android:textColor="@color/jls_jl"
             android:textSize="@dimen/sp12" />
@@ -45,6 +46,8 @@
     </LinearLayout>
 
     <TextView
+
+        android:layout_marginRight="@dimen/dp10"
         android:ellipsize="end"
         android:lines="2"
         android:id="@+id/elfsaid_content"
@@ -65,16 +68,27 @@
 
         <ImageView
 
+            android:layout_marginTop="@dimen/dp5"
+            android:visibility="visible"
+            android:scaleType="fitXY"
+            android:id="@+id/scencoll_im"
             android:layout_marginLeft="@dimen/dp10"
             android:src="@mipmap/ic_launcher"
             android:layout_width="@dimen/dp174"
             android:layout_height="@dimen/dp174" />
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/scencoll_recy"
             android:layout_marginRight="@dimen/dp10"
             android:layout_marginLeft="@dimen/dp10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="@dimen/dp10"
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
 
 </LinearLayout>

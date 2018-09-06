@@ -44,8 +44,16 @@ public class ScenicAdaptermain extends RecyclerView.Adapter<ScenicAdaptermain.My
     }
 
     @Override
-    public void onBindViewHolder(ScenicAdaptermain.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final ScenicAdaptermain.MyViewHolder holder, final int position) {
 
+        if (onItemClickListener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.OnItem(holder.itemView,holder.getLayoutPosition());
+                }
+            });
+        }
 //        holder.tv_money.setText(listBeen.get(position).getName());
 //        holder.tv_moneytwo.setText("￥"+listBeen.get(position).getGold());
 //        holder.tv_moneyzs.setText("再送"+listBeen.get(position).getGive()+"金币");
@@ -55,11 +63,11 @@ public class ScenicAdaptermain extends RecyclerView.Adapter<ScenicAdaptermain.My
 //        Glide.with(mContext).load("http://211.157.162.2/"+dataListBean.getImage())
 //                .into((ImageView)baseViewHolder.getView(R.id.image_item));
 
-        Uri uri = Uri.parse("http://211.157.162.2/"+listBeen.get(position).getImage());
+        Uri uri = Uri.parse("http://211.157.162.2/"+listBeen.get(position).getOrganization().getImage());
         holder.userAvatar.setImageURI(uri);
         holder.userAvatar.getLayoutParams().height = (position % 2)*100 + 400;
-        holder.userName.setText(listBeen.get(position).getName());
-        holder.tv_content.setText(listBeen.get(position).getDescription());
+        holder.userName.setText(listBeen.get(position).getOrganization().getName());
+        holder.tv_content.setText(listBeen.get(position).getOrganization().getDescription());
 
 //        holder.tv_name.setText(listBeen.get(position).getName());
 //        Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getImage())
@@ -80,5 +88,15 @@ public class ScenicAdaptermain extends RecyclerView.Adapter<ScenicAdaptermain.My
             userName =  itemView.findViewById(R.id.user_name);
             tv_content = itemView.findViewById(R.id.scenic_content);
         }
+    }
+
+
+    public interface OnItemClickListener{
+        void OnItem(View view,int position);
+
+    }
+    private OnItemClickListener onItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
     }
 }

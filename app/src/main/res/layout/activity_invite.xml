@@ -1,15 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.tourismelves.view.activity.InviteActivity">
 
 
-    <ImageView
-        android:id="@+id/invite_im"
-        android:scaleType="fitXY"
+    <TextView
+        android:text="把精灵说分享给你的朋友，您和你的朋友将获得优惠券。邀请成功，您将获得10元优惠"
+        android:textColor="#FF606980"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp16"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp10"/>
+
+
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp30"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textSize="@dimen/sp16"
+            android:text="已通过邀请获得金币："
+            android:textColor="#FF606980"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="0.00"
+            android:textColor="#FF3C7DD5"
+            android:textSize="@dimen/sp16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/dp10"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:textSize="@dimen/sp16"
+            android:text="您的专属邀请码："
+            android:textColor="#FF606980"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="13123211"
+            android:textColor="#FF3C7DD5"
+            android:textSize="@dimen/sp16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <!--<ImageView-->
+        <!--android:id="@+id/invite_im"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:layout_width="368dp"-->
+        <!--android:layout_height="551dp"-->
+        <!--tools:layout_editor_absoluteY="8dp"-->
+        <!--tools:layout_editor_absoluteX="8dp" />-->
+    
+    <ImageView
+
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/dp207"
+        android:layout_height="@dimen/dp207" />
+    <TextView
+        android:gravity="center"
+        android:layout_marginTop="@dimen/dp10"
+        android:textColor="#FF606980"
+        android:text="微信扫码立即下载精灵说"
+        android:textSize="@dimen/sp16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

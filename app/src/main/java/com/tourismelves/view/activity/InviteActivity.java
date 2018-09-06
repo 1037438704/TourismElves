@@ -28,7 +28,7 @@ public class InviteActivity extends StateBaseActivity {
 
     @Override
     protected void obtainData() {
-        im_shop = findViewById(R.id.invite_im);
+      //  im_shop = findViewById(R.id.invite_im);
     }
 
     @Override

@@ -338,6 +338,7 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
         }
     }
 
+
     private void setTime() {
         if (interpretationDetailsTime != null) {
             String s = calculateTime(getDuration() / 1000);

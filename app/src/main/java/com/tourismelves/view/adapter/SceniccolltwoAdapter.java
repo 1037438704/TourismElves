@@ -2,9 +2,7 @@ package com.tourismelves.view.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,20 +17,20 @@ import com.tourismelves.model.bean.ElfsaidBean;
 import java.util.List;
 
 /**
- * Created by fanhui on 2018/9/4.
+ * Created by fanhui on 2018/9/6.
  */
 
-public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.MyViewHolder> {
+public class SceniccolltwoAdapter extends RecyclerView.Adapter<SceniccolltwoAdapter.MyViewHolder> {
 
     Context context;
-    List<CollectBean.DataListBean> listBeen;
+    List<CollectBean.DataListBean.OrganizationBean.PhotoListBean> listBeen;
 
-    public SceniccollAdapter(Context context, List<CollectBean.DataListBean> listBeen) {
+    public SceniccolltwoAdapter(Context context, List<CollectBean.DataListBean.OrganizationBean.PhotoListBean> listBeen) {
         this.context = context;
         this.listBeen = listBeen;
     }
 
-    public void replaceData(@NonNull List<CollectBean.DataListBean> list) {
+    public void replaceData(@NonNull List<CollectBean.DataListBean.OrganizationBean.PhotoListBean> list) {
         if (listBeen == null) {
             return;
         }
@@ -54,15 +52,15 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
 
 
     @Override
-    public SceniccollAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(context).inflate(R.layout.scencoll_item,parent,false);
-        SceniccollAdapter.MyViewHolder myViewHolder = new SceniccollAdapter.MyViewHolder(view);
+    public SceniccolltwoAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view= LayoutInflater.from(context).inflate(R.layout.scencolltwo_item,parent,false);
+        SceniccolltwoAdapter.MyViewHolder myViewHolder = new SceniccolltwoAdapter.MyViewHolder(view);
         return myViewHolder;
         //     return view;
     }
 
     @Override
-    public void onBindViewHolder(final SceniccollAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final SceniccolltwoAdapter.MyViewHolder holder, final int position) {
 
 
 
@@ -76,19 +74,12 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
             });
 
         }
-        if (listBeen.get(position).getOrganization().getPhotoList()==null){
-            holder.im_scen.setVisibility(View.GONE);
-            return;
-        }
+
         try {
-            Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrganization().getPhotoList().get(0).getPhotoPath())
-                    .into(holder.im_scen);
-           // holder.tv_hot.setText(listBeen.get(position).getOrganization().get);
-            holder.tv_content.setText(listBeen.get(position).getOrganization().getDescription());
-            holder.tv_title.setText(listBeen.get(position).getOrganization().getName());
-            SceniccolltwoAdapter sceniccolltwoAdapter = new SceniccolltwoAdapter(context,listBeen.get(position).getOrganization().getPhotoList());
-            holder.recyclerView.setLayoutManager(new GridLayoutManager(context,2));
-            holder.recyclerView.setAdapter(sceniccolltwoAdapter);
+
+            Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position+1).getPhotoPath())
+                    .into(holder.im_shop);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -99,24 +90,26 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
 
     @Override
     public int getItemCount() {
+        if (listBeen.size()==1){
+            return 0;
+        }
+        if (listBeen.size()>4){
+            return 4;
+        }
         return listBeen.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
 
-        ImageView im_scen;
-        TextView tv_title,tv_content,tv_hot;
-        RecyclerView recyclerView;
 
+
+        ImageView im_shop;
         public MyViewHolder(final View itemView) {
             super(itemView);
 
-            im_scen = itemView.findViewById(R.id.scencoll_im);
-            tv_title =  itemView.findViewById(R.id.tv_title);
-            tv_content = itemView.findViewById(R.id.elfsaid_content);
-            tv_hot = itemView.findViewById(R.id.elfsaid_collect);
-            recyclerView = itemView.findViewById(R.id.scencoll_recy);
+
+            im_shop = itemView.findViewById(R.id.two_shop);
         }
     }
 
@@ -130,4 +123,3 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
         this.onItemClickListener = onItemClickListener;
     }
 }
-

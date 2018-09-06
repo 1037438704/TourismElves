@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.kevin.crop.UCrop;
+
 import com.tourismelves.R;
 import com.tourismelves.model.bean.UserBean;
 import com.tourismelves.model.net.OkHttpUtils;
@@ -30,11 +30,10 @@ import com.tourismelves.utils.PhotoUtils;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.SPUtils;
-import com.tourismelves.view.activity.base.PermissionsActivity;
+
+import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.widget.loadlayout.State;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -43,7 +42,7 @@ import java.util.List;
 import static com.tourismelves.app.constant.UrlConstants.userinfo;
 import static com.tourismelves.utils.system.PermissionUtil.getDeniedPermissions;
 
-public class MyAccountActivity extends PermissionsActivity {
+public class MyAccountActivity extends StateBaseActivity {
 
 
     TextView tv_name, tv_phone, tv_xb, top_name;
@@ -200,15 +199,15 @@ public class MyAccountActivity extends PermissionsActivity {
                 }
         );
     }
-
-    @Override
-    protected void authorizationSuccess(int type) {
-        if (photo == 0) {
-            openPhoto();
-        } else {
-            takePhoto();
-        }
-    }
+//
+//    @Override
+//    protected void authorizationSuccess(int type) {
+//        if (photo == 0) {
+//            openPhoto();
+//        } else {
+//            takePhoto();
+//        }
+//    }
 
     private int photo = 0;
 
@@ -222,23 +221,23 @@ public class MyAccountActivity extends PermissionsActivity {
      * 拍照
      */
     public void takePhoto() {
-        photo = 1;
-        List<String> deniedPermissions = getDeniedPermissions(this, cameras);
-        if (deniedPermissions != null) {
-            requestPermissions(camera, cameras);
-        } else {
-            List<String> permissions = getDeniedPermissions(this, externals);
-            if (permissions != null) {
-                requestPermissions(external, externals);
-            } else {
-                fileUri = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
-                imageUri = Uri.fromFile(fileUri);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-                    //通过FileProvider创建一个content类型的Uri
-                    imageUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".FileProvider", fileUri);
-                PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
-            }
-        }
+//        photo = 1;
+//        List<String> deniedPermissions = getDeniedPermissions(this, cameras);
+//        if (deniedPermissions != null) {
+//            requestPermissions(camera, cameras);
+//        } else {
+//            List<String> permissions = getDeniedPermissions(this, externals);
+//            if (permissions != null) {
+//                requestPermissions(external, externals);
+//            } else {
+//                fileUri = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
+//                imageUri = Uri.fromFile(fileUri);
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+//                    //通过FileProvider创建一个content类型的Uri
+//                    imageUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".FileProvider", fileUri);
+//                PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
+//            }
+//        }
     }
 
     private final int CODE_GALLERY_REQUEST = 0xa0;   //相册
@@ -248,44 +247,44 @@ public class MyAccountActivity extends PermissionsActivity {
      * 知乎开源相册选择器
      */
     public void openPhoto() {
-        photo = 0;
-        List<String> permissions = getDeniedPermissions(this, externals);
-        if (permissions != null) {
-            requestPermissions(external, externals);
-        } else {
-            Matisse.from(this)
-                    .choose(MimeType.of(MimeType.JPEG, MimeType.PNG)) // 选择 mime 的类型
-                    .theme(R.style.Matisse_Dracula)//Zhihu（亮蓝色主题） Dracula（黑色主题）
-                    .countable(true)
-                    .maxSelectable(1) // 图片选择的最多数量
-                    .spanCount(3)//网格的规格
-                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)//图像选择和预览活动所需的方向。
-                    .thumbnailScale(0.85f) // 缩略图的比例
-                    .imageEngine(new GlideEngine()) // 使用的图片加载引擎
-                    .forResult(CODE_GALLERY_REQUEST); // 设置作为标记的请求码
-        }
+//        photo = 0;
+//        List<String> permissions = getDeniedPermissions(this, externals);
+//        if (permissions != null) {
+//            requestPermissions(external, externals);
+//        } else {
+//            Matisse.from(this)
+//                    .choose(MimeType.of(MimeType.JPEG, MimeType.PNG)) // 选择 mime 的类型
+//                    .theme(R.style.Matisse_Dracula)//Zhihu（亮蓝色主题） Dracula（黑色主题）
+//                    .countable(true)
+//                    .maxSelectable(1) // 图片选择的最多数量
+//                    .spanCount(3)//网格的规格
+//                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)//图像选择和预览活动所需的方向。
+//                    .thumbnailScale(0.85f) // 缩略图的比例
+//                    .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+//                    .forResult(CODE_GALLERY_REQUEST); // 设置作为标记的请求码
+//        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case CODE_GALLERY_REQUEST://访问相册完成回调
-                    Uri newUri = Matisse.obtainResult(data).get(0);
-                    startCropActivity(newUri);
-                    break;
-                case CODE_CAMERA_REQUEST://拍照完成回调
-                    startCropActivity(imageUri);
-                    break;
-                case UCrop.REQUEST_CROP:    // 裁剪图片结果
-                    handleCropResult(data);
-                    break;
-                case UCrop.RESULT_ERROR:    // 裁剪图片错误
-                    handleCropError(data);
-                    break;
-            }
-        }
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                case CODE_GALLERY_REQUEST://访问相册完成回调
+//                    Uri newUri = Matisse.obtainResult(data).get(0);
+//                    startCropActivity(newUri);
+//                    break;
+//                case CODE_CAMERA_REQUEST://拍照完成回调
+//                    startCropActivity(imageUri);
+//                    break;
+//                case UCrop.REQUEST_CROP:    // 裁剪图片结果
+//                    handleCropResult(data);
+//                    break;
+//                case UCrop.RESULT_ERROR:    // 裁剪图片错误
+//                    handleCropError(data);
+//                    break;
+//            }
+//        }
     }
 
     /**
@@ -293,29 +292,29 @@ public class MyAccountActivity extends PermissionsActivity {
      *
      * @param uri
      */
-    public void startCropActivity(Uri uri) {
-        UCrop.of(uri, outputUri)
-                .withAspectRatio(1, 1)
-                .withMaxResultSize(512, 512)
-                .withTargetActivity(CropActivity.class)
-                .start(this);
-    }
+//    public void startCropActivity(Uri uri) {
+//        UCrop.of(uri, outputUri)
+//                .withAspectRatio(1, 1)
+//                .withMaxResultSize(512, 512)
+//                .withTargetActivity(CropActivity.class)
+//                .start(this);
+//    }
 
-    /**
-     * 处理剪切失败的返回值
-     */
-    private void handleCropError(Intent result) {
-        if (fileUri != null && fileUri.exists() && fileUri.isFile()) {
-            fileUri.delete();
-        }
-        final Throwable cropError = UCrop.getError(result);
-        if (cropError != null) {
-            LogUtil.i(cropError);
-            ToastUtil.show(cropError.getMessage());
-        } else {
-            ToastUtil.show("无法剪切选择图片");
-        }
-    }
+//    /**
+//     * 处理剪切失败的返回值
+//     */
+//    private void handleCropError(Intent result) {
+//        if (fileUri != null && fileUri.exists() && fileUri.isFile()) {
+//            fileUri.delete();
+//        }
+//        final Throwable cropError = UCrop.getError(result);
+//        if (cropError != null) {
+//            LogUtil.i(cropError);
+//            ToastUtil.show(cropError.getMessage());
+//        } else {
+//            ToastUtil.show("无法剪切选择图片");
+//        }
+//    }
 
     /**
      * 处理剪切成功的返回值
@@ -324,10 +323,10 @@ public class MyAccountActivity extends PermissionsActivity {
         if (fileUri != null && fileUri.exists() && fileUri.isFile()) {
             fileUri.delete();
         }
-        final Uri resultUri = UCrop.getOutput(result);
-        if (null != resultUri) {
-            LogUtil.i(resultUri);
-            String base64 = bitmapToBase64(getSmallBitmap(resultUri.getPath()));
+     //   final Uri resultUri = UCrop.getOutput(result);
+//        if (null != resultUri) {
+//            LogUtil.i(resultUri);
+//            String base64 = bitmapToBase64(getSmallBitmap(resultUri.getPath()));
 //            List<String> url = new ArrayList<>();
 //            url.add(resultUri.getPath());
 //            List<ParamString> paramObjects = new ArrayList<>();
@@ -357,9 +356,9 @@ public class MyAccountActivity extends PermissionsActivity {
 //                            LogUtil.i(currentBytes);
 //                        }
 //                    }, paramObjects, "image", url);
-        } else {
-            ToastUtil.show("无法剪切选择图片");
-        }
+//        } else {
+//            ToastUtil.show("无法剪切选择图片");
+//        }
     }
 
     // 根据路径获得图片并压缩，返回bitmap用于显示

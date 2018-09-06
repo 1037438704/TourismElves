@@ -1,14 +1,18 @@
 package com.tourismelves.view.activity;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +20,23 @@ import com.google.gson.Gson;
 import com.squareup.okhttp.Request;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.ElversayBean;
+import com.tourismelves.utils.ManagedMediaPlayer;
+import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.tourismelves.utils.TimeUtil.calculateTime;
 
 public class ElverSayDetailsActivity extends StateBaseActivity {
 
@@ -30,6 +46,14 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
     WebView webView;
     TextView tv_title,tv_love,tv_time;
     ImageView im_love;
+    String newContent;
+    private ManagedMediaPlayer mMediaPlayer;
+    SeekBar interpretationDetailsSeekbar;
+    private boolean isTouchBar = false;
+    String audioPath;
+    AppCompatTextView interpretationDetailsTime;
+    AppCompatImageView interpretationDetailsPlay;
+    private Timer timer;
 
 
     @Override
@@ -39,6 +63,10 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
+        mMediaPlayer = new ManagedMediaPlayer();
+        interpretationDetailsPlay = findViewById(R.id.interpretation_details_play);
+        interpretationDetailsTime = findViewById(R.id.interpretation_details_time);
+        interpretationDetailsSeekbar = findViewById(R.id.interpretation_details_seekbar);
         im_love = findViewById(R.id.details_love);
         tv_title = findViewById(R.id.say_details_title);
         tv_love = findViewById(R.id.elfsaid_collect);
@@ -61,6 +89,8 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
 
     @Override
     protected void obtainData() {
+
+
 
         //声明WebSettings子类
         WebSettings webSettings = webView.getSettings();
@@ -125,7 +155,17 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
                         Gson gson = new Gson();
                         elversayBean = gson.fromJson(response,ElversayBean.class);
 
-                        webView.loadData("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=0\"><title>任性猫</title><style type=\"text/css\">img{width: 100%;}</style></head><body>"+elversayBean.getDataList().get(0).getContent()+"</body></html>","text/html; charset=UTF-8", null);
+                        String content =elversayBean.getDataList().get(0).getContent();
+                        StringBuilder builder = new StringBuilder(content);
+                        Pattern p= Pattern.compile("<audio.*src=\"(.*)\"></audio>");
+                        Matcher matcher = p.matcher(content);
+                        while (matcher.find()){
+                            audioPath = matcher.group(1);
+                            File file = new File(audioPath);
+                            newContent = builder.delete(matcher.start(), matcher.end()).toString();
+                            play();
+                        }
+                        webView.loadData("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=0\"><title>任性猫</title><style type=\"text/css\">img{width: 100%;}</style></head><body>"+newContent+"</body></html>","text/html; charset=UTF-8", null);
 
 //
 //                        tv_time.setText(elversayBean.getDataList().get(0).getPublishTime());
@@ -164,7 +204,157 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
     @Override
     protected void initEvent() {
 
+
+
+        interpretationDetailsSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isTouchBar = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                isTouchBar = false;
+                //首先获取seekbar拖动后的位置
+                int progress = interpretationDetailsSeekbar.getProgress();
+                if (mMediaPlayer != null) {
+                    //跳转到某个位置播放
+                    if (!audioPath.equals("")) {
+                        mMediaPlayer.seekTo(progress);
+                        setTime();
+                    }
+                }
+                if (audioPath.equals("")) {
+                    interpretationDetailsSeekbar.setProgress(0);
+                }
+            }
+        });
+
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                cancelTimer();
+                setTime();
+                interpretationDetailsSeekbar.setProgress(0);
+            }
+        });
+        interpretationDetailsPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (audioPath.equals("")) {
+                    ToastUtil.show("播放失败，地址为空");
+                    return;
+                }
+
+                if (mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.pause();
+                    cancelTimer();
+                } else {
+                    start();
+                }
+            }
+        });
     }
 
+    /**
+     * 音乐播放地方
+     */
+
+    private void start() {
+        interpretationDetailsPlay.setImageResource(R.mipmap.zantingbofang);
+        mMediaPlayer.start();
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setTime();
+                        if (!isTouchBar) {
+                            if (interpretationDetailsSeekbar != null) {
+                                interpretationDetailsSeekbar.setMax(getDuration());
+                                interpretationDetailsSeekbar.setProgress(getCurrentPosition());
+                            }
+                        }
+                    }
+                });
+            }
+        }, 0, 50);
+    }
+
+    private void cancelTimer() {
+        if (interpretationDetailsPlay != null) {
+            interpretationDetailsPlay.setImageResource(R.mipmap.bofangqi);
+            interpretationDetailsTime.setText("0:00/0:00");
+            interpretationDetailsSeekbar.setProgress(0);
+        }
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+
+
+    public int getCurrentPosition() {
+        if (mMediaPlayer != null) {
+            return mMediaPlayer.getCurrentPosition();
+        }
+        return 0;
+    }
+
+    public int getDuration() {
+        if (mMediaPlayer != null) {
+            return mMediaPlayer.getDuration();
+        }
+        return 0;
+    }
+
+    private void setTime() {
+        if (interpretationDetailsTime != null) {
+            String s = calculateTime(getDuration() / 1000);
+            String s1 = calculateTime(getCurrentPosition() / 1000);
+            interpretationDetailsTime.setText(s1 + "/" + s);
+        }
+    }
+
+    public void play() {
+        LogUtil.i(audioPath);
+        try {
+            if (audioPath.equals("")) {
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+                    mMediaPlayer.stop();
+                    cancelTimer();
+                }
+                ToastUtil.show("播放失败，地址为空");
+                return;
+            }
+            mMediaPlayer.reset();
+            mMediaPlayer.setDataSource(audioPath);
+            mMediaPlayer.prepareAsync();
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    start();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        mMediaPlayer.pause();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
+        cancelTimer();
+        super.onDestroy();
+    }
 
 }

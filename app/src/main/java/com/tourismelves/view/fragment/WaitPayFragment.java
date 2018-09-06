@@ -32,7 +32,7 @@ public class WaitPayFragment extends BaseFragment {
     RecyclerView recyclerView;
     WaitpayBean waitpayBean;
     List<WaitpayBean.DataListBean> listBeen;
-    List list = new ArrayList();
+    private List<WaitpayBean.DataListBean> list=new ArrayList<>();
 
     @Override
     protected int setContentLayout() {
@@ -64,16 +64,25 @@ public class WaitPayFragment extends BaseFragment {
                         Gson gson = new Gson();
                         waitpayBean = gson.fromJson(response,WaitpayBean.class);
                         listBeen = waitpayBean.getDataList();
-                        WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),listBeen);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        recyclerView.setAdapter(waitpayAdapter);
-//                        for (int i = 0; i<listBeen.size();i++)
-//                        {
+
+
+
+                        for (int i = 0; i<listBeen.size();i++)
+                        {
+
+                            if (listBeen.get(i).getOrderStatus()==2||listBeen.get(i).getOrderStatus()==0&&listBeen.get(i).getPayStatus()==0||listBeen.get(i).getPayStatus()==3){
+                                list.add(listBeen.get(i));
+                            }
+
+
+
+                            Log.e("订单liebiao",list+"");
 //
-//                            Log.e("订单list",list+"");
-////
-//
-//                        }
+                            WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            recyclerView.setAdapter(waitpayAdapter);
+
+                        }
                     }
                 });
     }

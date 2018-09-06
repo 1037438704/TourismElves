@@ -1,6 +1,7 @@
 package com.tourismelves.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amap.api.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.ScenicBean;
 import com.tourismelves.model.net.OkHttpUtils;
+import com.tourismelves.view.activity.InterpretationListActivity;
 import com.tourismelves.view.adapter.ScenicAdaptermain;
 import com.tourismelves.view.fragment.base.BaseFragment;
 
@@ -92,9 +95,21 @@ public class ScenicFragment extends BaseFragment {
 //                      //  scenicAdapter = new ScenicAdapter(R.layout.scenic_item,listBeen);
                         mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                         recyclerView.setLayoutManager(mLayoutManager);
+                       // recyclerView.setLayoutManager(new L);
                         scenicAdaptermain = new ScenicAdaptermain(getActivity(),listBeen);
                         recyclerView.setAdapter(scenicAdaptermain);
 
+                        scenicAdaptermain.setOnItemClickListener(new ScenicAdaptermain.OnItemClickListener() {
+                            @Override
+                            public void OnItem(View view, int position) {
+                                Intent intent = new Intent(getContext(), InterpretationListActivity.class);
+                                intent.putExtra("ordId", listBeen.get(position).getOrganization().getOrgId());
+                                intent.putExtra("name", listBeen.get(position).getOrganization().getName());
+                                intent.putExtra("distance", listBeen.get(position).getOrganization().getName() );
+                                intent.putExtra("latlng", new LatLng(listBeen.get(position).getOrganization().getLatitude(), listBeen.get(position).getOrganization().getLongitude()));
+                                startActivity(intent);
+                            }
+                        });
 
 
 

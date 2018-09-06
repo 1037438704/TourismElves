@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/white"
+        android:textColor="#FF606980"
+        android:textSize="@dimen/sp16"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
+        android:text="选择问题分类"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <TextView
+        android:background="@color/white"
+        android:textColor="#FF606980"
+        android:textSize="@dimen/sp16"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
+        android:text="语音问题"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <TextView
+        android:background="@color/white"
+        android:textColor="#FF606980"
+        android:textSize="@dimen/sp16"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
+        android:text="图片问题"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <TextView
+        android:background="@color/white"
+        android:textColor="#FF606980"
+        android:textSize="@dimen/sp16"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
+        android:text="功能问题"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <TextView
+        android:background="@color/white"
+        android:textColor="#FF606980"
+        android:textSize="@dimen/sp16"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingTop="@dimen/dp15"
+        android:text="其他"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50" />
+</LinearLayout>

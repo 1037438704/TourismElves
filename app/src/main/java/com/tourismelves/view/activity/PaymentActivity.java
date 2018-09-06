@@ -11,17 +11,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.google.gson.Gson;
 import com.squareup.okhttp.Request;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.AliPayInfo;
+import com.tourismelves.model.bean.PayInfo;
+import com.tourismelves.model.bean.WXPayBean;
+import com.tourismelves.utils.WXPayUtils;
 import com.tourismelves.utils.common.PayResult;
+import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaymentActivity extends StateBaseActivity {
 
@@ -35,6 +47,9 @@ public class PaymentActivity extends StateBaseActivity {
     private static final int SDK_CHECK_FLAG = 2;
     String sk_id;
     private AliPayInfo aliPayInfo;
+    PayInfo payInfo;
+    private PayReq req;
+    private final IWXAPI msgApi = WXAPIFactory.createWXAPI(this, null);
 
 
 
@@ -124,13 +139,55 @@ public class PaymentActivity extends StateBaseActivity {
                         Log.v("------------ccc",response);
                         //调用微信支付
                         if (response!=null&&"1".equals(flagString)){
-                            Gson gson = new Gson();
+//                            Gson gson = new Gson();
+//                            JSONObject object = JSON.parseObject(response);
 //                            payInfo = gson.fromJson(response,PayInfo.class);
-//                            if (payInfo!=null&&"1".equals(flagString)){  //微信支付
-//                                fudaitype = getIntent().getStringExtra("fudaitype");
-//                                fudaiid = getIntent().getStringExtra("fudaiid");
-//                                sendPayReq(payInfo,fudaiid,fudaitype);
-//                            }
+////                            WXPayBean wxPayBean = gson.fromJson(response,WXPayBean.class);
+//                             message = JSON.parseObject(object.getString("message"), WXPayBean.class);
+////                            Integer code = object.getInteger("code");
+////                            if (code==200){  //微信支付
+////                                WXPayBean message = JSON.parseObject(object.getString("message"), WXPayBean.class);
+////                                WXPayUtils.WXPayBuilder builder = new WXPayUtils.WXPayBuilder();
+////                                builder.setAppId(message.getAppid())
+////                                        .setPartnerId(message.getPartnerid())
+////                                        .setPrepayId(message.getPrepayid())
+////                                        .setNonceStr(message.getNoncestr())
+////                                        .setTimeStamp(message.getTimestamp())
+////                                        .setSign(message.getTimestamp())
+////                                        .build().toWXPayNotSign(getContext());
+////                            }
+//                            sendPayReq(message);
+                            OkHttpUtils.get()
+                                    .url(ApiManager.ALL_URL+"lyjl/app/wxPayPay.do")
+                                    .addParams("userId", SPUtils.getInstance(PaymentActivity.this).getString("putInt"))
+                                    .addParams("orderId",sk_id)
+                                    .build()
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onError(Request request, Exception e) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(String response) {
+
+                                            JSONObject object = JSON.parseObject(response);
+                                            Integer code = object.getInteger("code");
+
+                                            WXPayBean message = JSON.parseObject(object.getString("message"), WXPayBean.class);
+                                            //假装请求了服务器 获取到了所有的数据,注意参数不能少
+                                            WXPayUtils.WXPayBuilder builder = new WXPayUtils.WXPayBuilder();
+                                            builder.setAppId(message.getAppid())
+                                                    .setPartnerId(message.getPartnerid())
+                                                    .setPrepayId(message.getPrepayid())
+                                                    .setNonceStr(message.getNoncestr())
+                                                    .setTimeStamp(message.getTimestamp())
+                                                    .setSign(message.getTimestamp())
+                                                    .build().toWXPayNotSign(getContext());
+                                        }
+                                    });
+
+
                         }else if (response!=null&&"2".equals(flagString)){
                             Gson gson = new Gson();
                             aliPayInfo = gson.fromJson(response,AliPayInfo.class);
@@ -151,6 +208,8 @@ public class PaymentActivity extends StateBaseActivity {
     protected void initEvent() {
 
     }
+
+
 
     private Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -227,4 +286,30 @@ public class PaymentActivity extends StateBaseActivity {
         payThread.start();
 
     }
+
+
+    /**
+     * 微信支付
+     * @param mPayInfo
+     */
+    private void sendPayReq(WXPayBean mPayInfo) {
+        req.appId = mPayInfo.getAppid();
+        req.partnerId = mPayInfo.getPartnerid();
+        req.prepayId = mPayInfo.getPrepayid();
+        req.packageValue = "Sign=WXPay";
+        req.nonceStr = mPayInfo.getNoncestr();
+        req.timeStamp = mPayInfo.getTimestamp();
+        req.sign = mPayInfo.getTimestamp();
+//        intent.putExtra("type", 0 + "");
+//        intent.putExtra("fudaitype", fudaitype);
+//        intent.putExtra("fudaiid", fudaiid);
+        Map<String, String> ext = new HashMap<>();
+
+        req.extData = new Gson().toJson(ext);
+
+        msgApi.sendReq(req);
+    }
+
+
+
 }

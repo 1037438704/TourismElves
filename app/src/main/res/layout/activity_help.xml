@@ -10,6 +10,7 @@
 
 
     <LinearLayout
+        android:id="@+id/help_dialog"
         android:layout_marginTop="@dimen/dp10"
         android:background="@color/white"
 

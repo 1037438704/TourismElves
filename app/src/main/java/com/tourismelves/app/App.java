@@ -6,8 +6,11 @@ import android.support.multidex.MultiDex;
 
 import com.lzy.okgo.OkGo;
 import com.lzy.okserver.download.DownloadManager;
+
+import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 import com.tourismelves.R;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.file.RootFile;
@@ -32,6 +35,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         initCommon();
+        MobSDK.init(this);
+
 
         IWXAPI iwxapi = WXAPIFactory.createWXAPI(this, getString(R.string.WX_APPID), true);
         iwxapi.registerApp(getString(R.string.WX_APPID));

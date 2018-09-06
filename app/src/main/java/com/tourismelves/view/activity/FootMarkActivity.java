@@ -38,7 +38,7 @@ public class FootMarkActivity extends StateBaseActivity {
         //tv_title = findViewById(R.id.title_name);
        // tv_title.setText("足迹");
         fragments.add(new ScenicFragment());
-        fragments.add(new WaitPayFragment());
+        fragments.add(new ScenicFragment());
 //        list.add("景区");
 //        list.add("精灵说");
 
