@@ -30,7 +30,7 @@ import com.tourismelves.utils.PhotoUtils;
 import com.tourismelves.utils.common.ToastUtil;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.SPUtils;
-import com.tourismelves.view.activity.base.PermissionsActivity;
+import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.widget.loadlayout.State;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -38,12 +38,10 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.util.List;
 
 import static com.tourismelves.app.constant.UrlConstants.userinfo;
-import static com.tourismelves.utils.system.PermissionUtil.getDeniedPermissions;
 
-public class MyAccountActivity extends PermissionsActivity {
+public class MyAccountActivity extends StateBaseActivity {
 
 
     TextView tv_name, tv_phone, tv_xb, top_name;
@@ -201,15 +199,6 @@ public class MyAccountActivity extends PermissionsActivity {
         );
     }
 
-    @Override
-    protected void authorizationSuccess(int type) {
-        if (photo == 0) {
-            openPhoto();
-        } else {
-            takePhoto();
-        }
-    }
-
     private int photo = 0;
 
     private File fileUri;    //拍照的文件
@@ -222,23 +211,12 @@ public class MyAccountActivity extends PermissionsActivity {
      * 拍照
      */
     public void takePhoto() {
-        photo = 1;
-        List<String> deniedPermissions = getDeniedPermissions(this, cameras);
-        if (deniedPermissions != null) {
-            requestPermissions(camera, cameras);
-        } else {
-            List<String> permissions = getDeniedPermissions(this, externals);
-            if (permissions != null) {
-                requestPermissions(external, externals);
-            } else {
                 fileUri = new File(Environment.getExternalStorageDirectory().getPath(), System.currentTimeMillis() + ".jpg");
                 imageUri = Uri.fromFile(fileUri);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
                     //通过FileProvider创建一个content类型的Uri
                     imageUri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".FileProvider", fileUri);
                 PhotoUtils.takePicture(this, imageUri, CODE_CAMERA_REQUEST);
-            }
-        }
     }
 
     private final int CODE_GALLERY_REQUEST = 0xa0;   //相册
@@ -248,11 +226,6 @@ public class MyAccountActivity extends PermissionsActivity {
      * 知乎开源相册选择器
      */
     public void openPhoto() {
-        photo = 0;
-        List<String> permissions = getDeniedPermissions(this, externals);
-        if (permissions != null) {
-            requestPermissions(external, externals);
-        } else {
             Matisse.from(this)
                     .choose(MimeType.of(MimeType.JPEG, MimeType.PNG)) // 选择 mime 的类型
                     .theme(R.style.Matisse_Dracula)//Zhihu（亮蓝色主题） Dracula（黑色主题）
@@ -263,7 +236,6 @@ public class MyAccountActivity extends PermissionsActivity {
                     .thumbnailScale(0.85f) // 缩略图的比例
                     .imageEngine(new GlideEngine()) // 使用的图片加载引擎
                     .forResult(CODE_GALLERY_REQUEST); // 设置作为标记的请求码
-        }
     }
 
     @Override
@@ -327,36 +299,9 @@ public class MyAccountActivity extends PermissionsActivity {
         final Uri resultUri = UCrop.getOutput(result);
         if (null != resultUri) {
             LogUtil.i(resultUri);
+
+
             String base64 = bitmapToBase64(getSmallBitmap(resultUri.getPath()));
-//            List<String> url = new ArrayList<>();
-//            url.add(resultUri.getPath());
-//            List<ParamString> paramObjects = new ArrayList<>();
-//            paramObjects.add(new ParamString("image", base64));
-//            paramObjects.add(new ParamString("token", "1f4b7545-22af-4f68-80ad-76d380c19b36"));
-//            paramObjects.add(new ParamString("userId", SPUtils.getInstance(getContext()).getString("putInt")));
-//            OkHttpUtils.postFile(updateUserInfo,
-//                    new OkHttpUtils.ResultCallback<String>() {
-//                        @Override
-//                        public void onSuccess(String response) {
-//                            JSONObject object = JSON.parseObject(response);
-//                            Integer code = object.getInteger("code");
-//                            if (code == 200) {
-//
-//                            } else {
-//                                ToastUtil.show(object.getString("message"));
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Exception e) {
-//                            ToastUtil.show(R.string.no_found_network);
-//                        }
-//                    }, new ProgressListener() {
-//                        @Override
-//                        public void onProgress(long currentBytes, long contentLength, boolean done) {
-//                            LogUtil.i(currentBytes);
-//                        }
-//                    }, paramObjects, "image", url);
         } else {
             ToastUtil.show("无法剪切选择图片");
         }
