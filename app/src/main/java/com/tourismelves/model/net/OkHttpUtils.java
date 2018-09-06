@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
 import com.tourismelves.utils.log.LogUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -19,6 +20,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -215,12 +217,68 @@ public class OkHttpUtils {
                 sb.append(",");
             }
         }
+
+        LogUtil.i(sb.toString());
         RequestBody requestBody = RequestBody.create(MEDIA_TYPE_TEXT, sb.toString());
         return new Request
                 .Builder()
                 .url(url)
                 .post(requestBody)
                 .build();
+    }
+
+    public static Call postFile(String url, final ResultCallback callback, ProgressListener progressListener, List<ParamString> params, String fileKey, List<String> fileList) {
+        return getmInstance().postRequest(url, callback, progressListener, params, fileKey, fileList);
+    }
+
+    /**
+     * post请求
+     * 表单形式 混合参数和文件
+     */
+    private Call postRequest(String url, final ResultCallback callback, ProgressListener progressListener,
+                             List<ParamString> params, String fileKey, List<String> fileList) {
+        RequestBody requestBody = getRequestBody(params, fileList, fileKey);
+        Request request = new Request.Builder().url(url)
+                .post(ProgressHelper.addProgressRequestListener(
+                        requestBody,
+                        progressListener))
+                .build();
+        return deliveryResult( callback, request);
+    }
+
+    private RequestBody getRequestBody(List<ParamString> params, List<String> fileNames, String fileKey) {
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+        if (params != null && !params.isEmpty()) {
+            for (ParamString param : params) {
+                LogUtil.i(param.key + "\t" + param.value);
+                builder.addFormDataPart(param.key, param.value);
+            }
+        } else {
+            builder.addFormDataPart("", "");
+        }
+
+        if (fileNames != null) {
+            if (fileNames.size() > 0) {
+                for (int i = 0; i < fileNames.size(); i++) { //对文件进行遍历
+                    File file = new File(fileNames.get(i)); //生成文件
+                    if (file.exists()) {
+                        LogUtil.i(file + "\t" + file.exists());
+                        //根据文件的后缀名，获得文件类型
+                        String fileType = getMimeType(file.getName());
+                        builder.addFormDataPart( //给Builder添加上传的文件
+                                fileKey,  //请求的名字
+                                file.getName(), //文件的文字，服务器端用来解析的
+                                RequestBody.create(MediaType.parse(fileType), file) //创建RequestBody，把上传的文件放入
+                        );
+                    } else {
+                        LogUtil.i(file + "\t不存在");
+                    }
+                }
+            }
+        }
+
+        return builder.build(); //根据Builder创建请求
     }
 
 

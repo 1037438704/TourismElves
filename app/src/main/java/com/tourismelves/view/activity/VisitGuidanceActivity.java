@@ -81,9 +81,9 @@ public class VisitGuidanceActivity extends CheckPermissionsActivity {
         String address = getIntent().getStringExtra("distance");
         end = getIntent().getParcelableExtra("latlng");
 
-        int distance = (int) (LocationUtil.getInstance(getContext()).getDistance(end.longitude, end.latitude, longitude, latitude) / 1000);
+        String distance = (LocationUtil.getInstance(getContext()).getDistance(end.longitude, end.latitude, longitude, latitude));
 
-        visitGuidanceDistance.setText(address + " " + String.format(getContext().getString(R.string.distance), distance + ""));
+        visitGuidanceDistance.setText(address + " " + String.format(getContext().getString(R.string.distance), distance));
         visitGuidanceName.setText(name + "游玩指引");
     }
 

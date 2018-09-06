@@ -9,7 +9,7 @@
     <string name="my_the_scenic_spot">我的景区</string>
     <string name="activation_code">我的激活码</string>
     <string name="hot_scenic_spot">热门景区</string>
-    <string name="distance">距离您%skm</string>
+    <string name="distance">距离您%s</string>
     <string name="scenic_spot_count">%s个景点</string>
     <string name="automatic_navigation">自动导览</string>
     <string name="home">首页</string>

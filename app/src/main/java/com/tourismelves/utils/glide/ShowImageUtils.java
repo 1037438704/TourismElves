@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.tourismelves.R;
+import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.ResolutionUtil;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -30,6 +31,7 @@ public class ShowImageUtils {
      */
     public static void showImageView(Context context, String url,
                                      ImageView imgeview) {
+        LogUtil.i(url);
         Glide.with(context).load(url)// 加载图片
                 .error(errorimg)// 设置错误图片
                 .crossFade()// 设置淡入淡出效果，默认300ms，可以传参
@@ -44,6 +46,7 @@ public class ShowImageUtils {
 
     public static void showImageView(Context context, int errorimg, String url,
                                      ImageView imgeview) {
+        LogUtil.i(url);
         Glide.with(context).load(url)// 加载图片
                 .error(errorimg)// 设置错误图片
                 .placeholder(errorimg)
@@ -70,6 +73,7 @@ public class ShowImageUtils {
     @SuppressLint("NewApi")
     public static void showImageView(Context context, String url, int w, int h, ImageView imgeview) {
         if (!((Activity) context).isDestroyed()) {
+            LogUtil.i(url);
             Glide.with(context)
                     .load(url)
                     .priority(Priority.LOW)
@@ -87,6 +91,7 @@ public class ShowImageUtils {
     @SuppressLint("NewApi")
     public static void showImageViewToCircle(Context context, String url, ImageView imgeview) {
         if (!((Activity) context).isDestroyed()) {
+            LogUtil.i(url);
             Glide.with(context)
                     .load(url)
                     .error(errorimg)// 设置错误图片
@@ -102,6 +107,7 @@ public class ShowImageUtils {
     public static void showTopRounded(Context context, String url, AppCompatImageView imgeview, int px) {
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
+                LogUtil.i(url);
                 Glide.with(context)
                         .load(url)
                         .error(errorimg)
@@ -118,6 +124,7 @@ public class ShowImageUtils {
 
     @SuppressLint("NewApi")
     public static void showRounded(final Context context, String url, final AppCompatImageView imgeview, final int px) {
+        LogUtil.i(url);
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
                 Glide.with(context)
@@ -145,6 +152,7 @@ public class ShowImageUtils {
 
     @SuppressLint("NewApi")
     public static void showRounded(Context context, String url, int w, int h, AppCompatImageView imgeview, int px) {
+        LogUtil.i(url);
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
                 Glide.with(context)
@@ -167,7 +175,8 @@ public class ShowImageUtils {
      * 模糊图片
      */
     @SuppressLint("NewApi")
-    public static void showFuzzyRounded(Context context, String url, int w, int h, AppCompatImageView imgeview) {
+    public static void showFuzzyRounded(Context context, String url, AppCompatImageView imgeview) {
+        LogUtil.i(url);
         if (context != null) {
             if (!((Activity) context).isDestroyed()) {
                 Glide.with(context)
@@ -175,8 +184,7 @@ public class ShowImageUtils {
                         .error(errorimg)
                         .thumbnail(0.1f)
                         .priority(Priority.LOW)
-                        .bitmapTransform(new CropTransformation(context, w, h, CropTransformation.CropType.CENTER),
-                                new BlurTransformation(context))
+                        .bitmapTransform(new BlurTransformation(context))
                         .diskCacheStrategy(DiskCacheStrategy.RESULT)
                         .into(imgeview);
             }

@@ -134,10 +134,9 @@ public class HomeFragment extends BaseFragment {
                                         String string = dataList.getJSONObject(i).toString();
                                         HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
-                                        int distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
-                                                    longitude, latitude);
+                                        String distance = LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(), longitude, latitude);
 
-                                        homeRes.setDistance(distance / 1000);
+                                        homeRes.setDistance(distance);
                                         homeResList.add(homeRes);
                                         homes.add(homeRes);
                                     }

@@ -1,80 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dp136"
     android:orientation="vertical"
     android:paddingLeft="@dimen/dp10"
     android:paddingRight="@dimen/dp10"
     android:paddingTop="@dimen/dp15">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/item_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp105"
-        android:layout_marginBottom="@dimen/dp15">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/rl"
-            android:layout_width="@dimen/dp105"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dp105"
-            android:layout_marginRight="@dimen/dp10"
-            android:layout_toRightOf="@+id/i_interpretation_select">
+            android:layout_marginBottom="@dimen/dp15">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/i_downloading_icon"
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="@dimen/dp105"
+                android:layout_height="@dimen/dp105"
+                android:layout_marginRight="@dimen/dp10">
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/i_downloading_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#48000000"/>
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/i_interpretation_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/bofang" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_downloading_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_toRightOf="@id/rl"
+                android:includeFontPadding="false"
+                android:singleLine="true"
+                android:textColor="#434F6D"
+                android:textSize="@dimen/sp16"
+                android:textStyle="bold" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/i_interpretation_play"
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_downloading_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/bofang" />
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/rl"
+                android:text="下载中"
+                android:textColor="#ff777d84"
+                android:textSize="@dimen/sp12" />
 
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/i_downloading_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:text="0M / 0M"
+                android:textColor="#ff777d84"
+                android:textSize="@dimen/sp12" />
+
+            <com.tourismelves.view.widget.ProgressView
+                android:id="@+id/i_downloading_progress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp4"
+                android:layout_above="@id/i_downloading_state"
+                android:layout_marginBottom="@dimen/dp8"
+                android:layout_toRightOf="@id/rl" />
         </RelativeLayout>
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_downloading_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dp10"
-            android:layout_toLeftOf="@+id/walking"
-            android:layout_toRightOf="@id/rl"
-            android:includeFontPadding="false"
-            android:singleLine="true"
-            android:textColor="#434F6D"
-            android:textSize="@dimen/sp16"
-            android:textStyle="bold" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_downloading_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@id/rl"
-            android:text="下载中"
-            android:textColor="#ff777d84"
-            android:textSize="@dimen/sp12" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/i_downloading_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="0M / 0M"
-            android:textColor="#ff777d84"
-            android:textSize="@dimen/sp12" />
-
-        <com.tourismelves.view.widget.ProgressView
-            android:id="@+id/i_downloading_progress"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp4"
-            android:layout_above="@id/i_downloading_state"
-            android:layout_marginBottom="@dimen/dp8"
-            android:layout_toRightOf="@id/rl" />
-    </RelativeLayout>
-
+        <TextView
+            android:id="@+id/item_delete"
+            android:layout_width="@dimen/dp82"
+            android:layout_height="match_parent"
+            android:background="#FF3758"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/sp18" />
+    </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

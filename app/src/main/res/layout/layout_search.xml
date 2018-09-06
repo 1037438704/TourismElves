@@ -69,7 +69,18 @@
             android:layout_marginBottom="@dimen/dp6"
             android:layout_marginRight="@dimen/dp18"
             android:layout_marginTop="@dimen/dp6"
-            android:src="@mipmap/dalei" />
+            android:src="@mipmap/dalei"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/base_weather_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp44"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/dp15"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
     <RelativeLayout

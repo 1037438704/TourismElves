@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -21,7 +22,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-import static com.tourismelves.app.constant.CommentConstants.address;
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
 
 /**
  * 购物
@@ -61,14 +63,16 @@ public class ShoppingFragment extends BaseFragment implements PoiSearch.OnPoiSea
     protected void obtainData() {
         getLoadLayout().setLayoutState(State.LOADING);
         // 第一个参数表示搜索字符串，第二个参数表示poi搜索类型，第三个参数表示poi搜索区域（空字符串代表全国）
-        query = new PoiSearch.Query("", "购物服务", nearScenicSpotActivity.mAddress);
+        query = new PoiSearch.Query("", "购物服务");
         //这里没有做分页加载了,默认给50条数据
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(currentPage);// 设置查第一页
 
         PoiSearch poiSearch = new PoiSearch(getActivity(), query);
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 10000));
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
+
     }
 
     @Override

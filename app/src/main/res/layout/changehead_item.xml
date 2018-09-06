@@ -5,6 +5,7 @@
 
 
     <TextView
+        android:id="@+id/xiangce"
         android:background="@color/white"
         android:textColor="@color/black"
         android:textSize="@dimen/sp16"
@@ -17,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1" />
     <TextView
+        android:id="@+id/paizhao"
         android:background="@color/white"
         android:textColor="@color/black"
         android:textSize="@dimen/sp16"

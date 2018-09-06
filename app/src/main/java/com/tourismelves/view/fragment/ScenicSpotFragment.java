@@ -140,11 +140,10 @@ public class ScenicSpotFragment extends BaseFragment {
                                         String string = dataList.getJSONObject(i).toString();
                                         HomeRes homeRes = JSON.parseObject(string, HomeRes.class);
 
-                                        int distance = 0;
-                                            distance = (int) LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
+                                        String distance = LocationUtil.getInstance(getContext()).getDistance(homeRes.getLongitude(), homeRes.getLatitude(),
                                                     longitude, latitude);
 
-                                        homeRes.setDistance(distance / 1000);
+                                        homeRes.setDistance(distance);
                                         homeResList.add(homeRes);
                                     }
 
@@ -214,6 +213,7 @@ public class ScenicSpotFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void getSelectCityBus(final SelectCityBus selectCityBus) {
         mainActivity.setBasePositioning(selectCityBus.getCity());
-        swipeToLoadLayout.setRefreshing(true);
+        page = 1;
+        searchOrganizationOrArticle(true);
     }
 }

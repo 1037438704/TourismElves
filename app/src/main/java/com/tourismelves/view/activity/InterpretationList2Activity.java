@@ -57,15 +57,16 @@ public class InterpretationList2Activity extends StateBaseActivity {
         setBaseTitle("讲解列表");
         setBaseRightImage(R.mipmap.xiazai);
         setBaseRightTv("全选");
+        attractionsBeans = getIntent().getParcelableArrayListExtra("attractionsBeans");
+        name = getIntent().getStringExtra("name");
         interpretationList2Recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        interpretationListAdapter = new InterpretationListAdapter(getContext(), new ArrayList<AttractionsBean>());
+        interpretationListAdapter = new InterpretationListAdapter(getContext(), new ArrayList<AttractionsBean>(),name);
         interpretationList2Recycler.setAdapter(interpretationListAdapter);
     }
 
     @Override
     protected void obtainData() {
-        attractionsBeans = getIntent().getParcelableArrayListExtra("attractionsBeans");
-        name = getIntent().getStringExtra("name");
+
         if (attractionsBeans != null) {
             interpretationListAdapter.replaceData(attractionsBeans);
 

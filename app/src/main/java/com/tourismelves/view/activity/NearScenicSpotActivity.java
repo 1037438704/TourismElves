@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.amap.api.services.nearby.NearbySearch;
 import com.tourismelves.R;
-import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.ResolutionUtil;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.FragmentAdapter;
@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.tourismelves.app.constant.CommentConstants.address;
 
 /**
  * 附近景区
@@ -36,7 +34,6 @@ public class NearScenicSpotActivity extends StateBaseActivity {
     private List<String> strings;
     private List<Fragment> fragments;
     private int tabWidth;
-    public String mAddress;
 
     @Override
     protected void setContentLayout() {
@@ -49,12 +46,6 @@ public class NearScenicSpotActivity extends StateBaseActivity {
         setBaseTitle("附近");
         setBaseRightImage(R.mipmap.search);
         tabWidth = (int) (ResolutionUtil.getInstance(getContext()).getWidth() / 2.2);
-        mAddress = getIntent().getStringExtra("address");
-        if (mAddress==null) {
-            mAddress = address;
-        }
-
-        LogUtil.a(mAddress);
 
         strings = new ArrayList<>();
         fragments = new ArrayList<>();
@@ -104,5 +95,11 @@ public class NearScenicSpotActivity extends StateBaseActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        NearbySearch.destroy();
     }
 }

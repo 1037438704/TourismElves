@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp45">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/i_all_download_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:drawableRight="@mipmap/qianjin_hei"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15"
+        android:textColor="#ff606980"
+        android:textSize="@dimen/sp14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:background="@color/gray_c" />
+</RelativeLayout>

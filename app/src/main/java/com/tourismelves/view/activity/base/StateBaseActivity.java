@@ -10,15 +10,19 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.amap.api.services.weather.LocalWeatherForecastResult;
+import com.amap.api.services.weather.LocalWeatherLive;
+import com.amap.api.services.weather.LocalWeatherLiveResult;
+import com.amap.api.services.weather.WeatherSearch;
+import com.amap.api.services.weather.WeatherSearchQuery;
 import com.tourismelves.R;
+import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.view.activity.SearchActivity;
 import com.tourismelves.view.activity.SelectCityActivity;
 import com.tourismelves.view.widget.loadlayout.LoadLayout;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-
-import static com.tourismelves.app.constant.CommentConstants.address;
 
 
 /**
@@ -29,10 +33,11 @@ import static com.tourismelves.app.constant.CommentConstants.address;
  * 实现obtainData来做数据的初始化
  * 实现initEvent来做事件监听的初始化
  */
-public abstract class StateBaseActivity extends BaseActivity implements View.OnClickListener {
+public abstract class StateBaseActivity extends BaseActivity implements View.OnClickListener, WeatherSearch.OnWeatherSearchListener {
 
     private AppCompatTextView basePositioning;
     private AppCompatImageView baseWeather;
+    private AppCompatTextView baseWeatherTv;
     private LinearLayout baseSearchLayout;
     private AppCompatTextView baseTitle;
     private View baseStatus;
@@ -68,6 +73,7 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         setStatusBar(R.id.base_status);
         basePositioning = findViewById(R.id.base_positioning);
         baseWeather = findViewById(R.id.base_weather);
+        baseWeatherTv = findViewById(R.id.base_weather_tv);
         baseStatus = findViewById(R.id.base_status);
         baseSearchLayout = findViewById(R.id.base_search_layout);
         baseTitle = findViewById(R.id.base_title);
@@ -187,12 +193,54 @@ public abstract class StateBaseActivity extends BaseActivity implements View.OnC
         baseRightTv.setText(getString(resStr));
     }
 
+    protected void setBaseWeatherTv(String resStr) {
+        baseWeatherTv.setText(resStr);
+    }
+
     public void setBasePositioning(@NonNull String resStr) {
-        address = resStr;
         basePositioning.setText(resStr.equals("") ? "定位" : resStr);
+        getWeather();
     }
 
     public String getBasePositioning() {
         return basePositioning.getText().toString().equals("定位") ? "" : basePositioning.getText().toString();
+    }
+
+    protected void getWeather(){
+        String city = basePositioning.getText().toString().replace("省", "");
+        LogUtil.i(city);
+        WeatherSearchQuery weatherQuery = new WeatherSearchQuery(city,
+                WeatherSearchQuery.WEATHER_TYPE_LIVE);
+        WeatherSearch weatherSearch = new WeatherSearch(
+                this);
+        weatherSearch.setQuery(weatherQuery);
+        weatherSearch.setOnWeatherSearchListener(this);
+        weatherSearch.searchWeatherAsyn();
+    }
+
+
+    @Override
+    public void onWeatherLiveSearched(LocalWeatherLiveResult localWeatherLiveResult, int rCode) {
+        if (rCode == 1000) {
+            LocalWeatherLive weatherLive = localWeatherLiveResult.getLiveResult();
+            LogUtil.i(weatherLive.getCity() + "\n"
+                    + weatherLive.getWeather() + "\n"
+                    + weatherLive.getAdCode() + "\n"
+                    + weatherLive.getHumidity() + "\n"
+                    + weatherLive.getProvince() + "\n"
+                    + weatherLive.getReportTime() + "\n"
+                    + weatherLive.getWindDirection() + "\n"
+                    + weatherLive.getWindPower() + "\n"
+                    + weatherLive.getTemperature() + "\n");
+            setBaseWeatherTv(weatherLive.getWeather());
+        } else {
+            LogUtil.i("查询天气失败");
+        }
+
+    }
+
+    @Override
+    public void onWeatherForecastSearched(LocalWeatherForecastResult localWeatherForecastResult, int i) {
+
     }
 }

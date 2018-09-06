@@ -26,6 +26,7 @@ import static com.tourismelves.app.constant.UrlConstants.port;
 
 public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBean> {
     private boolean isEdit;
+    private String mName;
 
     public void setEdit(boolean edit) {
         isEdit = edit;
@@ -37,18 +38,18 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
 
     public void selectAll(boolean flag) {
         for (AttractionsBean a : getDataList()) {
-            if (a.getApkDownloadInfoRes() != null) {
-                a.setSelect(flag);
-            }else {
+            if (a.getApkDownloadInfoRes() == null || a.getUnLocked() != 1) {
                 a.setSelect(false);
-                ToastUtil.show("下载地址为空，不可选中");
+            } else {
+                a.setSelect(flag);
             }
         }
         notifyDataSetChanged();
     }
 
-    public InterpretationListAdapter(@NonNull Context context, @NonNull List<AttractionsBean> mDataList) {
+    public InterpretationListAdapter(@NonNull Context context, @NonNull List<AttractionsBean> mDataList, String name) {
         super(context, mDataList);
+        this.mName = name;
     }
 
     @Override
@@ -68,7 +69,7 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
         }
 
 
-        int unLocked = attractionsBean.getUnLocked();
+        final int unLocked = attractionsBean.getUnLocked();
         locked.setVisibility(unLocked == 0 ? View.VISIBLE : View.GONE);
         play.setVisibility(unLocked == 1 ? View.VISIBLE : View.GONE);
 
@@ -88,16 +89,19 @@ public class InterpretationListAdapter extends RecyclerBaseAdapter<AttractionsBe
             @Override
             public void onClick(View v) {
                 if (isEdit) {
-                    if (attractionsBean.getApkDownloadInfoRes() != null) {
+                    if (attractionsBean.getApkDownloadInfoRes() == null) {
+                        ToastUtil.show("下载地址为空，不可选中");
+                    } else if (unLocked != 1) {
+                        ToastUtil.show("该景区未解锁，不可下载");
+                    } else {
                         attractionsBean.setSelect(!attractionsBean.isSelect());
                         select.setSelected(attractionsBean.isSelect());
-                    } else {
-                        ToastUtil.show("下载地址为空，不可选中");
                     }
                 } else {
                     Intent intent = new Intent(getContext(), InterpretationDetailsActivity.class);
                     intent.putParcelableArrayListExtra("attractionsBeans", (ArrayList<? extends Parcelable>) getDataList());
                     intent.putExtra("position", position);
+                    intent.putExtra("name", mName);
                     getContext().startActivity(intent);
                 }
             }

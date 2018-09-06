@@ -68,4 +68,6 @@ public interface UrlConstants {
     //游玩指引
     String scenicSpotInfo = port + "lyjl/web/scenicSpotInfo.do?";
 
+    String updateUserInfo = port + "lyjl/app/updateUserInfo.do";
+
 }

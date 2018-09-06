@@ -2,12 +2,10 @@ package com.tourismelves.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,26 +16,23 @@ import com.tourismelves.R;
 import com.tourismelves.model.bean.OrderNumBean;
 import com.tourismelves.model.bean.UserBean;
 import com.tourismelves.model.net.OkHttpUtils;
-import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.pinyin.ApiManager;
-import com.tourismelves.utils.system.SPConstants;
 import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.CollectActivity;
 import com.tourismelves.view.activity.CooperationActivity;
 import com.tourismelves.view.activity.CouponActivity;
+import com.tourismelves.view.activity.DownloadingActivity;
 import com.tourismelves.view.activity.FootMarkActivity;
 import com.tourismelves.view.activity.HelpActivity;
 import com.tourismelves.view.activity.InviteActivity;
 import com.tourismelves.view.activity.LoginActivity;
 import com.tourismelves.view.activity.MyAccountActivity;
 import com.tourismelves.view.activity.OrderActivity;
-import com.tourismelves.view.activity.RechargeActivity;
 import com.tourismelves.view.activity.SetupActivity;
 import com.tourismelves.view.dialog.ActivityCodeDialog;
 import com.tourismelves.view.fragment.base.BaseFragment;
 import com.zhy.http.okhttp.callback.StringCallback;
 
-import static com.tourismelves.app.constant.UrlConstants.login;
 import static com.tourismelves.app.constant.UrlConstants.userinfo;
 
 /**
@@ -46,7 +41,7 @@ import static com.tourismelves.app.constant.UrlConstants.userinfo;
 public class MyFragment extends BaseFragment {
 
     LinearLayout mLinearAccount,mLinearCoupon,mLinearTrack,mLinearSetup,mLinearCooper,mLinearInvite,mLinearCode,exit_login,ll_help;
-    TextView tv_order,tv_loginname,tv_recharge;
+    TextView tv_order,tv_loginname,tv_recharge,tv_download;
     TextView tv_title;
     TextView tv_name;
     TextView tv_collect,tv_ordernum,tv_xiazai,tv_money,tv_collectbo;
@@ -136,6 +131,18 @@ public class MyFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+        //订单管理
+        tv_recharge = view.findViewById(R.id.tv_recharge);
+        tv_recharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), OrderActivity.class);
+                startActivity(intent);
+            }
+        });
 //        //登录
 //        tv_loginname = view.findViewById(R.id.tv_loginname);
 //        tv_loginname.setOnClickListener(new View.OnClickListener() {
@@ -148,16 +155,12 @@ public class MyFragment extends BaseFragment {
         //姓名
         tv_name = view.findViewById(R.id.my_name);
 
-        //充值金币
-        tv_recharge = view.findViewById(R.id.tv_recharge);
-        tv_recharge.setOnClickListener(new View.OnClickListener() {
+        //下载
+        tv_download = view.findViewById(R.id.tv_download);
+        tv_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isLogin(getActivity(),true)){
-                    return;
-                }
-                Intent intent = new Intent(getActivity(), RechargeActivity.class);
-                intent.putExtra("gold",userBean.getDataList().get(0).getGold()+"");
+                Intent intent = new Intent(getActivity(), DownloadingActivity.class);
                 startActivity(intent);
             }
         });
@@ -299,7 +302,6 @@ public class MyFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(String response) {
-
                         Gson gson = new Gson();
                         OrderNumBean orderNumBean;
                         orderNumBean = gson.fromJson(response,OrderNumBean.class);

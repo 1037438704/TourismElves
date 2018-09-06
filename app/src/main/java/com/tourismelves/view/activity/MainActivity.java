@@ -38,7 +38,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.tourismelves.app.constant.CommentConstants.address;
 import static com.tourismelves.app.constant.CommentConstants.latitude;
 import static com.tourismelves.app.constant.CommentConstants.longitude;
 
@@ -297,8 +296,7 @@ public class MainActivity extends CheckPermissionsActivity {
                     // 获取当前提供定位服务的卫星个数
                     sb.append("星    数    : " + location.getSatellites() + "\n");
                     sb.append("国    家    : " + location.getCountry() + "\n");
-                    address=location.getProvince();
-                    sb.append("省            : " + address+ "\n");
+                    sb.append("省            : " + location.getProvince() + "\n");
                     sb.append("市            : " + location.getCity() + "\n");
                     sb.append("城市编码 : " + location.getCityCode() + "\n");
                     sb.append("区            : " + location.getDistrict() + "\n");
@@ -306,9 +304,8 @@ public class MainActivity extends CheckPermissionsActivity {
                     sb.append("地    址    : " + location.getAddress() + "\n");
                     sb.append("兴趣点    : " + location.getPoiName() + "\n");
 
-
-                    EventBusUtil.postEvent(new SelectCityBus("天津市"));
-                    setBasePositioning("天津市");
+                    setBasePositioning(location.getProvince());
+                    EventBusUtil.postEvent(new SelectCityBus(location.getProvince()));
                     city = location.getProvince();
                 } else {
                     //定位失败

@@ -195,7 +195,7 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
             recyclerView.setVisibility(View.VISIBLE);
             noData.setVisibility(View.GONE);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            InterpretationListAdapter interpretationListAdapter = new InterpretationListAdapter(getContext(), attractionsBeans);
+            InterpretationListAdapter interpretationListAdapter = new InterpretationListAdapter(getContext(), attractionsBeans,name);
             recyclerView.setAdapter(interpretationListAdapter);
         } else {
             recyclerView.setVisibility(View.GONE);
@@ -287,11 +287,10 @@ public class InterpretationListActivity extends CheckPermissionsActivity impleme
                 break;
             case R.id.interpretation_list_search_around_comments_btn:
                 Intent intent1 = new Intent(this, NearScenicSpotActivity.class);
-                intent1.putExtra("address", name);
                 startActivity(intent1);
                 break;
             case R.id.interpretation_list_facebook_btn:
-//                startActivity(new Intent(this, CommentsActivity.class));
+                startActivity(new Intent(this, HelpActivity.class));
                 break;
             case R.id.iv_zoom_small:
                 scaleLargeMap(0);

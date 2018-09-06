@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.amap.api.services.core.AMapException;
+import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.tourismelves.app.constant.CommentConstants.latitude;
+import static com.tourismelves.app.constant.CommentConstants.longitude;
 
 /**
  * 景区
@@ -62,12 +66,13 @@ public class ScenicSpotFragment extends BaseFragment implements PoiSearch.OnPoiS
     @Override
     protected void obtainData() {
         getLoadLayout().setLayoutState(State.LOADING);
-        query = new PoiSearch.Query("", "风景名胜", nearScenicSpotActivity.mAddress);
+        query = new PoiSearch.Query("", "风景名胜");
         //这里没有做分页加载了,默认给50条数据
         query.setPageSize(50);// 设置每页最多返回多少条poiitem
         query.setPageNum(page);// 设置查第一页
 
         PoiSearch poiSearch = new PoiSearch(getActivity(), query);
+        poiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(latitude, longitude), 10000));
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
     }

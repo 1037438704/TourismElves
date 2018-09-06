@@ -79,7 +79,7 @@ public class HomeRes implements Serializable {
     private String imageZooms;
     private AreaBean area;
     private int sceneryCount;
-    private int distance = 0;
+    private String distance = "0m";
     private List<ArticleListBean> articleList;
 
     public int getScore() {
@@ -114,11 +114,11 @@ public class HomeRes implements Serializable {
         this.price = price;
     }
 
-    public int getDistance() {
+    public String getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(String distance) {
         this.distance = distance;
     }
 

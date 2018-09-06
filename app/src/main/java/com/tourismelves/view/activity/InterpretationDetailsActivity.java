@@ -18,6 +18,7 @@ import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.ManagedMediaPlayer;
 import com.tourismelves.utils.common.EventBusUtil;
 import com.tourismelves.utils.common.ToastUtil;
+import com.tourismelves.utils.file.RootFile;
 import com.tourismelves.utils.glide.ShowImageUtils;
 import com.tourismelves.utils.log.LogUtil;
 import com.tourismelves.utils.system.ResolutionUtil;
@@ -25,6 +26,7 @@ import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.tourismelves.view.adapter.InterpretationDetailsAdapter;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -78,6 +80,7 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
     private Timer timer;
     private ManagedMediaPlayer mMediaPlayer;
     private String audioPath = "";
+    private String mName;
 
 
     @Override
@@ -90,6 +93,7 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
         showStateLayout(1);
         setBaseTitle("讲解详情");
         setBaseRightImage(R.drawable.icon_like_select);
+        mName = getIntent().getStringExtra("name");
         mMediaPlayer = new ManagedMediaPlayer();
         userId = SPUtils.getInstance(getContext()).getString("putInt");
         interpretationDetailsRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -103,28 +107,7 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
 
         AttractionsBean attractionsBean = attractionsBeans.get(getIntent().getIntExtra("position", 0));
         ordId = attractionsBeans.get(0).getPhotoList().get(0).getOrgId();
-
-        String photoPath = "";
-        if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
-            photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
-        }
-        if (attractionsBean.getAudioList() != null && attractionsBean.getAudioList().size() > 0) {
-            audioPath = port + attractionsBean.getAudioList().get(0).getAudioPath();
-        }
-        play();
-
-        interpretationDetailsName.setText(attractionsBean.getName());
-        interpretationDetailsContent.setText(attractionsBean.getDescription());
-        interpretationDetailsName2.setText(attractionsBean.getName());
-        interpretationDetailsContent2.setText(attractionsBean.getDescription());
-        ShowImageUtils.showRounded(getContext(), photoPath,
-                (int) getResources().getDimension(R.dimen.dp295),
-                (int) getResources().getDimension(R.dimen.dp190),
-                interpretationDetailsIcon, 10);
-        ShowImageUtils.showFuzzyRounded(getContext(), photoPath,
-                ResolutionUtil.getInstance(getContext()).getWidth(),
-                (int) getResources().getDimension(R.dimen.dp220),
-                interpretationDetailsFuzzy);
+        setView(attractionsBean);
 
         isFavorite();
     }
@@ -135,33 +118,7 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
             @Override
             public void onClickItem(int position) {
                 AttractionsBean attractionsBean = attractionsBeans.get(position);
-
-                String photoPath = "";
-                if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
-                    photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
-                }
-
-                if (attractionsBean.getAudioList() != null && attractionsBean.getAudioList().size() > 0) {
-                    audioPath = port + attractionsBean.getAudioList().get(0).getAudioPath();
-                } else {
-                    audioPath = "";
-                }
-                play();
-
-                interpretationDetailsName.setText(attractionsBean.getName());
-                interpretationDetailsContent.setText(attractionsBean.getDescription());
-                interpretationDetailsContentSc.scrollTo(0, 0);
-                interpretationDetailsName2.setText(attractionsBean.getName());
-                interpretationDetailsContent2.setText(attractionsBean.getDescription());
-                interpretationDetailsContentSc2.scrollTo(0, 0);
-                ShowImageUtils.showRounded(getContext(), photoPath,
-                        (int) getResources().getDimension(R.dimen.dp295),
-                        (int) getResources().getDimension(R.dimen.dp190),
-                        interpretationDetailsIcon, 10);
-                ShowImageUtils.showFuzzyRounded(getContext(), photoPath,
-                        ResolutionUtil.getInstance(getContext()).getWidth(),
-                        (int) getResources().getDimension(R.dimen.dp220),
-                        interpretationDetailsFuzzy);
+                setView(attractionsBean);
             }
         });
 
@@ -214,6 +171,39 @@ public class InterpretationDetailsActivity extends StateBaseActivity {
                 interpretationDetailsSeekbar.setProgress(0);
             }
         });
+    }
+
+    private void setView(AttractionsBean attractionsBean) {
+        String photoPath = "";
+        if (attractionsBean.getPhotoList() != null && attractionsBean.getPhotoList().size() > 0) {
+            photoPath = port + attractionsBean.getPhotoList().get(0).getPhotoPath();
+        }
+        audioPath = RootFile.getDownloadFiles().getPath() + "/" + mName + "/" + attractionsBean.getName() + ".mp3";
+        File file = new File(audioPath);
+        LogUtil.i(file.getPath() + "__" + file.exists());
+        if (!file.exists()) {
+            if (attractionsBean.getAudioList() != null && attractionsBean.getAudioList().size() > 0) {
+                audioPath = port + attractionsBean.getAudioList().get(0).getAudioPath();
+            } else {
+                audioPath = "";
+            }
+        }
+        play();
+
+        interpretationDetailsName.setText(attractionsBean.getName());
+        interpretationDetailsContent.setText(attractionsBean.getDescription());
+        interpretationDetailsContentSc.scrollTo(0, 0);
+        interpretationDetailsName2.setText(attractionsBean.getName());
+        interpretationDetailsContent2.setText(attractionsBean.getDescription());
+        interpretationDetailsContentSc2.scrollTo(0, 0);
+        ShowImageUtils.showRounded(getContext(), photoPath + "_" +
+                        (int) getResources().getDimension(R.dimen.dp295) + "x" +
+                        (int) getResources().getDimension(R.dimen.dp190) + ".jpg",
+                interpretationDetailsIcon, 10);
+        ShowImageUtils.showFuzzyRounded(getContext(), photoPath+ "_" +
+                ResolutionUtil.getInstance(getContext()).getWidth()+ "x" +
+                (int) getResources().getDimension(R.dimen.dp220)+ ".jpg",
+                interpretationDetailsFuzzy);
     }
 
 

@@ -120,9 +120,6 @@ public class PermissionUtil {
      * 传入权限，检查并返回其中未成功获取的权限。
      */
     public static List<String> getDeniedPermissions(@NonNull Activity activity, @NonNull String... permissions) {
-        if (!needCheckPermission()) {
-            return null;
-        }
         List<String> deniedPermissions = new ArrayList<>();
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
@@ -132,7 +129,6 @@ public class PermissionUtil {
         if (!deniedPermissions.isEmpty()) {
             return deniedPermissions;
         }
-
         return null;
     }
 

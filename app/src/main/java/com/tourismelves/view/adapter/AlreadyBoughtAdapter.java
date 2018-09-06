@@ -57,7 +57,7 @@ public class AlreadyBoughtAdapter extends RecyclerBaseAdapter<AlreadyBoughtBean.
                     Intent intent = new Intent(getContext(), InterpretationListActivity.class);
                     intent.putExtra("ordId", orgListBean.getOrgId());
                     intent.putExtra("name", orgListBean.getName());
-                    int distance = (int) LocationUtil.getInstance(getContext()).getDistance(orgListBean.getLongitude(), orgListBean.getLatitude(), longitude, latitude);
+                    String distance = LocationUtil.getInstance(getContext()).getDistance(orgListBean.getLongitude(), orgListBean.getLatitude(), longitude, latitude);
                     String sAddress = orgListBean.getArea().getParentArea().getName() + " " + orgListBean.getArea().getName() + " " + String.format(getContext().getString(R.string.distance), distance + "");
                     intent.putExtra("distance", sAddress);
                     intent.putExtra("latlng", new LatLng(orgListBean.getLatitude(), orgListBean.getLongitude()));

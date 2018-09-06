@@ -13,7 +13,7 @@
             android:id="@id/swipe_refresh_header"
             layout="@layout/layout_twitter_header" />
 
-        <android.support.v7.widget.RecyclerView
+        <com.tourismelves.view.widget.recycler.ItemRemoveRecyclerView
             android:id="@id/swipe_target"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -77,7 +77,7 @@ public class NearScenicSpotAdapter extends RecyclerBaseAdapter<PoiItem> {
         LatLonPoint llp = item.getLatLonPoint();
         final double lon = llp.getLongitude();
         final double lat = llp.getLatitude();
-        int distance = (int) (LocationUtil.getInstance(getContext()).getDistance(lon, lat, longitude, latitude) / 1000);
+        String distance =  (LocationUtil.getInstance(getContext()).getDistance(lon, lat, longitude, latitude));
         i_near_scenic_spot_distance.setText(String.format(getContext().getString(R.string.distance), distance + ""));
 
         String url = "";
