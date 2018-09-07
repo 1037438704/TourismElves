@@ -84,7 +84,7 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
 //            e.printStackTrace();
 //        }
         Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage())
-        .into(holder.im_shop1);
+        .into(holder.im_shop);
         holder.tv_name.setText(listBeen.get(position).getOrgList().get(0).getName());
         holder.tv_money.setText(listBeen.get(position).getOrgList().get(0).getPrice()+"");
 
@@ -100,12 +100,12 @@ public class WaitpayAdapter extends RecyclerView.Adapter<WaitpayAdapter.MyViewHo
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        ImageView im_shop1;
+        ImageView im_shop;
         TextView tv_name,tv_money;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
-            im_shop1 = itemView.findViewById(R.id.waitpay_im);
+            im_shop =itemView.findViewById(R.id.waitpay_im);
             tv_name = itemView.findViewById(R.id.waitpay_name);
             tv_money = itemView.findViewById(R.id.waitpay_money);
 

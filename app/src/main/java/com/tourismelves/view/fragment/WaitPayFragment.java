@@ -60,7 +60,7 @@ public class WaitPayFragment extends BaseFragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("订单详情112",response);
+                        Log.e("订单详情1",response);
                         Gson gson = new Gson();
                         waitpayBean = gson.fromJson(response,WaitpayBean.class);
                         listBeen = waitpayBean.getDataList();
