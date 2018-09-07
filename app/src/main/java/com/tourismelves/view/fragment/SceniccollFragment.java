@@ -66,7 +66,7 @@ public class SceniccollFragment extends BaseFragment {
 
                     @Override
                     public void onResponse(String response) {
-                        Log.e("我的收藏1",response);
+                        Log.e("我的收藏",response);
                         Gson gson = new Gson();
                         collectBean = gson.fromJson(response,CollectBean.class);
                         listBeen = collectBean.getDataList();

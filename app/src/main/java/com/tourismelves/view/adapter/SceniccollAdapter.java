@@ -87,8 +87,8 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
             holder.tv_content.setText(listBeen.get(position).getOrganization().getDescription());
             holder.tv_title.setText(listBeen.get(position).getOrganization().getName());
             SceniccolltwoAdapter sceniccolltwoAdapter = new SceniccolltwoAdapter(context,listBeen.get(position).getOrganization().getPhotoList());
-            holder.recyclerView1.setLayoutManager(new GridLayoutManager(context,2));
-            holder.recyclerView1.setAdapter(sceniccolltwoAdapter);
+            holder.recyclerView.setLayoutManager(new GridLayoutManager(context,2));
+            holder.recyclerView.setAdapter(sceniccolltwoAdapter);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -107,7 +107,7 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
 
         ImageView im_scen;
         TextView tv_title,tv_content,tv_hot;
-        RecyclerView recyclerView1;
+        RecyclerView recyclerView;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
@@ -116,7 +116,7 @@ public class SceniccollAdapter extends RecyclerView.Adapter<SceniccollAdapter.My
             tv_title =  itemView.findViewById(R.id.tv_title);
             tv_content = itemView.findViewById(R.id.elfsaid_content);
             tv_hot = itemView.findViewById(R.id.elfsaid_collect);
-            recyclerView1 = itemView.findViewById(R.id.scencoll_recy);
+            recyclerView = itemView.findViewById(R.id.scencoll_recy);
         }
     }
 

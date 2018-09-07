@@ -145,26 +145,26 @@ public class MyFragment extends BaseFragment {
         tv_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                WXTextObject textObject = new WXTextObject();
-                textObject.text = "hello";//你要分享出去的文本
-                WXMediaMessage msg = new WXMediaMessage();
-                msg.mediaObject = textObject;
-                msg.description = "hello";
-
-                SendMessageToWX.Req req = new SendMessageToWX.Req();
-                req.transaction = buildTransaction("text");// 唯一标识一个请求
-                req.message = msg;
-                // 发送到聊天界面——WXSceneSession
-                // 发送到朋友圈——WXSceneTimeline
-                // 添加到微信收藏——WXSceneFavorite
-                req.scene = SendMessageToWX.Req.WXSceneSession;
-                api.sendReq(req);
-//                if (!isLogin(getActivity(),true)){
-//                    return;
-//                }
-//                Intent intent = new Intent(getActivity(), RechargeActivity.class);
-//                startActivity(intent);
+//
+//                WXTextObject textObject = new WXTextObject();
+//                textObject.text = "hello";//你要分享出去的文本
+//                WXMediaMessage msg = new WXMediaMessage();
+//                msg.mediaObject = textObject;
+//                msg.description = "hello";
+//
+//                SendMessageToWX.Req req = new SendMessageToWX.Req();
+//                req.transaction = buildTransaction("text");// 唯一标识一个请求
+//                req.message = msg;
+//                // 发送到聊天界面——WXSceneSession
+//                // 发送到朋友圈——WXSceneTimeline
+//                // 添加到微信收藏——WXSceneFavorite
+//                req.scene = SendMessageToWX.Req.WXSceneSession;
+//                api.sendReq(req);
+                if (!isLogin(getActivity(),true)){
+                    return;
+                }
+                Intent intent = new Intent(getActivity(), RechargeActivity.class);
+                startActivity(intent);
 
 
             }
