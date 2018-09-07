@@ -309,11 +309,12 @@ public class LoginActivity extends StateBaseActivity {
         @Override
         public void onComplete(Object response) {
             Toast.makeText(LoginActivity.this, "授权成功", Toast.LENGTH_SHORT).show();
-            Log.e(TAG, "response:" + response);
+            Log.e("QQ登录", "response:" + response);
             JSONObject obj = (JSONObject) response;
             try {
                 final String   openID = obj.getString("openid");
                 final String accessToken = obj.getString("access_token");
+
                 Log.e("QQ登录",openID);
                 String expires = obj.getString("expires_in");
                 mTencent.setOpenId(openID);
@@ -327,24 +328,38 @@ public class LoginActivity extends StateBaseActivity {
 //                        Intent intent = new Intent(LoginActivity.this,MainTwoBanActivity.class);
 //                        startActivity(intent);
                         Log.e("QQ登录的","登录成功"+response.toString());
-
-                        com.zhy.http.okhttp.OkHttpUtils.get().url(ApiManager.ALL_URL+"api/login/qqcodeSubmit.jhtml")
-                                .addParams("openId",openID)
-                                .addParams("appId","1106154527")
-                                .addParams("access_token",accessToken)
-                                .build()
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onError(Request request, Exception e) {
-
-                                    }
-
-                                    @Override
-                                    public void onResponse(String response) {
+                        JSONObject obj = (JSONObject) response;
+                        try {
+                            final String gender = obj.getString("gender");
+                            final String nickName = obj.getString("nickname");
+                            final String image = obj.getString("figureurl_2");
 
 
-                                    }
-                                });
+                            com.zhy.http.okhttp.OkHttpUtils.get().url(ApiManager.ALL_URL+"lyjl/web/login.do")
+                                    .addParams("qq",openID)
+                                    .addParams("gender",gender)
+                                    .addParams("nickName",nickName)
+                                    .addParams("image",image)
+                                    .build()
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onError(Request request, Exception e) {
+
+                                        }
+
+                                        @Override
+                                        public void onResponse(String response) {
+
+
+                                            Log.e("QQ登录",response);
+
+                                        }
+                                    });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
 
 
 

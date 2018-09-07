@@ -84,7 +84,7 @@ public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.MyViewHolder> {
 //        }
         Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position).getOrgList().get(0).getImage())
                 .into(holder.im_shop);
-        holder.tv_name.setText(listBeen.get(position).getOrgList().get(0).getName());
+        holder.tv_name1.setText(listBeen.get(position).getOrgList().get(0).getName());
         holder.tv_money.setText(listBeen.get(position).getOrgList().get(0).getInsertTime()+"");
         holder.tv_content.setText(listBeen.get(position).getOrgList().get(0).getDescription());
 
@@ -101,13 +101,13 @@ public class BuyAdapter extends RecyclerView.Adapter<BuyAdapter.MyViewHolder> {
 
 
         ImageView im_shop;
-        TextView tv_name,tv_money,tv_content;
+        TextView tv_name1,tv_money,tv_content;
 
         public MyViewHolder(final View itemView) {
             super(itemView);
             tv_content = itemView.findViewById(R.id.buyorder_content);
             im_shop = itemView.findViewById(R.id.waitpay_im);
-            tv_name = itemView.findViewById(R.id.waitpay_name);
+            tv_name1 = itemView.findViewById(R.id.waitpay_name);
             tv_money = itemView.findViewById(R.id.waitpay_money);
 
 

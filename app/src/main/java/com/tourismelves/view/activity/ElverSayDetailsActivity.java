@@ -332,7 +332,7 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
                     mMediaPlayer.stop();
                     cancelTimer();
                 }
-                ToastUtil.show("播放失败，地址为空");
+                ToastUtil.show("播放失败1，地址为空");
                 return;
             }
             mMediaPlayer.reset();

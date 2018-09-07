@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.tourismelves">
 
+    <uses-permission android:name="android.permission.CAMERA"/>
     <!-- Required -->
     <uses-permission android:name="android.permission.MANAGE_DOCUMENTS" />
     <uses-permission android:name="cn.rxmao.shop.permission.JPUSH_MESSAGE" />
@@ -28,7 +30,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".view.activity.SplashActivity"
             android:screenOrientation="portrait">
@@ -128,7 +131,26 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-        <activity android:name=".view.activity.ElverSayDetailsActivity"></activity>
+        <activity android:name=".view.activity.ElverSayDetailsActivity" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".view.activity.SexActivity" />
+        <activity android:name=".view.activity.ChangePassActivity" />
+        <activity android:name=".view.activity.ChangePhoneActivity" />
+        <activity android:name=".view.activity.CollectActivity" />
+        <activity android:name=".view.activity.HelpActivity"></activity>
+        <activity android:name=".view.activity.PayActivity"></activity>
+        <!--<activity android:name=".view.activity.AllDownloadActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity android:name=".view.activity.AllDownload2Activity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity android:name=".view.activity.CropActivity"-->
+            <!--android:screenOrientation="portrait" />-->
+        <!--<activity android:name=".view.activity.SexActivity"-->
+            <!--android:screenOrientation="portrait" />-->
     </application>
 
 </manifest>

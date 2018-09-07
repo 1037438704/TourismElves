@@ -12,6 +12,11 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.Request;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXTextObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.OrderNumBean;
 import com.tourismelves.model.bean.UserBean;
@@ -47,6 +52,8 @@ public class MyFragment extends BaseFragment {
     TextView tv_name;
     TextView tv_collect,tv_ordernum,tv_xiazai,tv_money,tv_collectbo;
     UserBean userBean;
+    IWXAPI api;
+
 
     @Override
     protected int setContentLayout() {
@@ -58,6 +65,7 @@ public class MyFragment extends BaseFragment {
        // showStateLayout(2);
         //EventBusUtil.register(this);
         //setStatusBar(R.id.select_city_status);
+        api = WXAPIFactory.createWXAPI(getActivity(), "wx127d8dd53cf7aabc", false);
         tv_title = view.findViewById(R.id.title_name);
         tv_title.setText("我的");
         //我的账户
@@ -137,11 +145,28 @@ public class MyFragment extends BaseFragment {
         tv_recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isLogin(getActivity(),true)){
-                    return;
-                }
-                Intent intent = new Intent(getActivity(), RechargeActivity.class);
-                startActivity(intent);
+
+                WXTextObject textObject = new WXTextObject();
+                textObject.text = "hello";//你要分享出去的文本
+                WXMediaMessage msg = new WXMediaMessage();
+                msg.mediaObject = textObject;
+                msg.description = "hello";
+
+                SendMessageToWX.Req req = new SendMessageToWX.Req();
+                req.transaction = buildTransaction("text");// 唯一标识一个请求
+                req.message = msg;
+                // 发送到聊天界面——WXSceneSession
+                // 发送到朋友圈——WXSceneTimeline
+                // 添加到微信收藏——WXSceneFavorite
+                req.scene = SendMessageToWX.Req.WXSceneSession;
+                api.sendReq(req);
+//                if (!isLogin(getActivity(),true)){
+//                    return;
+//                }
+//                Intent intent = new Intent(getActivity(), RechargeActivity.class);
+//                startActivity(intent);
+
+
             }
         });
 //        //登录
@@ -233,6 +258,9 @@ public class MyFragment extends BaseFragment {
 
     }
 
+    private String buildTransaction(String text) {
+        return null;
+    }
 
 
     @Override

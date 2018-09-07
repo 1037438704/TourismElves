@@ -15,6 +15,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':okgo')
+
 }
 
 //apply from: 'bintray.gradle'

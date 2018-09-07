@@ -60,7 +60,7 @@ public class WaitPayFragment extends BaseFragment {
                     @Override
                     public void onResponse(String response) {
 
-                        Log.e("订单详情",response);
+                        Log.e("订单详情1",response);
                         Gson gson = new Gson();
                         waitpayBean = gson.fromJson(response,WaitpayBean.class);
                         listBeen = waitpayBean.getDataList();
@@ -76,7 +76,7 @@ public class WaitPayFragment extends BaseFragment {
 
 
 
-                            Log.e("订单liebiao",list+"");
+                            Log.e("订单liebiao1",list+"");
 //
                             WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

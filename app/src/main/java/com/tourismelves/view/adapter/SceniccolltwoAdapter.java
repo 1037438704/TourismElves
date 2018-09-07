@@ -78,7 +78,7 @@ public class SceniccolltwoAdapter extends RecyclerView.Adapter<SceniccolltwoAdap
         try {
 
             Glide.with(context).load("http://211.157.162.2/"+listBeen.get(position+1).getPhotoPath())
-                    .into(holder.im_shop);
+                    .into(holder.im_shop1);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -104,12 +104,12 @@ public class SceniccolltwoAdapter extends RecyclerView.Adapter<SceniccolltwoAdap
 
 
 
-        ImageView im_shop;
+        ImageView im_shop1;
         public MyViewHolder(final View itemView) {
             super(itemView);
 
 
-            im_shop = itemView.findViewById(R.id.two_shop);
+            im_shop1 = itemView.findViewById(R.id.two_shop);
         }
     }
 

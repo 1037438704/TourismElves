@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 26
@@ -26,6 +27,53 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+    signingConfigs {
+        release {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('Users/fanhui/Desktop/app.jks')
+            storePassword 'android'
+        }
+    }
+
+
+//    MobSDK {
+//        appKey "2774cb11e85db"
+//        appSecret "d58ef972ef69492723b8f9c04ac2f76f"
+//
+//        ShareSDK {
+//            //平台配置信息
+//            devInfo {
+//
+////                Wechat {
+////                    appId "wxb98a6631c58e363d"
+////                    appSecret "aa47ffa84ddc5fa5786a34937e38ec67"
+////                    shareByAppClient true
+////                }
+////                QQ {
+////                    //检查一下这个
+////                    appId "1106154527"
+////                    appKey "1Dqy6tSGqoIJllJO"
+////                    shareByAppClient true
+////                }
+////                WechatMoments {
+////                    appKey "wxb98a6631c58e363d"
+////                    appSecret "aa47ffa84ddc5fa5786a34937e38ec67"
+////                    shareByAppClient true
+////                }
+//
+//            }
+//        }
+//
+//    }
+//    MobSDK {
+//        appKey "d580ad56b4b5"
+//        appSecret "7fcae59a62342e7e2759e9e397c82bdd"
+//
+//        ShareSDK {}
+//
+//    }
 }
 
 
@@ -45,7 +93,6 @@ dependencies {
     compile files('libs/open_sdk_r5990_lite.jar')
     compile files('libs/alipaySdk-20180403.jar')
     compile files('libs/AMap3DMap_6.4.0_AMapSearch_6.1.0_AMapLocation_4.2.0_20180814.jar')
-
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support.constraint:constraint-layout:1.1.2'
     compile 'com.android.support.test:runner:1.0.2'
@@ -68,4 +115,13 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile project(path: ':okgo')
+    compile project(path: ':okserver')
+    compile files('libs/wechat-sdk-android-with-mta-1.0.2.jar')
+    //RxPermissions
+   // compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+//    //RxJava2
+//    compile "io.reactivex.rxjava2:rxjava:2.1.9"
+    //相册选择器
+   // compile 'com.zhihu.android:matisse:0.5.0-alpha4'
 }
