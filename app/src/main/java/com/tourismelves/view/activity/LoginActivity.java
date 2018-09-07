@@ -221,8 +221,8 @@ public class LoginActivity extends StateBaseActivity {
 
                                 Log.e("获取验证码",response);
                                 Toast.makeText(LoginActivity.this, "发送成功", Toast.LENGTH_SHORT).show();
-                                ll_login.setVisibility(View.VISIBLE);
-                                ll_register.setVisibility(View.GONE);
+                                ll_login.setVisibility(View.GONE);
+                                ll_register.setVisibility(View.VISIBLE);
                             }
                         });
             }
@@ -289,6 +289,8 @@ public class LoginActivity extends StateBaseActivity {
                                 registerBean = gson.fromJson(response,RegisterBean.class);
                                 if (registerBean.getCode()==200){
                                     Toast.makeText(LoginActivity.this, registerBean.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                    ll_login.setVisibility(View.VISIBLE);
+                                    ll_register.setVisibility(View.GONE);
                                 }
                             }
                         });
