@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.tourismelves.utils.system.SPUtils;
 import com.tourismelves.view.activity.base.StateBaseActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+import com.zhy.http.okhttp.utils.Exceptions;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +56,7 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
     AppCompatTextView interpretationDetailsTime;
     AppCompatImageView interpretationDetailsPlay;
     private Timer timer;
+    LinearLayout ll_bottem;
 
 
     @Override
@@ -63,6 +66,7 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
 
     @Override
     protected void initControls() {
+        ll_bottem = findViewById(R.id.interpretation_details_ll);
         mMediaPlayer = new ManagedMediaPlayer();
         interpretationDetailsPlay = findViewById(R.id.interpretation_details_play);
         interpretationDetailsTime = findViewById(R.id.interpretation_details_time);
@@ -163,6 +167,9 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
                             audioPath = matcher.group(1);
                             File file = new File(audioPath);
                             newContent = builder.delete(matcher.start(), matcher.end()).toString();
+                            if (audioPath.equals("")){
+                                ll_bottem.setVisibility(View.GONE);
+                            }
                             play();
                         }
                         webView.loadData("<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1,user-scalable=0\"><title>任性猫</title><style type=\"text/css\">img{width: 100%;}</style></head><body>"+newContent+"</body></html>","text/html; charset=UTF-8", null);
@@ -246,17 +253,22 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
         interpretationDetailsPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (audioPath.equals("")) {
-                    ToastUtil.show("播放失败，地址为空");
-                    return;
+                try {
+                    if (audioPath.equals("")) {
+                        ToastUtil.show("播放失败，地址为空");
+                        return;
+                    }
+
+                    if (mMediaPlayer.isPlaying()) {
+                        mMediaPlayer.pause();
+                        cancelTimer();
+                    } else {
+                        start();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
 
-                if (mMediaPlayer.isPlaying()) {
-                    mMediaPlayer.pause();
-                    cancelTimer();
-                } else {
-                    start();
-                }
             }
         });
     }
@@ -264,6 +276,8 @@ public class ElverSayDetailsActivity extends StateBaseActivity {
     /**
      * 音乐播放地方
      */
+
+
 
     private void start() {
         interpretationDetailsPlay.setImageResource(R.mipmap.zantingbofang);

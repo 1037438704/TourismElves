@@ -15,6 +15,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.tourismelves.utils.pinyin.ApiManager;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -44,6 +45,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         mWeixinAPI = WXAPIFactory.createWXAPI(this, WEIXIN_APP_ID, true);
         mWeixinAPI.handleIntent(this.getIntent(), this);
     }
+
+
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -112,6 +116,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
      * @param weixinCode
      */
     private void doWXLogin(final String weixinCode) {
+
+//
+//        OkHttpUtils.get()
+//                .url(ApiManager.ALL_URL+"lyjl/web/login.do")
+//                .addParams()
 
 
 

@@ -148,4 +148,40 @@
             android:src="@mipmap/mine_icon_next"/>
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/setup_qchc"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:layout_marginTop="@dimen/dp1"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_weight="1"
+            android:text="清除缓存"
+            android:textSize="@dimen/sp14" />
+
+        <TextView
+            android:id="@+id/personal_qchc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="0.0KB"
+            android:textSize="@dimen/sp14" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp10"
+            android:src="@mipmap/mine_icon_next" />
+
+    </LinearLayout>
+
 </LinearLayout>

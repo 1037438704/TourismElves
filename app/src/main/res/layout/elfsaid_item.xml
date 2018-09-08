@@ -70,7 +70,7 @@
 
             <TextView
                 android:ellipsize="end"
-                android:lines="2"
+                android:lines="3"
                 android:id="@+id/elfsaid_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,24 +85,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginTop="@dimen/dp10"
                 android:orientation="horizontal">
 
 
-                <ImageView
-                    android:layout_width="@dimen/dp8"
-                    android:layout_height="@dimen/dp10"
-                    android:layout_gravity="center"
-                    android:src="@mipmap/spritesay" />
+                <!--<ImageView-->
+                    <!--android:layout_width="@dimen/dp8"-->
+                    <!--android:layout_height="@dimen/dp10"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:src="@mipmap/spritesay" />-->
 
-                <TextView
+                <!--<TextView-->
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:text="北京朝阳区"
-                    android:textColor="@color/jls_jl"
-                    android:textSize="@dimen/sp12" />
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="@dimen/dp5"-->
+                    <!--android:text="北京朝阳区"-->
+                    <!--android:textColor="@color/jls_jl"-->
+                    <!--android:textSize="@dimen/sp12" />-->
 
 
                 <TextView

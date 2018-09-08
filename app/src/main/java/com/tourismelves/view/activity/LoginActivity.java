@@ -1,6 +1,8 @@
 package com.tourismelves.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +26,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.tourismelves.R;
 import com.tourismelves.model.bean.LoginBean;
+import com.tourismelves.model.bean.QQLoginBean;
 import com.tourismelves.model.bean.RegisterBean;
 import com.tourismelves.model.net.OkHttpUtils;
 import com.tourismelves.utils.common.ToastUtil;
@@ -354,6 +357,33 @@ public class LoginActivity extends StateBaseActivity {
 
 
                                             Log.e("QQ登录",response);
+                                            Gson gson = new Gson();
+                                            final QQLoginBean qqLoginBean;
+                                            qqLoginBean = gson.fromJson(response,QQLoginBean.class);
+                                            if (qqLoginBean.getDataList().get(0).getLoginName()==null){
+                                                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this).setTitle("提示").setMessage("第三方登录需要绑定手机号，前往绑定？")
+                                                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                                            }
+                                                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                                Intent intent = new Intent(LoginActivity.this,BundActivity.class);
+                                                                intent.putExtra("userid",qqLoginBean.getDataList().get(0).getUserId()+"");
+                                                                startActivity(intent);
+                                                            }
+                                                        }).create();
+                                                alertDialog.show();
+                                            }else {
+                                                String userid = qqLoginBean.getDataList().get(0).getUserId()+"";
+                                             //   Log.e("登陆的token",token);
+                                                SPUtils.getInstance(LoginActivity.this).put("putInt",userid);//存储一个int值
+                                                Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                                startActivity(intent);
+
+                                            }
 
                                         }
                                     });

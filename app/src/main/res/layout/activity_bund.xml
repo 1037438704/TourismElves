@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.tourismelves.view.activity.BundActivity">
+
+
+
+
+
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp16"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="wrap_content"
+            android:text="手机号"/>
+
+        <EditText
+            android:textColorHint="#b2b2b2"
+            android:textSize="@dimen/dp15"
+            android:id="@+id/change_edphone"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请输入手机号"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginRight="@dimen/dp10"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="@dimen/sp14"
+            android:background="#FF4A90E2"
+            android:id="@+id/tv_smscode"
+            android:layout_gravity="center"
+            android:text="获取验证码"
+            android:layout_width="@dimen/dp90"
+            android:layout_height="@dimen/dp30" />
+    </LinearLayout>
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp16"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="wrap_content"
+            android:text="验证码"/>
+
+        <EditText
+            android:textColorHint="#b2b2b2"
+            android:textSize="@dimen/sp15"
+            android:id="@+id/change_yzm"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp16"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="wrap_content"
+            android:text="密码"/>
+
+        <EditText
+            android:textColorHint="#b2b2b2"
+            android:textSize="@dimen/sp15"
+            android:id="@+id/change_mm"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:hint="请输入密码"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp10"
+            android:textSize="@dimen/sp16"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="wrap_content"
+            android:text="确认密码"/>
+
+        <EditText
+            android:id="@+id/change_zcmm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="再次确认密码"
+            android:textColorHint="#b2b2b2"
+            android:textSize="@dimen/sp15" />
+
+
+    </LinearLayout>
+    <TextView
+        android:background="@color/nc_border"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1" />
+    <Button
+        android:id="@+id/bt_login_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp15"
+        android:background="@mipmap/bar"
+        android:text="完成注册"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp16" />
+    <TextView
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

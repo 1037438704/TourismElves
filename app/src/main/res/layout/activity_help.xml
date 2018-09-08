@@ -29,49 +29,49 @@
 
     </LinearLayout>
     
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
 
-        <TextView
-            android:background="@color/white"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
-            android:textSize="@dimen/sp12"
-            android:text="景点信息有误"
-            android:layout_width="@dimen/dp90"
-            android:layout_height="@dimen/dp30" />
-        <TextView
-            android:background="@color/white"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
-            android:textSize="@dimen/sp12"
-            android:text="定位不准"
-            android:layout_width="@dimen/dp68"
-            android:layout_height="@dimen/dp30" />
-        <TextView
-            android:background="@color/white"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
-            android:textSize="@dimen/sp12"
-            android:text="缺个景点"
-            android:layout_width="@dimen/dp68"
-            android:layout_height="@dimen/dp30" />
-        <TextView
-            android:background="@color/white"
-            android:layout_marginLeft="@dimen/dp10"
-            android:layout_marginTop="@dimen/dp10"
-            android:gravity="center"
-            android:textSize="@dimen/sp12"
-            android:text="路线错误"
-            android:layout_width="@dimen/dp68"
-            android:layout_height="@dimen/dp30" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_marginLeft="@dimen/dp10"-->
+            <!--android:layout_marginTop="@dimen/dp10"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="景点信息有误"-->
+            <!--android:layout_width="@dimen/dp90"-->
+            <!--android:layout_height="@dimen/dp30" />-->
+        <!--<TextView-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_marginLeft="@dimen/dp10"-->
+            <!--android:layout_marginTop="@dimen/dp10"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="定位不准"-->
+            <!--android:layout_width="@dimen/dp68"-->
+            <!--android:layout_height="@dimen/dp30" />-->
+        <!--<TextView-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_marginLeft="@dimen/dp10"-->
+            <!--android:layout_marginTop="@dimen/dp10"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="缺个景点"-->
+            <!--android:layout_width="@dimen/dp68"-->
+            <!--android:layout_height="@dimen/dp30" />-->
+        <!--<TextView-->
+            <!--android:background="@color/white"-->
+            <!--android:layout_marginLeft="@dimen/dp10"-->
+            <!--android:layout_marginTop="@dimen/dp10"-->
+            <!--android:gravity="center"-->
+            <!--android:textSize="@dimen/sp12"-->
+            <!--android:text="路线错误"-->
+            <!--android:layout_width="@dimen/dp68"-->
+            <!--android:layout_height="@dimen/dp30" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:orientation="vertical"
@@ -81,6 +81,7 @@
         android:layout_height="@dimen/dp259">
 
         <EditText
+            android:id="@+id/ed_content"
             android:paddingLeft="@dimen/dp10"
             android:background="@null"
             android:textSize="@dimen/sp14"
@@ -89,7 +90,32 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp150" />
 
+        <RelativeLayout
+            android:visibility="visible"
+            android:id="@+id/addBtnLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/help_im"
+                    android:src="@mipmap/add_image_icon"
+                    android:layout_width="@dimen/dp80"
+                    android:layout_height="@dimen/dp80" />
+                <TextView
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="添加图片"
+                    android:textSize="@dimen/sp12"
+                    android:textColor="#999"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
+        </RelativeLayout>
     </LinearLayout>
 
 
@@ -102,4 +128,21 @@
         android:hint="留下您的联系方式方便联系"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp30" />
+
+    <TextView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <Button
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp45"
+        android:background="@mipmap/bar"
+        android:text="提交"
+        android:textColor="#ffffff"
+        android:id="@+id/petname_save"
+        />
 </LinearLayout>

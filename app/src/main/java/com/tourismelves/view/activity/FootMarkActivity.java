@@ -38,7 +38,7 @@ public class FootMarkActivity extends StateBaseActivity {
         //tv_title = findViewById(R.id.title_name);
        // tv_title.setText("足迹");
         fragments.add(new ScenicFragment());
-        fragments.add(new ScenicFragment());
+      //  fragments.add(new ScenicFragment());
 //        list.add("景区");
 //        list.add("精灵说");
 
@@ -49,7 +49,7 @@ public class FootMarkActivity extends StateBaseActivity {
 
 
         tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("景区",R.drawable.add_switch2)));
-        tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("精灵说",R.drawable.add_switch2)));
+    //    tab_layout.addTab(tab_layout.newTab().setCustomView(tab_icon("精灵说",R.drawable.add_switch2)));
         //Tablayout自定义view绑定ViewPager
         viewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
         tab_layout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewpager));

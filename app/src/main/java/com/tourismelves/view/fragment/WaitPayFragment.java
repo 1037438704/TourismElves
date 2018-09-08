@@ -1,6 +1,7 @@
 package com.tourismelves.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,8 @@ import com.tourismelves.R;
 import com.tourismelves.model.bean.WaitpayBean;
 import com.tourismelves.utils.pinyin.ApiManager;
 import com.tourismelves.utils.system.SPUtils;
+import com.tourismelves.view.activity.PayActivity;
+import com.tourismelves.view.adapter.ElfSaidAdapter;
 import com.tourismelves.view.adapter.WaitpayAdapter;
 import com.tourismelves.view.fragment.base.BaseFragment;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -81,6 +84,17 @@ public class WaitPayFragment extends BaseFragment {
                             WaitpayAdapter waitpayAdapter = new WaitpayAdapter(getActivity(),list);
                             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                             recyclerView.setAdapter(waitpayAdapter);
+                            waitpayAdapter.setOnItemClickListener(new ElfSaidAdapter.OnItemClickListener() {
+                                @Override
+                                public void OnItem(View view, int position) {
+                                    Intent intent = new Intent(getActivity(), PayActivity.class);
+                                    intent.putExtra("pk_id",list.get(position).getOrderId());
+                                    intent.putExtra("sumPrice",list.get(position).getGoodsAmount());
+//                                    pk_id = getIntent().getStringExtra("pk_id");
+//                                    sumPrice = getIntent().getDoubleExtra("sumPrice", 0.00);
+                                    startActivity(intent);
+                                }
+                            });
 
                         }
                     }
